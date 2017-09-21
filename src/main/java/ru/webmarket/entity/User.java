@@ -25,6 +25,19 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleid"))
     private Set<Role> roles;
 
+
+    @OneToOne
+    @JoinTable(name = "shopping_cart")
+    private ShoppingCart ShoppingCart;
+
+    public ShoppingCart getShopping_cart() {
+        return ShoppingCart;
+    }
+
+    public void setShopping_cart(ShoppingCart shopping_cart) {
+        this.ShoppingCart = shopping_cart;
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,11 +46,11 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
+    public String getName() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setNane(String username) {
         this.username = username;
     }
 

@@ -31,7 +31,7 @@ CREATE TABLE categories (
   categoriesname VARCHAR(255)
 );
 
-CREATE TABLE pruduct_categories (
+CREATE TABLE product_categories (
   productcategories SERIAL PRIMARY KEY,
   productid         INTEGER,
   categoriesid      INTEGER,
@@ -49,9 +49,9 @@ CREATE TABLE shopping_list (
 CREATE TABLE shopping_cart (
   shoppcartid SERIAL PRIMARY KEY,
   userid      INTEGER,
-  shopplisid  INTEGER,
+  shopplitsid  INTEGER,
   FOREIGN KEY (userid) REFERENCES users (userid),
-  FOREIGN KEY (shopplisid) REFERENCES shopping_list (shopplistid)
+  FOREIGN KEY (shopplitsid) REFERENCES shopping_list (shopplistid)
 );
 
 CREATE TABLE order_list (
