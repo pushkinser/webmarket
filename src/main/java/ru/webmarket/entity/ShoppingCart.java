@@ -1,46 +1,26 @@
 package ru.webmarket.entity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "shopping_cart")
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "shoppcartid")
     private Long id;
 
-    @OneToOne
-    @JoinTable(name = "users")
+    @Transient
+    @JoinColumn(name = "userid")
     private User user;
 
+    @Transient
     @ManyToMany
     @JoinTable(name = "shopping_list", joinColumns = @JoinColumn(name = "shoppcartid"),
             inverseJoinColumns = @JoinColumn(name = "productid"))
-    private Set<Product> products;
+    private List<Product> products;
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
 }

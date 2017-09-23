@@ -1,15 +1,14 @@
-
 CREATE TABLE roles (
   roleid   SERIAL PRIMARY KEY,
   rolename VARCHAR(50)
 );
 
 CREATE TABLE users (
-  userid     SERIAL PRIMARY KEY,
-  username   VARCHAR(255),
-  secondname VARCHAR(255),
-  email      VARCHAR(255),
-  password   VARCHAR(255)
+  userid   SERIAL PRIMARY KEY,
+  username VARCHAR(255),
+  lastname VARCHAR(255),
+  email    VARCHAR(255),
+  password VARCHAR(255)
 );
 
 CREATE TABLE user_roles (
@@ -49,15 +48,9 @@ CREATE TABLE shopping_list (
 CREATE TABLE shopping_cart (
   shoppcartid SERIAL PRIMARY KEY,
   userid      INTEGER,
-  shopplitsid  INTEGER,
+  shopplistid INTEGER,
   FOREIGN KEY (userid) REFERENCES users (userid),
-  FOREIGN KEY (shopplitsid) REFERENCES shopping_list (shopplistid)
-);
-
-CREATE TABLE order_list (
-  orderlistid SERIAL PRIMARY KEY,
-  productid   INTEGER,
-  FOREIGN KEY (productid) REFERENCES products (productid)
+  FOREIGN KEY (shopplistid) REFERENCES shopping_list (shopplistid)
 );
 
 CREATE TABLE orders (
@@ -65,6 +58,17 @@ CREATE TABLE orders (
   userid    INTEGER,
   orderlist INTEGER,
   reckoning MONEY,
-  FOREIGN KEY (orderlist) REFERENCES order_list (orderlistid),
   FOREIGN KEY (userid) REFERENCES users (userid)
 );
+
+CREATE TABLE order_list (
+  orderlistid SERIAL PRIMARY KEY,
+  productid   INTEGER,
+  orderid     INTEGER,
+  FOREIGN KEY (productid) REFERENCES products (productid),
+  FOREIGN KEY (orderid) REFERENCES orders (orderid)
+);
+
+
+-- INSERT INTO users (username, lastname, email, password) VALUES ('Sergey', 'Pushkin', '@', 'password');
+-- INSERT INTO roles (rolename) VALUES ('Adnin'), ('User');
