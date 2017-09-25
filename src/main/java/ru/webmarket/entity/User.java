@@ -2,22 +2,28 @@ package ru.webmarket.entity;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Сергей
+ * <p>
+ *
+ *     TODO: equals/hashCode for List
  */
+
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="userid")
+    @Column(name = "users_id")
     private Long id;
 
     @Column(name = "username")
     private String userName;
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "lastname")
     private String lastName;
@@ -28,24 +34,19 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Transient
-    @ManyToMany
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "roleid"))
-    private Set<Role> roles;
+    @ManyToMany(mappedBy = "users")
+    private List<Role> roles;
 
-    @Transient
-    @OneToOne (mappedBy = "ShoppingCart")
+    @OneToOne(mappedBy = "user")
     private ShoppingCart shoppingCart;
 
-    @Transient
-    @OneToMany
-    @JoinTable(name = "order_list", joinColumns = @JoinColumn(name = "userid"),
-    inverseJoinColumns = @JoinColumn(name = "orderid"))
-    private List<Order> orderList;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Order> ordes;
 
-    public User(String userName, String lastName, String email, String password) {
+
+    public User(String userName, String name, String lastName, String email, String password) {
         this.userName = userName;
+        this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
@@ -69,6 +70,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLastName() {
@@ -95,29 +104,29 @@ public class User {
         this.password = password;
     }
 
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
-//
-//    public ShoppingCart getShoppingCart() {
-//        return shoppingCart;
-//    }
-//
-//    public void setShoppingCart(ShoppingCart shoppingCart) {
-//        this.shoppingCart = shoppingCart;
-//    }
-//
-//    public List<Order> getOrderList() {
-//        return orderList;
-//    }
-//
-//    public void setOrderList(List<Order> orderList) {
-//        this.orderList = orderList;
-//    }
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public List<Order> getOrdes() {
+        return ordes;
+    }
+
+    public void setOrdes(List<Order> ordes) {
+        this.ordes = ordes;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -128,13 +137,10 @@ public class User {
 
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-//        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-//        if (roles != null ? !roles.equals(user.roles) : user.roles != null) return false;
-//        if (shoppingCart != null ? !shoppingCart.equals(user.shoppingCart) : user.shoppingCart != null) return false;
-//        return orderList != null ? orderList.equals(user.orderList) : user.orderList == null;
-        return password != null ? !password.equals(user.password) : user.password != null;
+        return password != null ? password.equals(user.password) : user.password == null;
     }
 
     @Override
@@ -153,8 +159,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
+                "  userName='" + userName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
