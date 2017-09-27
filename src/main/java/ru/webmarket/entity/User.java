@@ -41,8 +41,7 @@ public class User {
     private ShoppingCart shoppingCart;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Order> ordes;
-
+    private List<Order> orders;
 
     public User(String userName, String name, String lastName, String email, String password) {
         this.userName = userName;
@@ -121,11 +120,11 @@ public class User {
     }
 
     public List<Order> getOrdes() {
-        return ordes;
+        return orders;
     }
 
     public void setOrdes(List<Order> ordes) {
-        this.ordes = ordes;
+        this.orders = ordes;
     }
 
     @Override

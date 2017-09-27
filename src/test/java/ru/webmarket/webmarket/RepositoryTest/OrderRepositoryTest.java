@@ -1,4 +1,4 @@
-package ru.webmarket.webmarket;
+package ru.webmarket.webmarket.RepositoryTest;
 
 import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
@@ -10,7 +10,7 @@ import ru.webmarket.configuration.Persistence;
 import ru.webmarket.entity.Order;
 import ru.webmarket.repository.OrderRepository;
 
-public class OrderTest {
+public class OrderRepositoryTest {
 
     private static OrderRepository orderRepository;
 

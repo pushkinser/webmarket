@@ -1,4 +1,4 @@
-package ru.webmarket.webmarket;
+package ru.webmarket.webmarket.RepositoryTest;
 
 import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.webmarket.configuration.Persistence;
-import ru.webmarket.entity.Category;
+import ru.webmarket.entity.CategoryDTO;
 import ru.webmarket.repository.CategoryRepository;
 
 public class CategoryRepositoryTest {
@@ -23,9 +23,9 @@ public class CategoryRepositoryTest {
 
     @Test
     public void shouldGetCategories () {
-        Iterable<Category> allCategory = categoryRepository.findAll();
-        for (Category category: allCategory) {
-            System.out.println(category);
+        Iterable<CategoryDTO> allCategory = categoryRepository.findAll();
+        for (CategoryDTO categoryDTO : allCategory) {
+            System.out.println(categoryDTO);
         }
         Assert.assertNotNull(allCategory);
         Assert.assertTrue(allCategory.iterator().hasNext());

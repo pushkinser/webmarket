@@ -2,13 +2,12 @@ package ru.webmarket.entity;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "products_id")
     private Long id;
 
@@ -19,19 +18,19 @@ public class Product {
     private Double price;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
-    private Set<Category> categories;
+    private List<CategoryDTO> categories;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "orders_items",
             joinColumns = @JoinColumn(name = "orders_id"),
             inverseJoinColumns = @JoinColumn(name = "products_id"))
-    List<Order> orders;
+    private List<Order> orders;
 
     public Product() {
 
     }
 
-    public Product(String name, Double price, Set<Category> categories, List<Order> orders) {
+    public Product(String name, Double price, List<CategoryDTO> categories, List<Order> orders) {
         this.name = name;
         this.price = price;
         this.categories = categories;
@@ -62,11 +61,11 @@ public class Product {
         this.price = price;
     }
 
-    public Set<Category> getCategories() {
+    public List<CategoryDTO> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(List<CategoryDTO> categories) {
         this.categories = categories;
     }
 
@@ -78,6 +77,7 @@ public class Product {
         this.orders = orders;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,9 +87,7 @@ public class Product {
 
         if (id != null ? !id.equals(product.id) : product.id != null) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
-        if (price != null ? !price.equals(product.price) : product.price != null) return false;
-        if (categories != null ? !categories.equals(product.categories) : product.categories != null) return false;
-        return orders != null ? orders.equals(product.orders) : product.orders == null;
+        return price != null ? price.equals(product.price) : product.price == null;
     }
 
     @Override
@@ -97,14 +95,12 @@ public class Product {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (categories != null ? categories.hashCode() : 0);
-        result = 31 * result + (orders != null ? orders.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "RoleService{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +

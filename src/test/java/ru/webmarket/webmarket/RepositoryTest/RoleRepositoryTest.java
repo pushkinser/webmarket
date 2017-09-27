@@ -1,4 +1,4 @@
-package ru.webmarket.webmarket;
+package ru.webmarket.webmarket.RepositoryTest;
 
 import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
@@ -10,7 +10,7 @@ import ru.webmarket.configuration.Persistence;
 import ru.webmarket.entity.Role;
 import ru.webmarket.repository.RoleRepository;
 
-public class RoleTest {
+public class RoleRepositoryTest {
 
     private static RoleRepository roleRepository;
 

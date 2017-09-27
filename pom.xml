@@ -13,15 +13,22 @@
         <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <jetty.version>9.3.7.v20160115</jetty.version>
+        <spring.jade.version>1.1.4</spring.jade.version>
+        <spring.security.version>4.0.4.RELEASE</spring.security.version>
     </properties>
 
 
     <dependencies>
+        <!--Servlet API-->
+
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
+
+        <!--Spring -->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -89,8 +96,13 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.3.11.RELEASE</version>
+            <version>${spring.framework.version}</version>
         </dependency>
 
         <dependency>
@@ -98,6 +110,65 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>4.3.11.RELEASE</version>
+        </dependency>
+
+        <!-- Spring Jade -->
+
+        <dependency>
+            <groupId>de.neuland-bfi</groupId>
+            <artifactId>spring-jade4j</artifactId>
+            <version>${spring.jade.version}</version>
+        </dependency>
+
+        <!--Jetty Server-->
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+
+        <!-- Spring Security -->
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session</artifactId>
+            <version>1.1.0.RELEASE</version>
         </dependency>
 
     </dependencies>
@@ -144,6 +215,24 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <webAppSourceDirectory>webapp</webAppSourceDirectory>
+                    <httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
+                    <stopKey/>
+                    <stopPort/>
+                </configuration>
+            </plugin>
+
             <!--Maven Shade Plugin-->
 
             <!--<plugin>-->
@@ -178,25 +267,9 @@
                 <!--</executions>-->
             <!--</plugin>-->
 
-            <!--Jetty Maven Plugin-->
 
-            <!--<plugin>-->
-                <!--<groupId>org.eclipse.jetty</groupId>-->
-                <!--<artifactId>jetty-maven-plugin</artifactId>-->
-                <!--<version>${jetty.version}</version>-->
-                <!--<configuration>-->
-                    <!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
-                    <!--<webApp>-->
-                        <!--<contextPath>/</contextPath>-->
-                    <!--</webApp>-->
-                    <!--<webAppSourceDirectory>webapp</webAppSourceDirectory>-->
-                    <!--<httpConnector>-->
-                        <!--<port>8080</port>-->
-                    <!--</httpConnector>-->
-                    <!--<stopKey/>-->
-                    <!--<stopPort/>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+
+
 
         </plugins>
     </build>

@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * TODO: equals/hashCode for List<Product>
+ * TODO: equals/hashCode for List<RoleService>
  *
  *
  */
@@ -14,10 +14,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class CategoryDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categories_id")
     private Long id;
 
@@ -30,12 +30,12 @@ public class Category {
             inverseJoinColumns = @JoinColumn(name = "products_id"))
     private List<Product> products;
 
-    public Category(String name, List<Product> products) {
+    public CategoryDTO(String name, List<Product> products) {
         this.name = name;
         this.products = products;
     }
 
-    public Category() {
+    public CategoryDTO() {
     }
 
     public Long getId() {
@@ -67,10 +67,10 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Category category = (Category) o;
+        CategoryDTO categoryDTO = (CategoryDTO) o;
 
-        if (id != null ? !id.equals(category.id) : category.id != null) return false;
-        return name != null ? name.equals(category.name) : category.name == null;
+        if (id != null ? !id.equals(categoryDTO.id) : categoryDTO.id != null) return false;
+        return name != null ? name.equals(categoryDTO.name) : categoryDTO.name == null;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "CategoryService{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
  //               ", products=" + products +

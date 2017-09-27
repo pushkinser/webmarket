@@ -13,13 +13,17 @@ import java.util.List;
 @Table(name = "shopping_cart")
 public class ShoppingCart {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shopping_cart_id")
     private Long id;
 
     @OneToOne
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "orders_id",referencedColumnName = "orders_id")
+    private Order order;
 
 
     public Long getId() {
@@ -38,6 +42,14 @@ public class ShoppingCart {
         this.user = user;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,13 +58,15 @@ public class ShoppingCart {
         ShoppingCart that = (ShoppingCart) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        return user != null ? user.equals(that.user) : that.user == null;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        return order != null ? order.equals(that.order) : that.order == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (order != null ? order.hashCode() : 0);
         return result;
     }
 
@@ -61,6 +75,7 @@ public class ShoppingCart {
         return "ShoppingCart{" +
                 "id=" + id +
                 ", user=" + user +
+                //", order=" + order +
                 '}';
     }
 }
