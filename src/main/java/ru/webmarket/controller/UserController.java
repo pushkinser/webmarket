@@ -17,49 +17,20 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-//    @RequestMapping(value = "/{id}")
-//    public UserDTO user() {
-//        UserDTO userDTO = new UserDTO();
-//        userDTO = userService.getUser(1L);
-//        return new ModelAndView.((View) userDTO);
-//    }
-
-
-//    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-//    public ModelAndView profile() {
-//        return new ModelAndView("profile", SecurityUtils.getAuthInfo());
-//    }
-
-
-//    @RequestMapping("/")
-//    public Iterable<UserDTO> getUsers() {
-//        return userService.getAllUsers();
-//    }
-
-
-//    @RequestMapping("/{id}")
-//    public UserDTO getUsers(@PathVariable("id") String id) {
-//        UserDTO userDTO;
-//        Long longId = Long.parseLong(id, 10);
-//        userDTO = userService.getUser(longId);
-//        return userDTO.toString();
-//    }
-
-
     @RequestMapping("/{id}")
-    public String getUser(@PathVariable("id") String id) {
+    public UserDTO getUser(@PathVariable("id") String id) {
         UserDTO userDTO;
         Long longId = Long.parseLong(id, 10);
         userDTO = userService.getUser(longId);
-        return userDTO.toString();
+        return userDTO;
     }
 
     @RequestMapping("/all")
-    public String getUsers () {
+    public List<UserDTO> getUsers () {
         List<UserDTO> userDTOS;
         userDTOS = userService.getAllUsers();
 
-        return  userDTOS.toString();
+        return  userDTOS;
     }
 
     @RequestMapping(value = "/create/{username}/{name}/{lastname}/{email}/{password}", method = RequestMethod.POST)

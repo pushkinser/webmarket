@@ -1,7 +1,7 @@
 //package ru.webmarket.service.impl;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
-//import ru.webmarket.entity.CategoryDTO;
+//import ru.webmarket.entity.Category;
 //import ru.webmarket.entity.Product;
 //import ru.webmarket.repository.CategoryRepository;
 //import ru.webmarket.service.CategoryService;
@@ -16,18 +16,18 @@
 //    private CategoryRepository categoryRepository;
 //
 //    @Override
-//    public void addCategory(CategoryDTO categoryDTO) {
+//    public void addCategory(Category categoryDTO) {
 //        categoryRepository.save(categoryDTO);
 //    }
 //
 //    @Override
-//    public CategoryDTO getCategory(Long id) {
+//    public Category getCategory(Long id) {
 //        return categoryRepository.findOne(id);
 //    }
 //
 //    @Override
-//    public void editCategory(CategoryDTO toEditCategoryDTO) {
-//        CategoryDTO categoryDTO = categoryRepository.findOne(toEditCategoryDTO.getId());
+//    public void editCategory(Category toEditCategoryDTO) {
+//        Category categoryDTO = categoryRepository.findOne(toEditCategoryDTO.getId());
 //
 //        toEditCategoryDTO.setName(categoryDTO.getName());
 //    }
@@ -38,17 +38,17 @@
 //    }
 //
 //    @Override
-//    public List<CategoryDTO> getAllCategories() {
+//    public List<Category> getAllCategories() {
 //        return categoryRepository.findAll();
 //    }
 //
 //    @Override
-//    public List<Product> getAllProducts(CategoryDTO categoryDTO) {
+//    public List<Product> getAllProducts(Category categoryDTO) {
 //        return null;
 //    }
 //
 //    @Override
-//    public CategoryDTO findByName(String name) {
+//    public Category findByName(String name) {
 //        return null;
 //    }
 //}

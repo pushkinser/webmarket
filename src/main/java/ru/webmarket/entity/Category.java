@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "categories")
-public class CategoryDTO {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +30,12 @@ public class CategoryDTO {
             inverseJoinColumns = @JoinColumn(name = "products_id"))
     private List<Product> products;
 
-    public CategoryDTO(String name, List<Product> products) {
+    public Category(String name, List<Product> products) {
         this.name = name;
         this.products = products;
     }
 
-    public CategoryDTO() {
+    public Category() {
     }
 
     public Long getId() {
@@ -67,10 +67,10 @@ public class CategoryDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CategoryDTO categoryDTO = (CategoryDTO) o;
+        Category category = (Category) o;
 
-        if (id != null ? !id.equals(categoryDTO.id) : categoryDTO.id != null) return false;
-        return name != null ? name.equals(categoryDTO.name) : categoryDTO.name == null;
+        if (id != null ? !id.equals(category.id) : category.id != null) return false;
+        return name != null ? name.equals(category.name) : category.name == null;
     }
 
     @Override

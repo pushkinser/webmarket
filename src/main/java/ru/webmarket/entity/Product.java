@@ -18,7 +18,7 @@ public class Product {
     private Double price;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
-    private List<CategoryDTO> categories;
+    private List<Category> categories;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "orders_items",
@@ -30,7 +30,7 @@ public class Product {
 
     }
 
-    public Product(String name, Double price, List<CategoryDTO> categories, List<Order> orders) {
+    public Product(String name, Double price, List<Category> categories, List<Order> orders) {
         this.name = name;
         this.price = price;
         this.categories = categories;
@@ -61,11 +61,11 @@ public class Product {
         this.price = price;
     }
 
-    public List<CategoryDTO> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryDTO> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 

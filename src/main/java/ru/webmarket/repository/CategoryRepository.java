@@ -1,7 +1,7 @@
 package ru.webmarket.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.webmarket.entity.CategoryDTO;
+import ru.webmarket.entity.Category;
 
-public interface CategoryRepository extends JpaRepository<CategoryDTO, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 }

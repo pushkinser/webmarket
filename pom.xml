@@ -16,6 +16,7 @@
         <jetty.version>9.3.7.v20160115</jetty.version>
         <spring.jade.version>1.1.4</spring.jade.version>
         <spring.security.version>4.0.4.RELEASE</spring.security.version>
+        <jackson.version>2.8.8</jackson.version>
     </properties>
 
 
@@ -115,6 +116,28 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>4.3.11.RELEASE</version>
+        </dependency>
+
+        <!-- Jackson Core -->
+
+        <!-- для конвертации типов, чтобы у ArrayList не было "No converter found for return value of type" -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Spring Jade -->

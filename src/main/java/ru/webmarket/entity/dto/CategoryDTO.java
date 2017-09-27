@@ -51,7 +51,7 @@ public class CategoryDTO {
 
     @Override
     public String toString() {
-        return "CategoryDTO{" +
+        return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", products=" + products +

@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.webmarket.configuration.Persistence;
-import ru.webmarket.entity.CategoryDTO;
+import ru.webmarket.entity.Category;
 import ru.webmarket.repository.CategoryRepository;
 
 public class CategoryRepositoryTest {
@@ -23,9 +23,9 @@ public class CategoryRepositoryTest {
 
     @Test
     public void shouldGetCategories () {
-        Iterable<CategoryDTO> allCategory = categoryRepository.findAll();
-        for (CategoryDTO categoryDTO : allCategory) {
-            System.out.println(categoryDTO);
+        Iterable<Category> allCategory = categoryRepository.findAll();
+        for (Category category : allCategory) {
+            System.out.println(category);
         }
         Assert.assertNotNull(allCategory);
         Assert.assertTrue(allCategory.iterator().hasNext());

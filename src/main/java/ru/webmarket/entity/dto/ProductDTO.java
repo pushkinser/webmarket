@@ -1,7 +1,6 @@
 package ru.webmarket.entity.dto;
 
-import ru.webmarket.entity.CategoryDTO;
-import ru.webmarket.entity.Order;
+import ru.webmarket.entity.Category;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class ProductDTO {
 
     private Double price;
 
-    private List<CategoryDTO> categories;
+    private List<Category> categories;
 
     private List<OrderDTO> orders;
 
@@ -26,7 +25,7 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public ProductDTO(Long id, String name, Double price, List<CategoryDTO> categories, List<OrderDTO> orders) {
+    public ProductDTO(Long id, String name, Double price, List<Category> categories, List<OrderDTO> orders) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -58,11 +57,11 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public List<CategoryDTO> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryDTO> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
