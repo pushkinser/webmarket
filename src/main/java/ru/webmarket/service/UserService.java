@@ -23,7 +23,7 @@ public interface UserService {
 
     UserDTO findByEmail(String email);
 
-    ShoppingCartDTO getSgoppingCart (Long id);
+    ShoppingCartDTO getShoppingCart (Long id);
 
     List<RoleDTO> getRoles (Long id);
 

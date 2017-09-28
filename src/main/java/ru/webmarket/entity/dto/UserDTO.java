@@ -47,30 +47,6 @@ public class UserDTO {
         this.password = password;
     }
 
-//    public UserDTO(Long id, String userName, String name, String lastName, String email, String password, Iterable<Role> roles, ShoppingCart shoppingCart, Iterable<Order> orders) {
-//        this.id = id;
-//        this.userName = userName;
-//        this.name = name;
-//        this.lastName = lastName;
-//        this.email = email;
-//        this.password = password;
-//        this.roles = roles;
-//        this.shoppingCart = shoppingCart;
-//        this.orders = orders;
-//    }
-//
-//    public UserDTO(User user) {
-//        this.id = user.getId();
-//        this.userName = user.getUserName();
-//        this.name = user.getName();
-//        this.lastName = user.getLastName();
-//        this.email = user.getEmail();
-//        this.password = user.getPassword();
-//        this.roles = user.getRoles();
-//        this.shoppingCart = user.getShoppingCart();
-//        this.orders = user.getOrdes();
-//    }
-
     public Long getId() {
         return id;
     }
@@ -153,8 +129,8 @@ public class UserDTO {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
-               ", shoppingCart=" + shoppingCart +
-               ", orders=" + orders +
+                ", shoppingCart=" + shoppingCart +
+                ", orders=" + orders +
                 '}';
     }
 }

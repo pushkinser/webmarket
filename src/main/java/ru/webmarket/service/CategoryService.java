@@ -2,6 +2,7 @@ package ru.webmarket.service;
 
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Category;
+import ru.webmarket.entity.dto.CategoryDTO;
 import ru.webmarket.entity.dto.ProductDTO;
 
 import java.util.List;
@@ -9,18 +10,15 @@ import java.util.List;
 @Service
 public interface CategoryService {
 
-    void addCategory(Category categoryDTO);
+    void addCategory(CategoryDTO categoryDTO);
 
-    Category getCategory(Long id);
+    CategoryDTO getCategory(Long id);
 
-    void editCategory(Category categoryDTO);
+    void editCategory(CategoryDTO categoryDTO);
 
     void deleteCategory(Long id);
 
-    List<Category> getAllCategories();
-
-    List<ProductDTO> getAllProducts(Category categoryDTO);
+    List<CategoryDTO> getAllCategories();
 
     Category findByName(String name);
-
 }

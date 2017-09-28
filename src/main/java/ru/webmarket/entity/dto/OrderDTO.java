@@ -12,42 +12,26 @@ public class OrderDTO {
 
     private Double total;
 
-    private UserDTO user;
-
     private List<ProductDTO> products;
-
-    private ShoppingCartDTO shoppingCart;
 
     public OrderDTO () {
 
     }
 
-    public OrderDTO(Long id, Double total, UserDTO user, List<ProductDTO> products) {
+    public OrderDTO(Long id, Double total, List<ProductDTO> products) {
         this.id = id;
         this.total = total;
-        this.user = user;
         this.products = products;
     }
 
-    public OrderDTO(Long id, Double total, UserDTO user) {
-        this.id = id;
-        this.total = total;
-        this.user = user;
-    }
+    private Double countTotal (List<ProductDTO> products) {
+        Double count = Double.valueOf(0);
 
-    public OrderDTO(Long id, Double total, UserDTO user, ShoppingCartDTO shoppingCart) {
-        this.id = id;
-        this.total = total;
-        this.user = user;
-        this.shoppingCart = shoppingCart;
-    }
+        for (ProductDTO productDTO: products) {
+            count = count + productDTO.getPrice();
+        }
 
-    public OrderDTO(Long id, Double total, UserDTO user, List<ProductDTO> products, ShoppingCartDTO shoppingCart) {
-        this.id = id;
-        this.total = total;
-        this.user = user;
-        this.products = products;
-        this.shoppingCart = shoppingCart;
+        return count;
     }
 
     public Long getId() {
@@ -59,19 +43,11 @@ public class OrderDTO {
     }
 
     public Double getTotal() {
-        return total;
+        return countTotal(products);
     }
 
     public void setTotal(Double total) {
         this.total = total;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
     }
 
     public List<ProductDTO> getProducts() {
@@ -82,20 +58,11 @@ public class OrderDTO {
         this.products = products;
     }
 
-    public ShoppingCartDTO getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public void setShoppingCart(ShoppingCartDTO shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
-
     @Override
     public String toString() {
         return "OrderDTO{" +
                 "id=" + id +
                 ", total=" + total +
-                ", user=" + user +
                 ", products=" + products +
                 '}';
     }

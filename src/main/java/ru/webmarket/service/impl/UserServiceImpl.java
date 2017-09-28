@@ -11,10 +11,10 @@ import ru.webmarket.entity.dto.UserDTO;
 import ru.webmarket.repository.UserRepository;
 import ru.webmarket.service.UserService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
-* TODO : @Override:  getSgoppingCart, getRoles, getOrders
 *
  */
 
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
 
-        for (User user: users) {
+        for (User user : users) {
 
             userDTOS.add(UserConverter.entityToDto(user));
         }
@@ -77,18 +77,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ShoppingCartDTO getSgoppingCart(Long id) {
-        return null;
+    public ShoppingCartDTO getShoppingCart(Long id) {
+
+        return UserConverter.entityToDto(userRepository.findById(id)).getShoppingCart();
     }
 
     @Override
     public List<RoleDTO> getRoles(Long id) {
-        return null;
+
+        return UserConverter.entityToDto(userRepository.findById(id)).getRoles();
     }
 
     @Override
     public List<OrderDTO> getOrders(Long id) {
-        return null;
+
+        return UserConverter.entityToDto(userRepository.findById(id)).getOrders();
     }
 
 

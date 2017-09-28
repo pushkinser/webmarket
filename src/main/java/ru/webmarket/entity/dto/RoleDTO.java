@@ -9,8 +9,6 @@ public class RoleDTO {
 
     private String name;
 
-    private List<UserDTO> users;
-
     public RoleDTO () {
 
     }
@@ -18,12 +16,6 @@ public class RoleDTO {
     public RoleDTO(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public RoleDTO(Long id, String name, List<UserDTO> users) {
-        this.id = id;
-        this.name = name;
-        this.users = users;
     }
 
     public Long getId() {
@@ -42,20 +34,11 @@ public class RoleDTO {
         this.name = name;
     }
 
-    public List<UserDTO> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserDTO> users) {
-        this.users = users;
-    }
-
     @Override
     public String toString() {
         return "RoleDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

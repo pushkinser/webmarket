@@ -3,26 +3,37 @@ package ru.webmarket.entity.dto;
 import ru.webmarket.entity.Order;
 import ru.webmarket.entity.User;
 
+import java.util.List;
+
 public class ShoppingCartDTO {
     private Long id;
 
-    private User user;
+    private UserDTO user;
 
-    private Order order;
+    private OrderDTO order;
+
+    private List<ProductDTO> products;
 
     public ShoppingCartDTO () {
 
     }
 
-    public ShoppingCartDTO(Long id, User user) {
+    public ShoppingCartDTO(Long id, UserDTO user) {
         this.id = id;
         this.user = user;
     }
 
-    public ShoppingCartDTO(Long id, User user, Order order) {
+    public ShoppingCartDTO(Long id, UserDTO user, OrderDTO order) {
         this.id = id;
         this.user = user;
         this.order = order;
+    }
+
+    public ShoppingCartDTO(Long id, UserDTO user, OrderDTO order, List<ProductDTO> products) {
+        this.id = id;
+        this.user = user;
+        this.order = order;
+        this.products = products;
     }
 
     public Long getId() {
@@ -33,28 +44,36 @@ public class ShoppingCartDTO {
         this.id = id;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 
-    public Order getOrder() {
+    public OrderDTO getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(OrderDTO order) {
         this.order = order;
     }
+
+    public List<ProductDTO> getProducts() {
+        return order.getProducts();
+    }
+
+    public void setProducts(List<ProductDTO> products) {
+        this.products = products;
+    }
+
 
     @Override
     public String toString() {
         return "ShoppingCartDTO{" +
                 "id=" + id +
-                ", user=" + user +
-                ", order=" + order +
+                ", products=" + products +
                 '}';
     }
 }

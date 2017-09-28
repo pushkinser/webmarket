@@ -9,15 +9,7 @@ public class CategoryDTO {
 
     private String name;
 
-    private List<ProductDTO> products;
-
     public CategoryDTO() {
-    }
-
-    public CategoryDTO(Long id, String name, List<ProductDTO> products) {
-        this.id = id;
-        this.name = name;
-        this.products = products;
     }
 
     public CategoryDTO(Long id, String name) {
@@ -41,20 +33,11 @@ public class CategoryDTO {
         this.name = name;
     }
 
-    public List<ProductDTO> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ProductDTO> products) {
-        this.products = products;
-    }
-
     @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", products=" + products +
                 '}';
     }
 }

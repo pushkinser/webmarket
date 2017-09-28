@@ -2,8 +2,10 @@ package ru.webmarket.entity.converter;
 
 import ru.webmarket.entity.Role;
 import ru.webmarket.entity.dto.RoleDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 /*
-* TODO : Converter for List<RoleDTO> and List<Role>
  */
 
 public class RoleConvector {
@@ -13,7 +15,6 @@ public class RoleConvector {
 
         role.setId(roleDTO.getId());
         role.setName(roleDTO.getName());
-        role.setUsers(UserConverter.dtoToEntity(roleDTO.getUsers()));
 
         return role;
     }
@@ -23,9 +24,26 @@ public class RoleConvector {
 
         roleDTO.setId(role.getId());
         roleDTO.setName(role.getName());
-        roleDTO.setUsers(UserConverter.entityToDto(role.getUsers()));
 
         return roleDTO;
+    }
+
+    public static List<Role> dtoToEntity(List<RoleDTO> roleDTOS) {
+        List<Role> roles = new ArrayList<>();
+        for (RoleDTO roleDTO : roleDTOS) {
+            roles.add(dtoToEntity(roleDTO));
+        }
+
+        return roles;
+    }
+
+    public static List<RoleDTO> entityToDto(List<Role> roles) {
+        List<RoleDTO> roleDTOS = new ArrayList<>();
+        for (Role role : roles) {
+            roleDTOS.add(entityToDto(role));
+        }
+
+        return roleDTOS;
     }
 
 }
