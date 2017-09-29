@@ -45,6 +45,10 @@ public class Role {
         this.users = users;
     }
 
+    public Role() {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,9 +69,8 @@ public class Role {
 
     @Override
     public String toString() {
-        return "RoleRepository{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "Role{" +
+                "name='" + name + '\'' +
                 '}';
     }
 }

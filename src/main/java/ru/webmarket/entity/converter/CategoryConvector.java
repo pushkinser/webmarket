@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class CategoryConvector {
 
-    public static Category dtoToentity(CategoryDTO categoryDTO) {
+    public static Category dtoToEntity(CategoryDTO categoryDTO) {
+        if (categoryDTO == null) return null;
         Category category = new Category();
 
         category.setId(categoryDTO.getId());
@@ -21,6 +22,7 @@ public class CategoryConvector {
     }
 
     public static CategoryDTO entityToDto(Category category) {
+        if (category == null) return null;
         CategoryDTO categoryDTO = new CategoryDTO();
 
         categoryDTO.setId(category.getId());
@@ -30,19 +32,21 @@ public class CategoryConvector {
     }
 
     public static List<Category> dtoToEntity(List<CategoryDTO> categoryDTOS){
+        if (categoryDTOS == null) return null;
         List<Category> categories = new ArrayList<>();
-
         for (CategoryDTO categoryDTO: categoryDTOS) {
-            categories.add(CategoryConvector.dtoToentity(categoryDTO));
+            if (categoryDTO == null) continue;
+            categories.add(CategoryConvector.dtoToEntity(categoryDTO));
         }
 
         return categories;
     }
 
     public static List<CategoryDTO> entityToDto(List<Category> categories) {
+        if (categories == null) return null;
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
-
         for (Category category: categories) {
+            if (category == null) return null;
             categoryDTOS.add(CategoryConvector.entityToDto(category));
         }
 

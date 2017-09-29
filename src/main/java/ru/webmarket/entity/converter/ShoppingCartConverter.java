@@ -12,31 +12,32 @@ import java.util.List;
 public class ShoppingCartConverter {
 
     public static ShoppingCartDTO entityToDto(ShoppingCart shoppingCart) {
+        if (shoppingCart == null) return null;
 
         ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO();
 
         shoppingCartDTO.setId(shoppingCart.getId());
         shoppingCartDTO.setOrder(OrderConverter.entityToDto(shoppingCart.getOrder()));
-        shoppingCartDTO.setUser(UserConverter.entityToDto(shoppingCart.getUser()));
 
         return shoppingCartDTO;
     }
 
     public static ShoppingCart dtoToEntity(ShoppingCartDTO shoppingCartDTO) {
-
+        if (shoppingCartDTO == null) return null;
         ShoppingCart shoppingCart = new ShoppingCart();
 
         shoppingCart.setId(shoppingCartDTO.getId());
         shoppingCart.setOrder(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
-        shoppingCart.setUser(UserConverter.dtoToEntity(shoppingCartDTO.getUser()));
+
 
         return shoppingCart;
     }
 
     public static List<ShoppingCartDTO> entityToDto(List<ShoppingCart> shoppingCarts) {
+        if (shoppingCarts == null) return null;
         List<ShoppingCartDTO> shoppingCartDTOS = new ArrayList<>();
-
         for (ShoppingCart shoppingCart : shoppingCarts) {
+            if (shoppingCart == null) continue;
             shoppingCartDTOS.add(ShoppingCartConverter.entityToDto(shoppingCart));
         }
 
@@ -44,9 +45,10 @@ public class ShoppingCartConverter {
     }
 
     public static List<ShoppingCart> dtoToEntity(List<ShoppingCartDTO> shoppingCartDTOS) {
+        if (shoppingCartDTOS == null) return null;
         List<ShoppingCart> shoppingCarts = new ArrayList<>();
-
         for (ShoppingCartDTO shoppingCartDTO : shoppingCartDTOS) {
+            if (shoppingCartDTO == null) continue;
             shoppingCarts.add(ShoppingCartConverter.dtoToEntity(shoppingCartDTO));
         }
 

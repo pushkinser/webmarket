@@ -2,6 +2,7 @@ package ru.webmarket.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Role;
 import ru.webmarket.entity.User;
 import ru.webmarket.entity.converter.RoleConvector;
@@ -17,6 +18,7 @@ import java.util.List;
 
  */
 
+@Service
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
@@ -36,10 +38,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void editRole(RoleDTO roleDTO) {
-          Role role = RoleConvector.dtoToEntity(roleDTO);
-          role = roleRepository.findOne(role.getId());
+        Role role = RoleConvector.dtoToEntity(roleDTO);
+        role = roleRepository.findOne(role.getId());
 
-          role.setName(roleDTO.getName());
+        role.setName(roleDTO.getName());
     }
 
     @Override
@@ -49,14 +51,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDTO> getAllRoles() {
-        List<Role> roles = roleRepository.findAll();
-        List<RoleDTO> roleDTOS = new ArrayList<>();
-
-        for (Role role: roles) {
-            roleDTOS.add(RoleConvector.entityToDto(role));
-        }
-
-        return roleDTOS;
+        return RoleConvector.entityToDto(roleRepository.findAll());
     }
 
 

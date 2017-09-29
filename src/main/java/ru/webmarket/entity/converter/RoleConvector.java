@@ -11,6 +11,7 @@ import java.util.List;
 public class RoleConvector {
 
     public static Role dtoToEntity(RoleDTO roleDTO) {
+        if ( roleDTO == null) return null;
         Role role = new Role();
 
         role.setId(roleDTO.getId());
@@ -20,6 +21,7 @@ public class RoleConvector {
     }
 
     public static RoleDTO entityToDto(Role role) {
+        if ( role == null) return null;
         RoleDTO roleDTO = new RoleDTO();
 
         roleDTO.setId(role.getId());
@@ -29,8 +31,10 @@ public class RoleConvector {
     }
 
     public static List<Role> dtoToEntity(List<RoleDTO> roleDTOS) {
+        if ( roleDTOS == null) return null;
         List<Role> roles = new ArrayList<>();
         for (RoleDTO roleDTO : roleDTOS) {
+            if (roleDTO == null) continue;
             roles.add(dtoToEntity(roleDTO));
         }
 
@@ -38,8 +42,10 @@ public class RoleConvector {
     }
 
     public static List<RoleDTO> entityToDto(List<Role> roles) {
+        if ( roles == null) return null;
         List<RoleDTO> roleDTOS = new ArrayList<>();
         for (Role role : roles) {
+            if (role == null) continue;
             roleDTOS.add(entityToDto(role));
         }
 

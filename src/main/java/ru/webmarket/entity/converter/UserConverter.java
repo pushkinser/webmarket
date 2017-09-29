@@ -48,6 +48,7 @@ import java.util.List;
 public class UserConverter {
 
     public static User dtoToEntity(UserDTO userDTO) {
+        if (userDTO == null) return null;
         User user = new User();
 
         user.setId(userDTO.getId());
@@ -64,7 +65,7 @@ public class UserConverter {
     }
 
     public static UserDTO entityToDto(User user) {
-
+        if (user == null) return null;
         UserDTO userDTO = new UserDTO();
 
         userDTO.setId(user.getId());
@@ -81,8 +82,10 @@ public class UserConverter {
     }
 
     public static List<User> dtoToEntity(List<UserDTO> userDTOS) {
+        if (userDTOS == null) return null;
         List<User> users = new ArrayList<User>();
         for (UserDTO userDTO : userDTOS) {
+            if (userDTO == null) continue;
             users.add(dtoToEntity(userDTO));
         }
 
@@ -90,8 +93,10 @@ public class UserConverter {
     }
 
     public static List<UserDTO> entityToDto(List<User> users) {
+        if (users == null) return null;
         List<UserDTO> userDTOS = new ArrayList<UserDTO>();
         for (User user : users) {
+            if (user == null) continue;
             userDTOS.add(entityToDto(user));
         }
 

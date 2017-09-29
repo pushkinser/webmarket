@@ -1,5 +1,6 @@
 package ru.webmarket.service;
 
+import org.springframework.stereotype.Service;
 import ru.webmarket.entity.dto.CategoryDTO;
 import ru.webmarket.entity.dto.ProductDTO;
 
@@ -14,7 +15,7 @@ public interface ProductService {
 
     ProductDTO getProduct(Long id);
 
-    void editProduct(ProductDTO categoryDTO);
+    void editProduct(ProductDTO productDTO);
 
     void deleteProduct(Long id);
 

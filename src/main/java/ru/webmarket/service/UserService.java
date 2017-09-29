@@ -1,5 +1,6 @@
 package ru.webmarket.service;
 
+import org.springframework.stereotype.Service;
 import ru.webmarket.entity.dto.OrderDTO;
 import ru.webmarket.entity.dto.RoleDTO;
 import ru.webmarket.entity.dto.ShoppingCartDTO;

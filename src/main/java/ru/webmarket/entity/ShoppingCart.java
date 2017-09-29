@@ -25,6 +25,9 @@ public class ShoppingCart {
     @JoinColumn(name = "orders_id",referencedColumnName = "orders_id")
     private Order order;
 
+    public ShoppingCart() {
+
+    }
 
     public Long getId() {
         return id;
@@ -73,9 +76,7 @@ public class ShoppingCart {
     @Override
     public String toString() {
         return "ShoppingCart{" +
-                "id=" + id +
-                ", user=" + user +
-                //", order=" + order +
+                "order=" + order +
                 '}';
     }
 }

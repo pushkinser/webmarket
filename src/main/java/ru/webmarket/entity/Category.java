@@ -83,8 +83,7 @@ public class Category {
     @Override
     public String toString() {
         return "CategoryService{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
  //               ", products=" + products +
                 '}';
     }

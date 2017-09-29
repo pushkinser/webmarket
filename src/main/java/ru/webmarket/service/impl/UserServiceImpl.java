@@ -11,11 +11,10 @@ import ru.webmarket.entity.dto.UserDTO;
 import ru.webmarket.repository.UserRepository;
 import ru.webmarket.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/*
-*
+ /*
+* TODO: Чтобы удалить пользователя, необходимо полностью удалить из базы все упоминания этого пользователя?
  */
 
 @Service
@@ -24,10 +23,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+
     @Override
     public void addUser(UserDTO userDTO) {
         User user = UserConverter.dtoToEntity(userDTO);
         userRepository.save(user);
+
     }
 
     @Override
@@ -50,20 +51,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.delete(id);
-
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        List<UserDTO> userDTOS = new ArrayList<>();
-
-        for (User user : users) {
-
-            userDTOS.add(UserConverter.entityToDto(user));
-        }
-
-        return userDTOS;
+        return UserConverter.entityToDto(userRepository.findAll());
     }
 
     @Override

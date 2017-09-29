@@ -30,6 +30,12 @@ public class ProductDTO {
         this.categories = categories;
     }
 
+    public ProductDTO(String name, Double price, List<CategoryDTO> categories) {
+        this.name = name;
+        this.price = price;
+        this.categories = categories;
+    }
+
     public Long getId() {
         return id;
     }
@@ -66,8 +72,7 @@ public class ProductDTO {
     @Override
     public String toString() {
         return "ProductDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", price=" + price +
                 ", categories=" + categories +
                 '}';

@@ -1,5 +1,6 @@
 package ru.webmarket.service;
 
+import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Role;
 import ru.webmarket.entity.User;
 import ru.webmarket.entity.dto.RoleDTO;

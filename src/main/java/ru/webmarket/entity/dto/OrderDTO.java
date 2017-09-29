@@ -61,8 +61,7 @@ public class OrderDTO {
     @Override
     public String toString() {
         return "OrderDTO{" +
-                "id=" + id +
-                ", total=" + total +
+                "total=" + total +
                 ", products=" + products +
                 '}';
     }

@@ -162,9 +162,9 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-//                ", roles=" + roles +
-//                ", shoppingCart=" + shoppingCart +
-//                ", orderList=" + orderList +
+                ", roles=" + roles +
+                ", shoppingCart=" + shoppingCart +
+                ", orderList=" + orders +
                 '}';
     }
 }

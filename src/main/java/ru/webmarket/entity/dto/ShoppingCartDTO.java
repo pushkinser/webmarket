@@ -8,32 +8,19 @@ import java.util.List;
 public class ShoppingCartDTO {
     private Long id;
 
-    private UserDTO user;
-
     private OrderDTO order;
-
-    private List<ProductDTO> products;
 
     public ShoppingCartDTO () {
 
     }
 
-    public ShoppingCartDTO(Long id, UserDTO user) {
+    public ShoppingCartDTO(Long id) {
         this.id = id;
-        this.user = user;
     }
 
-    public ShoppingCartDTO(Long id, UserDTO user, OrderDTO order) {
+    public ShoppingCartDTO(Long id, OrderDTO order) {
         this.id = id;
-        this.user = user;
         this.order = order;
-    }
-
-    public ShoppingCartDTO(Long id, UserDTO user, OrderDTO order, List<ProductDTO> products) {
-        this.id = id;
-        this.user = user;
-        this.order = order;
-        this.products = products;
     }
 
     public Long getId() {
@@ -44,14 +31,6 @@ public class ShoppingCartDTO {
         this.id = id;
     }
 
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
     public OrderDTO getOrder() {
         return order;
     }
@@ -60,20 +39,12 @@ public class ShoppingCartDTO {
         this.order = order;
     }
 
-    public List<ProductDTO> getProducts() {
-        return order.getProducts();
-    }
-
-    public void setProducts(List<ProductDTO> products) {
-        this.products = products;
-    }
-
 
     @Override
     public String toString() {
         return "ShoppingCartDTO{" +
                 "id=" + id +
-                ", products=" + products +
+                ", order=" + order +
                 '}';
     }
 }

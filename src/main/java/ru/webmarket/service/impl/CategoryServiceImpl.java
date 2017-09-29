@@ -1,6 +1,7 @@
 package ru.webmarket.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Category;
 import ru.webmarket.entity.converter.CategoryConvector;
 import ru.webmarket.entity.dto.CategoryDTO;
@@ -10,7 +11,7 @@ import ru.webmarket.service.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
@@ -18,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void addCategory(CategoryDTO categoryDTO) {
-        Category category = CategoryConvector.dtoToentity(categoryDTO);
+        Category category = CategoryConvector.dtoToEntity(categoryDTO);
         categoryRepository.save(category);
     }
 
@@ -30,9 +31,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void editCategory(CategoryDTO toEditCategoryDTO) {
-        Category categoryDTO = categoryRepository.findOne(toEditCategoryDTO.getId());
+        Category category = categoryRepository.findOne(toEditCategoryDTO.getId());
 
-        toEditCategoryDTO.setName(categoryDTO.getName());
+        category.setName(toEditCategoryDTO.getName());
     }
 
     @Override
@@ -42,16 +43,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
-        List<CategoryDTO> categoryDTOS = new ArrayList<>();
-        for (Category category : categories) {
-            categoryDTOS.add(CategoryConvector.entityToDto(category));
-        }
-        return categoryDTOS;
+        return CategoryConvector.entityToDto(categoryRepository.findAll());
     }
 
     @Override
-    public Category findByName(String name) {
-        return null;
+    public CategoryDTO findByName(String name) {
+        return CategoryConvector.entityToDto(categoryRepository.findByName(name));
     }
 }

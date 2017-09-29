@@ -25,6 +25,9 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private ShoppingCart shoppingCart;
 
+    public Order() {
+
+    }
 
     public Long getId() {
         return id;
@@ -91,8 +94,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", total=" + total +
+                "total=" + total +
                 ", products=" + products +
                 '}';
     }

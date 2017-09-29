@@ -7,7 +7,6 @@ import ru.webmarket.entity.dto.ProductDTO;
 
 import java.util.List;
 
-@Service
 public interface CategoryService {
 
     void addCategory(CategoryDTO categoryDTO);
@@ -20,5 +19,5 @@ public interface CategoryService {
 
     List<CategoryDTO> getAllCategories();
 
-    Category findByName(String name);
+    CategoryDTO findByName(String name);
 }
