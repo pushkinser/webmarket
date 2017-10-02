@@ -11,6 +11,7 @@ import ru.webmarket.entity.dto.UserDTO;
 import ru.webmarket.repository.UserRepository;
 import ru.webmarket.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
  /*
@@ -27,63 +28,75 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(UserDTO userDTO) {
         User user = UserConverter.dtoToEntity(userDTO);
-        userRepository.save(user);
+        if (user != null) userRepository.save(user);
 
     }
 
     @Override
     public UserDTO getUser(Long id) {
-        return UserConverter.entityToDto(userRepository.findOne(id));
+        User user = userRepository.findOne(id);
+        if (user == null) return null;
+        return UserConverter.entityToDto(user);
     }
 
     @Override
     public void editUser(UserDTO userDTO) {
-
         User user = UserConverter.dtoToEntity(userDTO);
         user = userRepository.findById(user.getId());
-
-        user.setName(userDTO.getName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-
+        if (user != null) {
+            user.setName(userDTO.getName());
+            user.setLastName(userDTO.getLastName());
+            user.setEmail(userDTO.getEmail());
+        }
     }
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.delete(id);
+        User user = userRepository.findById(id);
+        if (user != null) userRepository.delete(id);
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return UserConverter.entityToDto(userRepository.findAll());
+        List<UserDTO> userDTOS = new ArrayList<>();
+        userDTOS = UserConverter.entityToDto(userRepository.findAll());
+        if (userDTOS.isEmpty()) return null;
+        return userDTOS;
     }
 
     @Override
     public UserDTO findByUserName(String username) {
-        return UserConverter.entityToDto(userRepository.findByUserName(username));
+        User user = userRepository.findByUserName(username);
+        if (user == null) return null;
+        return UserConverter.entityToDto(user);
     }
 
     @Override
     public UserDTO findByEmail(String email) {
-        return UserConverter.entityToDto(userRepository.findByUserName(email));
+        User user = userRepository.findByUserName(email);
+        if (user == null) return null;
+        return UserConverter.entityToDto(user);
     }
 
     @Override
     public ShoppingCartDTO getShoppingCart(Long id) {
-
-        return UserConverter.entityToDto(userRepository.findById(id)).getShoppingCart();
+        UserDTO userDTO = UserConverter.entityToDto(userRepository.findById(id));
+        if (userDTO == null) return null;
+        return userDTO.getShoppingCart();
     }
 
     @Override
     public List<RoleDTO> getRoles(Long id) {
-
-        return UserConverter.entityToDto(userRepository.findById(id)).getRoles();
+        UserDTO userDTO = UserConverter.entityToDto(userRepository.findById(id));
+        if (userDTO == null) return null;
+        return userDTO.getRoles();
     }
 
     @Override
     public List<OrderDTO> getOrders(Long id) {
-
-        return UserConverter.entityToDto(userRepository.findById(id)).getOrders();
+        UserDTO userDTO = UserConverter.entityToDto(userRepository.findById(id));
+        if (userDTO == null) return null;
+        return userDTO.getOrders();
     }
 
 

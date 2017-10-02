@@ -27,38 +27,44 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void addRole(RoleDTO roleDTO) {
         Role role = RoleConvector.dtoToEntity(roleDTO);
-        roleRepository.save(role);
+        if (role != null) roleRepository.save(role);
     }
 
     @Override
     public RoleDTO getRole(Long id) {
         Role role = roleRepository.findOne(id);
+        if (role == null) return null;
         return RoleConvector.entityToDto(role);
     }
 
     @Override
     public void editRole(RoleDTO roleDTO) {
         Role role = RoleConvector.dtoToEntity(roleDTO);
-        role = roleRepository.findOne(role.getId());
-
-        role.setName(roleDTO.getName());
+        if (role != null) {
+            role = roleRepository.findOne(role.getId());
+            role.setName(roleDTO.getName());
+        }
     }
 
     @Override
     public void deleteRole(Long id) {
-        roleRepository.delete(id);
+        Role role = roleRepository.findOne(id);
+        if (role != null) roleRepository.delete(id);
     }
 
     @Override
     public List<RoleDTO> getAllRoles() {
-        return RoleConvector.entityToDto(roleRepository.findAll());
+        List<RoleDTO> roleDTOS = new ArrayList<>();
+        roleDTOS = RoleConvector.entityToDto(roleRepository.findAll());
+        if (roleDTOS == null) return null;
+        return roleDTOS;
     }
 
 
     @Override
     public RoleDTO findByName(String name) {
         Role role = roleRepository.findByName(name);
-
+        if (role == null) return null;
         return RoleConvector.entityToDto(role);
     }
 }
