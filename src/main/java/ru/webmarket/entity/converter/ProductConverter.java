@@ -1,6 +1,5 @@
 package ru.webmarket.entity.converter;
 
-import org.springframework.security.access.method.P;
 import ru.webmarket.entity.Product;
 import ru.webmarket.entity.dto.ProductDTO;
 
@@ -19,7 +18,7 @@ public class ProductConverter {
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
-        productDTO.setCategories(CategoryConvector.entityToDto(product.getCategories()));
+        productDTO.setCategories(CategoryConvecter.entityToDto(product.getCategories()));
 
         return productDTO;
     }
@@ -31,7 +30,7 @@ public class ProductConverter {
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
-        product.setCategories(CategoryConvector.dtoToEntity(productDTO.getCategories()));
+        product.setCategories(CategoryConvecter.dtoToEntity(productDTO.getCategories()));
 
         return product;
     }

@@ -32,9 +32,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO getRole(Long id) {
-        Role role = roleRepository.findOne(id);
-        if (role == null) return null;
-        return RoleConvector.entityToDto(role);
+        return RoleConvector.entityToDto(roleRepository.findOne(id));
     }
 
     @Override
@@ -54,17 +52,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDTO> getAllRoles() {
-        List<RoleDTO> roleDTOS = new ArrayList<>();
-        roleDTOS = RoleConvector.entityToDto(roleRepository.findAll());
-        if (roleDTOS == null) return null;
-        return roleDTOS;
+        return RoleConvector.entityToDto(roleRepository.findAll());
     }
 
 
     @Override
     public RoleDTO findByName(String name) {
-        Role role = roleRepository.findByName(name);
-        if (role == null) return null;
-        return RoleConvector.entityToDto(role);
+        return RoleConvector.entityToDto(roleRepository.findByName(name));
     }
 }

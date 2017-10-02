@@ -3,14 +3,13 @@ package ru.webmarket.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Product;
-import ru.webmarket.entity.converter.CategoryConvector;
+import ru.webmarket.entity.converter.CategoryConvecter;
 import ru.webmarket.entity.converter.ProductConverter;
 import ru.webmarket.entity.dto.CategoryDTO;
 import ru.webmarket.entity.dto.ProductDTO;
 import ru.webmarket.repository.ProductRepository;
 import ru.webmarket.service.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,9 +27,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductDTO getProduct(Long id) {
-        Product product = productRepository.findOne(id);
-        if (product == null) return null;
-        return ProductConverter.entityToDto(product);
+        return ProductConverter.entityToDto(productRepository.findOne(id));
     }
 
     @Override
@@ -38,7 +35,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepository.findOne(productDTO.getId());
         if (product != null) {
             product.setName(productDTO.getName());
-            product.setCategories(CategoryConvector.dtoToEntity(productDTO.getCategories()));
+            product.setCategories(CategoryConvecter.dtoToEntity(productDTO.getCategories()));
             product.setPrice(productDTO.getPrice());
         }
     }
@@ -51,24 +48,16 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<ProductDTO> getAllProduct() {
-        List<ProductDTO> productDTOS = new ArrayList<>();
-        productDTOS = ProductConverter.entityToDto(productRepository.findAll());
-        if (productDTOS == null) return null;
-        return productDTOS;
+        return ProductConverter.entityToDto(productRepository.findAll());
     }
 
     @Override
     public List<CategoryDTO> getAllCategory(ProductDTO productDTO) {
-        List<CategoryDTO> categoryDTOS = new ArrayList<>();
-        categoryDTOS = productDTO.getCategories();
-        if (categoryDTOS.isEmpty()) return null;
-        return categoryDTOS;
+        return productDTO.getCategories();
     }
 
     @Override
     public ProductDTO findByName(String name) {
-        Product product = productRepository.findByName(name);
-        if (product == null) return null;
-        return ProductConverter.entityToDto(product);
+        return ProductConverter.entityToDto(productRepository.findByName(name));
     }
 }

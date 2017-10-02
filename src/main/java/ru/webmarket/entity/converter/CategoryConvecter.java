@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Сергей
  */
-public class CategoryConvector {
+public class CategoryConvecter {
 
     public static Category dtoToEntity(CategoryDTO categoryDTO) {
         if (categoryDTO == null) return null;
@@ -36,9 +36,8 @@ public class CategoryConvector {
         List<Category> categories = new ArrayList<>();
         for (CategoryDTO categoryDTO: categoryDTOS) {
             if (categoryDTO == null) continue;
-            categories.add(CategoryConvector.dtoToEntity(categoryDTO));
+            categories.add(CategoryConvecter.dtoToEntity(categoryDTO));
         }
-
         return categories;
     }
 
@@ -47,9 +46,8 @@ public class CategoryConvector {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (Category category: categories) {
             if (category == null) return null;
-            categoryDTOS.add(CategoryConvector.entityToDto(category));
+            categoryDTOS.add(CategoryConvecter.entityToDto(category));
         }
-
         return categoryDTOS;
     }
 

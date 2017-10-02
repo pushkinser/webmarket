@@ -16,14 +16,14 @@ public class ApplicationInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext container) {
         // Создание корневого контекста Spring
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(Application.class);
+        rootContext.register(Application.class, Security.class);
 
         // Листенер для управления жизненным циклом корневого контекста Spring
         container.addListener(new ContextLoaderListener(rootContext));
 
         // Создание контекста Spring для сервлета-диспетчера Spring MVC
         AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-        dispatcherContext.register(Application.class);
+        dispatcherContext.register(Application.class, Security.class);
 
         // Регистрация сервлета-диспетчера Spring MVC
         ServletRegistration.Dynamic dispatcher =
@@ -36,8 +36,6 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 
         //  Определение log4j
         org.apache.log4j.BasicConfigurator.configure();
-//
-
 
         // Регистрация других сервлетов и фильтров
         FilterRegistration charEncodingFilterReg =

@@ -7,6 +7,10 @@
     <artifactId>webmarket</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <packaging>war</packaging>
+    <name>Webmarket</name>
+
+
     <properties>
         <spring.framework.version>4.3.11.RELEASE</spring.framework.version>
         <slf4j.version>1.7.18</slf4j.version>
@@ -188,6 +192,8 @@
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session</artifactId>
@@ -196,23 +202,19 @@
 
     </dependencies>
     <repositories>
-    <repository>
-        <id>spring-libs-release</id>
-        <name>Spring Releases</name>
-        <url>https://repo.spring.io/libs-release</url>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-    </repository>
+        <repository>
+            <id>spring-libs-release</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/libs-release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
-    <packaging>war</packaging>
-
-    <name>webmarket</name>
-    <description>webmarket</description>
 
     <build>
-        <finalName>DocFinder</finalName>
+        <finalName>webmarket</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -223,7 +225,19 @@
             </resource>
         </resources>
 
+
         <plugins>
+            <!--This will generate an exploded version of the WAR-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <webappDirectory>/sample/servlet/container/deploy/directory</webappDirectory>
+                </configuration>
+            </plugin>
+
 
             <!--Maven Compiler Plugin-->
 
@@ -259,42 +273,40 @@
             <!--Maven Shade Plugin-->
 
             <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-shade-plugin</artifactId>-->
-                <!--<version>${maven.shade.plugin.version}</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>shade</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<createDependencyReducedPom>false</createDependencyReducedPom>-->
-                            <!--<transformers>-->
-                                <!--<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
-                                    <!--<mainClass>ru.math.vsu.Main</mainClass>-->
-                                <!--</transformer>-->
-                            <!--</transformers>-->
-                            <!--<filters>-->
-                                <!--<filter>-->
-                                    <!--<artifact>*:*</artifact>-->
-                                    <!--<excludes>-->
-                                        <!--<exclude>META-INF/*.SF</exclude>-->
-                                        <!--<exclude>META-INF/*.DSA</exclude>-->
-                                        <!--<exclude>META-INF/*.RSA</exclude>-->
-                                    <!--</excludes>-->
-                                <!--</filter>-->
-                            <!--</filters>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-shade-plugin</artifactId>-->
+            <!--<version>${maven.shade.plugin.version}</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>shade</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<createDependencyReducedPom>false</createDependencyReducedPom>-->
+            <!--<transformers>-->
+            <!--<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+            <!--<mainClass>ru.math.vsu.Main</mainClass>-->
+            <!--</transformer>-->
+            <!--</transformers>-->
+            <!--<filters>-->
+            <!--<filter>-->
+            <!--<artifact>*:*</artifact>-->
+            <!--<excludes>-->
+            <!--<exclude>META-INF/*.SF</exclude>-->
+            <!--<exclude>META-INF/*.DSA</exclude>-->
+            <!--<exclude>META-INF/*.RSA</exclude>-->
+            <!--</excludes>-->
+            <!--</filter>-->
+            <!--</filters>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
             <!--</plugin>-->
 
 
-
-
-
         </plugins>
+
     </build>
 
 

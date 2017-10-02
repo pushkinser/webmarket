@@ -52,7 +52,7 @@ public class UserConverter {
         User user = new User();
 
         user.setId(userDTO.getId());
-        user.setUserName(userDTO.getUserName());
+        user.setUsername(userDTO.getUserName());
         user.setName(userDTO.getName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
@@ -69,7 +69,7 @@ public class UserConverter {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setId(user.getId());
-        userDTO.setUserName(user.getUserName());
+        userDTO.setUserName(user.getUsername());
         userDTO.setName(user.getName());
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());

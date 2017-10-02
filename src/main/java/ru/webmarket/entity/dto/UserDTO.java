@@ -1,9 +1,5 @@
 package ru.webmarket.entity.dto;
 
-import ru.webmarket.entity.Order;
-import ru.webmarket.entity.Role;
-import ru.webmarket.entity.ShoppingCart;
-
 import java.util.List;
 
 public class UserDTO {
@@ -25,7 +21,6 @@ public class UserDTO {
     private ShoppingCartDTO shoppingCart;
 
     private List<OrderDTO> orders;
-
 
     public UserDTO() {
     }
