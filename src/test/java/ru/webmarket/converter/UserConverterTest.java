@@ -1,16 +1,10 @@
-package ru.webmarket.webmarket.ConverterTest;
+package ru.webmarket.converter;
 
-import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.webmarket.configuration.Persistence;
 import ru.webmarket.entity.User;
 import ru.webmarket.entity.converter.UserConverter;
 import ru.webmarket.entity.dto.UserDTO;
-import ru.webmarket.repository.UserRepository;
 
 public class UserConverterTest {
 

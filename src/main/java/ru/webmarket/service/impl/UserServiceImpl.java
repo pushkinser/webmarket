@@ -1,10 +1,10 @@
 package ru.webmarket.service.impl;
 
-import org.apache.commons.collections.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Role;
 import ru.webmarket.entity.User;
+import ru.webmarket.entity.converter.RoleConvector;
 import ru.webmarket.entity.converter.UserConverter;
 import ru.webmarket.entity.dto.OrderDTO;
 import ru.webmarket.entity.dto.RoleDTO;
@@ -16,19 +16,24 @@ import ru.webmarket.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
  /*
-* TODO: Чтобы удалить пользователя, необходимо полностью удалить из базы все упоминания этого пользователя?
+ *
  */
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
 
     @Override
@@ -40,7 +45,6 @@ public class UserServiceImpl implements UserService {
             user.setRoles(roles);
             userRepository.save(user);
         }
-
     }
 
     @Override
@@ -67,7 +71,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return UserConverter.entityToDto(userRepository.findAll());
+        return userRepository.findAll().stream()
+                .map(UserConverter::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -87,7 +93,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<RoleDTO> getRoles(Long id) {
-        return UserConverter.entityToDto(userRepository.findById(id)).getRoles();
+        return userRepository.findById(id).getRoles().stream()
+                .map(RoleConvector::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override

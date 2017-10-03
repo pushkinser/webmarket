@@ -22,8 +22,8 @@ public class Product {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "orders_items",
-            joinColumns = @JoinColumn(name = "orders_id"),
-            inverseJoinColumns = @JoinColumn(name = "products_id"))
+            joinColumns = @JoinColumn(name = "products_id"),
+            inverseJoinColumns = @JoinColumn(name = "orders_id"))
     private List<Order> orders;
 
     public Product() {

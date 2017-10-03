@@ -1,4 +1,4 @@
-package ru.webmarket.webmarket.RepositoryTest;
+package ru.webmarket.repository;
 
 import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
@@ -12,8 +12,8 @@ import ru.webmarket.repository.UserRepository;
 
 
 public class UserRepositoryTest {
-    private static UserRepository userRepository;
 
+    private static UserRepository userRepository;
 
     @BeforeClass
     public static void setup() {

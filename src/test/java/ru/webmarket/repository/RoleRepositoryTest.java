@@ -1,4 +1,4 @@
-package ru.webmarket.webmarket.RepositoryTest;
+package ru.webmarket.repository;
 
 import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
