@@ -1,0 +1,33 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="/css/bootstrap.min.css")
+        script(src="/js/bootstrap.min.js")
+        script(src="/js/bootstrap.min.js")
+        title Список продуктов
+    body
+        .container
+            div
+                table.table.table-hover.table-bordered
+                    thead(style="background-color: #bce8f1;")
+                        tr
+                            th №
+                            th Название
+                            th Стоимость
+                            th Действие
+                    tbody
+                        - var index = 0;
+                        for product in products
+                            tr
+                                td #{index++}
+                                td
+                                    a(href="/product/?id=#{product.id}") #{product.name}
+                                td #{product.price}
+                                td Добавить в корзину
+
+
+                // Информация о списке товаров
+                        //a. Заголовок.
+                        //b. Цена.
+                        //c. Фотография товара.
+                        //d. Конпка добавления в корзину.
