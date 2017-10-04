@@ -4,7 +4,7 @@ package ru.webmarket.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Role;
-import ru.webmarket.entity.converter.RoleConvector;
+import ru.webmarket.entity.converter.RoleConverter;
 import ru.webmarket.entity.dto.RoleDTO;
 import ru.webmarket.repository.RoleRepository;
 import ru.webmarket.service.RoleService;
@@ -27,18 +27,18 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void addRole(RoleDTO roleDTO) {
-        Role role = RoleConvector.dtoToEntity(roleDTO);
+        Role role = RoleConverter.dtoToEntity(roleDTO);
         if (role != null) roleRepository.save(role);
     }
 
     @Override
     public RoleDTO getRole(Long id) {
-        return RoleConvector.entityToDto(roleRepository.findOne(id));
+        return RoleConverter.entityToDto(roleRepository.findOne(id));
     }
 
     @Override
     public void editRole(RoleDTO roleDTO) {
-        Role role = RoleConvector.dtoToEntity(roleDTO);
+        Role role = RoleConverter.dtoToEntity(roleDTO);
         if (role != null) {
             role = roleRepository.findOne(role.getId());
             role.setName(roleDTO.getName());
@@ -53,12 +53,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDTO> getAllRoles() {
-        return RoleConvector.entityToDto(roleRepository.findAll());
+        return RoleConverter.entityToDto(roleRepository.findAll());
     }
 
 
     @Override
     public RoleDTO findByName(String name) {
-        return RoleConvector.entityToDto(roleRepository.findByName(name));
+        return RoleConverter.entityToDto(roleRepository.findByName(name));
     }
 }
