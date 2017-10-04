@@ -18,7 +18,7 @@ public class ProductConverter {
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
-        productDTO.setCategories(CategoryConvecter.entityToDto(product.getCategories()));
+        productDTO.setCategories(CategoryConverter.entityToDto(product.getCategories()));
 
         return productDTO;
     }
@@ -30,7 +30,7 @@ public class ProductConverter {
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
-        product.setCategories(CategoryConvecter.dtoToEntity(productDTO.getCategories()));
+        product.setCategories(CategoryConverter.dtoToEntity(productDTO.getCategories()));
 
         return product;
     }

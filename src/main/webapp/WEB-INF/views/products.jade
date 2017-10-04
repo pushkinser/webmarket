@@ -2,31 +2,46 @@ doctype html
 html
     head
         link(rel="stylesheet", href="/css/bootstrap.min.css")
+        script(src="/js/jquery-3.2.1.min.js")
         script(src="/js/bootstrap.min.js")
-        script(src="/js/bootstrap.min.js")
+
         title Список продуктов
     body
         .container
-            div
-                table.table.table-hover.table-bordered
-                    thead(style="background-color: #bce8f1;")
-                        tr
-                            th №
-                            th Название
-                            th Стоимость
-                            th Действие
-                    tbody
-                        - var index = 0;
-                        for product in products
+                div
+                    table.table.table-hover.table-bordered
+                        thead(style="background-color: #bce8f1;")
                             tr
-                                td #{index++}
-                                td
-                                    a(href="/product/?id=#{product.id}") #{product.name}
-                                td #{product.price}
-                                td Добавить в корзину
+                                th №
+                                th Название
+                                th Стоимость
+                                th
+                        tbody(id='info')
 
+    script.
+        $.ajax({
+            url: 'http://localhost:8080/api/product/',
+            data: {format: 'json'},
+            dataType: 'json',
+            success: function (data) {
+                var $title, $price, id;
+                for (var i = 0; i < data.length; i++) {
+                    id = data[i].id;
+                    $('#info').append('<tr>'
+                        + '<td>'
+                        + (i+1)
+                        + '<td>'
+                        + '<a href="/product/'+id+'">' + data[i].name  +'</a>'
+                        + '<td>'
+                        + data[i].price
+                        + '<td>'
+                        + 'Добавить в корзину');
+                }
+            },
+            type: 'GET'
+        });
 
-                // Информация о списке товаров
+// Информация о списке товаров
                         //a. Заголовок.
                         //b. Цена.
                         //c. Фотография товара.

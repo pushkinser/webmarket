@@ -100,7 +100,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "RoleService{" +
+        return "Product{" +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", categories=" + categories +

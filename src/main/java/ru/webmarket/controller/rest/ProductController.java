@@ -1,10 +1,7 @@
 package ru.webmarket.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.webmarket.entity.Category;
 import ru.webmarket.entity.Product;
 import ru.webmarket.entity.dto.CategoryDTO;
@@ -26,31 +23,32 @@ public class ProductController {
     @Autowired
     private CategoryServiceImpl categoryService;
 
-    @RequestMapping("/get")
-    public ProductDTO getProduct(Long id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ProductDTO getProduct(@PathVariable("id") Long id) {
 
         return productService.getProduct(id);
     }
 
-    @RequestMapping("/get/all")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<ProductDTO> getAllProduct() {
+
         return productService.getAllProduct();
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void addProduct(ProductDTO productDTO) {
 
         productService.addProduct(productDTO);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
     public void updateProduct(ProductDTO productDTO) {
 
         productService.editProduct(productDTO);
     }
 
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public void deleteProduct(Long id) {
         productService.deleteProduct(id);
     }

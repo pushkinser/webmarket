@@ -7,7 +7,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.webmarket.entity.dto.ProductDTO;
 import ru.webmarket.security.SecurityUtils;
@@ -26,10 +25,6 @@ public class ProductControllerView {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ModelAndView getItems() {
         final ModelMap result = SecurityUtils.getAuthInfo();
-        List<ProductDTO> products = productService.getAllProduct().stream()
-                .map(ProductDTO::new)
-                .collect(Collectors.toList());
-        result.put("products", products);
 
         return new ModelAndView("products", result);
     }
