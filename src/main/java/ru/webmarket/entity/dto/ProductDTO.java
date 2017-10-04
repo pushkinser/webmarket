@@ -36,6 +36,13 @@ public class ProductDTO {
         this.categories = categories;
     }
 
+    public ProductDTO(ProductDTO productDTO) {
+        this.id = productDTO.getId();
+        this.name = productDTO.getName();
+        this.price = productDTO.getPrice();
+        this.categories = productDTO.getCategories();
+    }
+
     public Long getId() {
         return id;
     }

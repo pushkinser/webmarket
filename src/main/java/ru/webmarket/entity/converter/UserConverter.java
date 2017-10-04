@@ -30,8 +30,6 @@
 //}
 package ru.webmarket.entity.converter;
 
-import org.omg.PortableInterceptor.USER_EXCEPTION;
-import ru.webmarket.entity.Order;
 import ru.webmarket.entity.User;
 import ru.webmarket.entity.dto.UserDTO;
 
@@ -57,7 +55,7 @@ public class UserConverter {
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
-        user.setRoles(RoleConvector.dtoToEntity(userDTO.getRoles()));
+        user.setRoles(RoleConverter.dtoToEntity(userDTO.getRoles()));
         user.setOrdes(OrderConverter.dtoToEntity(userDTO.getOrders()));
         user.setShoppingCart(ShoppingCartConverter.dtoToEntity(userDTO.getShoppingCart()));
 
@@ -74,7 +72,7 @@ public class UserConverter {
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
-        userDTO.setRoles(RoleConvector.entityToDto(user.getRoles()));
+        userDTO.setRoles(RoleConverter.entityToDto(user.getRoles()));
         userDTO.setOrders(OrderConverter.entityToDto(user.getOrdes()));
         userDTO.setShoppingCart(ShoppingCartConverter.entityToDto(user.getShoppingCart()));
 

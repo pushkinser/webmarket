@@ -3,7 +3,7 @@ package ru.webmarket.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Category;
-import ru.webmarket.entity.converter.CategoryConvecter;
+import ru.webmarket.entity.converter.CategoryConverter;
 import ru.webmarket.entity.dto.CategoryDTO;
 import ru.webmarket.repository.CategoryRepository;
 import ru.webmarket.service.CategoryService;
@@ -22,18 +22,18 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void addCategory(CategoryDTO categoryDTO) {
-        Category category = CategoryConvecter.dtoToEntity(categoryDTO);
+        Category category = CategoryConverter.dtoToEntity(categoryDTO);
         if (category != null) categoryRepository.save(category);
     }
 
     @Override
     public CategoryDTO getCategory(Long id) {
-        return CategoryConvecter.entityToDto(categoryRepository.findOne(id));
+        return CategoryConverter.entityToDto(categoryRepository.findOne(id));
     }
 
     @Override
     public void editCategory(CategoryDTO toEditCategoryDTO) {
-        categoryRepository.save(CategoryConvecter.dtoToEntity(toEditCategoryDTO));
+        categoryRepository.save(CategoryConverter.dtoToEntity(toEditCategoryDTO));
     }
 
     @Override
@@ -44,11 +44,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> getAllCategories() {
-        return CategoryConvecter.entityToDto(categoryRepository.findAll());
+        return CategoryConverter.entityToDto(categoryRepository.findAll());
     }
 
     @Override
     public CategoryDTO findByName(String name) {
-        return CategoryConvecter.entityToDto(categoryRepository.findByName(name));
+        return CategoryConverter.entityToDto(categoryRepository.findByName(name));
     }
 }

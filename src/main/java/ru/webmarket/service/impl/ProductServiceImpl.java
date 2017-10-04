@@ -3,7 +3,7 @@ package ru.webmarket.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Product;
-import ru.webmarket.entity.converter.CategoryConvecter;
+import ru.webmarket.entity.converter.CategoryConverter;
 import ru.webmarket.entity.converter.ProductConverter;
 import ru.webmarket.entity.dto.CategoryDTO;
 import ru.webmarket.entity.dto.ProductDTO;
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepository.findOne(productDTO.getId());
         if (product != null) {
             product.setName(productDTO.getName());
-            product.setCategories(CategoryConvecter.dtoToEntity(productDTO.getCategories()));
+            product.setCategories(CategoryConverter.dtoToEntity(productDTO.getCategories()));
             product.setPrice(productDTO.getPrice());
         }
     }

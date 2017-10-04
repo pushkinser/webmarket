@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.Role;
 import ru.webmarket.entity.User;
-import ru.webmarket.entity.converter.RoleConvector;
+import ru.webmarket.entity.converter.RoleConverter;
 import ru.webmarket.entity.converter.UserConverter;
 import ru.webmarket.entity.dto.OrderDTO;
 import ru.webmarket.entity.dto.RoleDTO;
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<RoleDTO> getRoles(Long id) {
         return userRepository.findById(id).getRoles().stream()
-                .map(RoleConvector::entityToDto)
+                .map(RoleConverter::entityToDto)
                 .collect(Collectors.toList());
     }
 
