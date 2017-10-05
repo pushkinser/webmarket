@@ -25,6 +25,17 @@ public class UserServiceTest extends AppTest {
             roleDTOS = userDTO.getRoles();
             Assert.assertNotNull(roleDTOS);
         }
-
     }
+
+
+    @Test
+    public void shouldEditUser() {
+        UserDTO userDTO = new UserDTO("username", "name", "lastname", "@", "pas");
+        Long id = 7L;
+        userDTO.setId(id);
+        userService.editUser(userDTO);
+        Assert.assertNotNull(userService.getUser(id));
+        Assert.assertEquals(userDTO.getUserName(), userService.getUser(id).getUserName());
+    }
+
 }

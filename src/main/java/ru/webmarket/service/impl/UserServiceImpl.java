@@ -38,13 +38,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(UserDTO userDTO) {
+        if (userDTO == null) throw new NullPointerException();
         User user = UserConverter.dtoToEntity(userDTO);
-        if (user != null) {
-            List<Role> roles = new ArrayList<>();
-            roles.add(roleRepository.findByName("CUSTOMER"));
-            user.setRoles(roles);
-            userRepository.save(user);
-        }
+
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleRepository.findByName("CUSTOMER"));
+        user.setRoles(roles);
+        userRepository.save(user);
+
     }
 
     @Override
@@ -54,23 +55,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editUser(UserDTO userDTO) {
-        User user = UserConverter.dtoToEntity(userDTO);
-        user = userRepository.findById(user.getId());
-        if (user != null) {
-            user.setName(userDTO.getName());
-            user.setLastName(userDTO.getLastName());
-            user.setEmail(userDTO.getEmail());
-        }
+        if (userDTO == null) throw new NullPointerException();
+        if (userRepository.findById(userDTO.getId()) != null) userRepository.save(UserConverter.dtoToEntity(userDTO));
     }
 
     @Override
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id);
-        if (user != null) userRepository.delete(id);
+        if (userRepository.findById(id) == null) throw new NullPointerException();
+        userRepository.delete(id);
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
+        if (userRepository.findAll() == null) return null;
         return userRepository.findAll().stream()
                 .map(UserConverter::entityToDto)
                 .collect(Collectors.toList());
@@ -93,6 +90,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<RoleDTO> getRoles(Long id) {
+        if (userRepository.findById(id) == null) return null;
         return userRepository.findById(id).getRoles().stream()
                 .map(RoleConverter::entityToDto)
                 .collect(Collectors.toList());
@@ -100,6 +98,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<OrderDTO> getOrders(Long id) {
+        if (userRepository.findById(id) == null) return null;
         return UserConverter.entityToDto(userRepository.findById(id)).getOrders();
     }
 }

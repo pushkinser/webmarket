@@ -2,22 +2,37 @@ doctype html
 html
     head
         link(rel="stylesheet", href="/css/bootstrap.min.css")
+        script(src="/js/jquery-3.2.1.min.js")
         script(src="/js/bootstrap.min.js")
-        title Продукт #{product.name}
+        title Продукт
     body
-        .container
-            h1 #{product.name}
-            p
-                #{product.name}
-            p
-                #{product.price}
-            p
-                Добавить в корзину
+        .container(id='info')
+
+    script.
+        var str = document.location.href;
+        var regexp = 'product/';
+        var index_id = str.indexOf(regexp);
+        var id = str.slice(index_id+regexp.length);
+        var url = "http://localhost:8080/api/product/"+ id;
+        $.ajax({
+            type: 'get',
+            url: url,
+            dataType: 'json',
+            success: function (data) {
+
+                $('#info').append('<p>'
+                    + '<h1>' + data.name + '</h1>'
+                    + '<p>'
+                    + data.price
+                    + '<p>'
+                    + 'Добавить в корзину');
+
+            }
+        });
 
 
-        // Информация о конкретном товаре
-        //a. Заголовок.
-        //b. Цена.
+        //a. Заголовок. +
+        //b. Цена. +
         //c. Фотография товара.
         //d. Описание.
         //e. Конпка добавления в корзину.

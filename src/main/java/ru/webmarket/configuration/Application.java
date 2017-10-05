@@ -52,6 +52,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         registry.addResourceHandler("favicon.ico").addResourceLocations("/WEB-INF/");
         registry.addResourceHandler("/views/**").addResourceLocations("/WEB-INF/views/**");
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");

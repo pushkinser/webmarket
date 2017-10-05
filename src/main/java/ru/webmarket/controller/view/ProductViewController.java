@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
 @Controller
-public class ProductControllerView {
+public class ProductViewController {
 
     @Autowired
     private ProductServiceImpl productService;
@@ -32,9 +32,8 @@ public class ProductControllerView {
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
     public ModelAndView getItem(@PathVariable("id") long id) {
         final ModelMap result = SecurityUtils.getAuthInfo();
-        ProductDTO productDTO = productService.getProduct(id);
-        result.put("product", productDTO);
-
+//        ProductDTO productDTO = productService.getProduct(id);
+//        result.put("product", productDTO);
         return new ModelAndView("product", result);
     }
 }

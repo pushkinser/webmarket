@@ -13,7 +13,7 @@ import ru.webmarket.service.ProductService;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
@@ -25,8 +25,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void addProduct(ProductDTO productDTO) {
-        Product product = productRepository.findOne(productDTO.getId());
-        if (product != null) productRepository.save(ProductConverter.dtoToEntity(productDTO));
+        if (productDTO == null) throw new NullPointerException();
+        productRepository.save(ProductConverter.dtoToEntity(productDTO));
     }
 
     @Override
@@ -36,18 +36,15 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void editProduct(ProductDTO productDTO) {
-        Product product = productRepository.findOne(productDTO.getId());
-        if (product != null) {
-            product.setName(productDTO.getName());
-            product.setCategories(CategoryConverter.dtoToEntity(productDTO.getCategories()));
-            product.setPrice(productDTO.getPrice());
-        }
+        if (productDTO == null) throw new NullPointerException();
+        if (productRepository.findOne(productDTO.getId()) != null)
+            productRepository.save(ProductConverter.dtoToEntity(productDTO));
     }
 
     @Override
     public void deleteProduct(Long id) {
-        Product product = productRepository.findOne(id);
-        if (product != null) productRepository.delete(id);
+        if (productRepository.findOne(id) == null) throw new NullPointerException();
+        productRepository.delete(id);
     }
 
     @Override

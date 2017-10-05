@@ -25,25 +25,25 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping("/get")
-    public UserDTO getUser(Long id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public UserDTO getUser(@PathVariable("id") Long id) {
 
         return userService.getUser(id);
     }
 
-    @RequestMapping("/get/all")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<UserDTO> getUsers() {
 
         return userService.getAllUsers();
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void addUser(UserDTO userDTO) {
 
         userService.addUser(userDTO);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
     public void updateUser(UserDTO userDTO) {
 
         userService.editUser(userDTO);
