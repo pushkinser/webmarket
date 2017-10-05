@@ -4,23 +4,19 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.webmarket.AppTest;
 import ru.webmarket.configuration.Persistence;
 import ru.webmarket.entity.User;
 import ru.webmarket.repository.UserRepository;
 
 
-public class UserRepositoryTest {
+public class UserRepositoryTest extends AppTest {
 
-    private static UserRepository userRepository;
-
-    @BeforeClass
-    public static void setup() {
-        BasicConfigurator.configure();
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(Persistence.class);
-        userRepository = ctx.getBean(UserRepository.class);
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     public void shouldGetUsers() {
@@ -51,7 +47,7 @@ public class UserRepositoryTest {
         User user2 = userRepository.findById(user.getId());
         user.setEmail("@@");
         Assert.assertNotNull(userRepository.findById(user.getId()));
-        Assert.assertTrue(user.getEmail() != user2.getEmail());
+        Assert.assertNotEquals(user.getEmail(),user2.getEmail());
         Assert.assertTrue(user != user2);
         userRepository.delete(user.getId());
     }

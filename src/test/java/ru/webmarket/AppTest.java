@@ -1,5 +1,6 @@
 package ru.webmarket;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -10,4 +11,9 @@ import ru.webmarket.configuration.Application;
 @ContextConfiguration(classes = {Application.class})
 @WebAppConfiguration
 public class AppTest {
+
+    @Test
+    public void nothing () {
+
+    }
 }
