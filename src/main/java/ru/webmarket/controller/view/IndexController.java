@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.webmarket.entity.User;
 import ru.webmarket.entity.converter.UserConverter;
 import ru.webmarket.entity.dto.UserDTO;
+import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.security.UserDetailsManager;
 import ru.webmarket.service.impl.UserServiceImpl;
 
@@ -27,8 +28,7 @@ public class IndexController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     public ModelAndView index() {
-        ModelAndView model = new ModelAndView("products");
-        model.addObject("username", "User");
+        ModelAndView model = new ModelAndView("index", SecurityUtils.getAuthInfo());
 
         return model;
     }

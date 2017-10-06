@@ -2,10 +2,25 @@ doctype html
 html
     head
         link(rel="stylesheet", href="/css/bootstrap.min.css")
-        script(src="/js/jquery-3.2.1.min.js")
+        script(src="/js/jquery-2.2.1.min.js")
         script(src="/js/bootstrap.min.js")
         title Продукт
     body
+        nav.navbar.navbar-default
+                .container-fluid
+                    .navbar-header
+                        .navbar-brand Webmarket
+                     lu.nav.navbar-nav.nav-tabs
+                         li
+                             a(href="/") Главна
+                         li
+                             a(href="/products/") Товары
+                     lu.nav.navbar-nav.navbar-right
+                         li
+                             if isAuthorized
+                                 a(href="/logout") Выйти
+                             else
+                                 a(href="/login") Войти
         .container(id='info')
 
     script.

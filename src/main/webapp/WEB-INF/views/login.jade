@@ -6,6 +6,16 @@ html
         script(src="/js/bootstrap.min.js")
         title index
     body
+        nav.navbar.navbar-default
+            .container-fluid
+                .navbar-header
+                    .navbar-brand Webmarket
+                lu.nav.navbar-nav.navbar-right
+                    li
+                        if isAuthorized
+                            a(href="/logout") Выйти
+                        else
+                            a(href="/login") Войти
         .container
             .row
                 .col-md-4
@@ -18,16 +28,12 @@ html
                     else
                         form(role="form", action="/perform_login", method="POST")
                             .form-group
-                                label Username
-                                input(type = "username", class = "form-control", name = "username", placeholder="username")
+                                input(type = "username", class = "form-control", name = "username", placeholder="Имя пользователя")
                             .form-group
-                                label Password
-                                input(type = "password", class = "form-control", name = "password", placeholder="password")
+                                input(type = "password", class = "form-control", name = "password", placeholder="Пароль")
                             button.btn.btn-lg.btn-primary.btn-block(type="submit") Войти
                             //a.btn.btn-lg.btn-primary.btn-block(type="button", href="/register") Регистрация
-                            a.btn.btn-lg.btn-primary.btn-block(type="button") Регистрация
-
-
+                            a.btn.btn-lg.btn-primary.btn-block.disabled(type="button") Регистрация
 
 
 
