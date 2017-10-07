@@ -14,6 +14,8 @@ public class ProductDTO {
 
     private List<CategoryDTO> categories;
 
+    private String description;
+
     public ProductDTO() {
     }
 
@@ -41,6 +43,14 @@ public class ProductDTO {
         this.name = productDTO.getName();
         this.price = productDTO.getPrice();
         this.categories = productDTO.getCategories();
+    }
+
+    public ProductDTO(Long id, String name, Double price, List<CategoryDTO> categories, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.categories = categories;
+        this.description = description;
     }
 
     public Long getId() {
@@ -75,6 +85,13 @@ public class ProductDTO {
         this.categories = categories;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public String toString() {

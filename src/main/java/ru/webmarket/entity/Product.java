@@ -17,6 +17,9 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
     private List<Category> categories;
 
@@ -33,6 +36,14 @@ public class Product {
     public Product(String name, Double price, List<Category> categories, List<Order> orders) {
         this.name = name;
         this.price = price;
+        this.categories = categories;
+        this.orders = orders;
+    }
+
+    public Product(String name, Double price, String description, List<Category> categories, List<Order> orders) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
         this.categories = categories;
         this.orders = orders;
     }
@@ -77,6 +88,13 @@ public class Product {
         this.orders = orders;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public boolean equals(Object o) {

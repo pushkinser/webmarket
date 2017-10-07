@@ -12,7 +12,7 @@ html
                     .navbar-brand Webmarket
                 lu.nav.navbar-nav.nav-tabs
                     li
-                        a(href="/") Главна
+                        a(href="/") Главная
                     li
                         a(href="/products/") Товары
                 lu.nav.navbar-nav.navbar-right
@@ -26,42 +26,35 @@ html
             .p.h1 Добро пожаловать!
 
 
-        .container
-            div
-                table.table.table-hover
-                    thead
-                        tr
-                            th №
-                            th Название
-                            th Стоимость
-                            th
-                    tbody(id='info')
+        .col-md-8
+            table.table.dataTable(id = "info")
+                thead
+                    tr
+                        th Название
+                        th Стоимость
+                        th
+                tfoot
+                    tr
+                        th Название
+                        th Стоимость
+                        th
 
-    script.
-        $.ajax({
-            url: 'http://localhost:8080/api/product/',
-            data: {format: 'json'},
-            dataType: 'json',
-            success: function (data) {
-                var $title, $price, id;
-                for (var i = 0; i < data.length; i++) {
-                    id = data[i].id;
-                    $('#info').append('<tr>'
-                        + '<td>'
-                        + (i + 1)
-                        + '<td>'
-                        + '<a href="/product/' + id + '">' + data[i].name + '</a>'
-                        + '<td>'
-                        + data[i].price
-                        + '<td>'
-                        + 'Добавить в корзину');
-                }
-            },
-            type: 'GET'
+
+script.
+
+    $(document).ready(function () {
+        $('#info').DataTable({
+            "ajax": {"url": "http://localhost:8080/api/product/", "dataSrc": ""},
+            "columns": [
+                {'data': "name"},
+                {'data': "price"},
+                {"defaultContent": "Добавить в корзину"}
+            ],
+            "deferRender": true
         });
+    });
 
-
-        //a. Заголовок. +
-        //b. Цена. +
-        //c. Фотография товара.
-        //d. Конпка добавления в корзину.}!
+//a. Заголовок. +
+//b. Цена. +
+//c. Фотография товара.
+//d. Конпка добавления в корзину.}!
