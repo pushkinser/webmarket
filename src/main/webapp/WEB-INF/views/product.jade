@@ -4,31 +4,34 @@ html
         link(rel="stylesheet", href="/css/bootstrap.min.css")
         script(src="/js/jquery-2.2.1.min.js")
         script(src="/js/bootstrap.min.js")
-        title Продукт
+        title(id='title')
     body
         nav.navbar.navbar-default
-                .container-fluid
-                    .navbar-header
-                        .navbar-brand Webmarket
-                     lu.nav.navbar-nav.nav-tabs
-                         li
-                             a(href="/") Главная
-                         li
-                             a(href="/products/") Товары
-                     lu.nav.navbar-nav.navbar-right
-                         li
-                             if isAuthorized
-                                 a(href="/logout") Выйти
-                             else
-                                 a(href="/login") Войти
-        .container(id='info')
+            .container-fluid
+                .navbar-header
+                    .navbar-brand Webmarket
+                lu.nav.navbar-nav.nav-tabs
+                    li
+                        a(href="/") Главная
+                    li
+                        a(href="/products/") Товары
+                lu.nav.navbar-nav.navbar-right
+                    li
+                        img(src='/images/shopping_cart/empty.png', class='img-responsive')
+                    li
+                        if isAuthorized
+                            a(href="/logout") Выйти
+                        else
+                            a(href="/login") Войти
+        .container
+            .col-md-8(id='info')
 
     script.
         var str = document.location.href;
         var regexp = 'product/';
         var index_id = str.indexOf(regexp);
-        var id = str.slice(index_id+regexp.length);
-        var url = "http://localhost:8080/api/product/"+ id;
+        var id = str.slice(index_id + regexp.length);
+        var url = "http://localhost:8080/api/product/" + id;
         $.ajax({
             type: 'get',
             url: url,
@@ -36,13 +39,21 @@ html
             success: function (data) {
 
                 $('#info').append('<p>'
+                    + '<div class="row">'
+                    + '<div class="col-md-6">'
+                    + "<img src='/images/product/" + data.id + ".jpg' class='img-thumbnail' alt=data.name width='100%' height='100%'>" + '</div>'
+                    + '<div class="col-md-6">'
                     + '<h1>' + data.name + '</h1>'
                     + '<p>'
-                    + data.price
-                    + '<p>'
-                    + data.description
-                    + '<p>'
-                    + 'Добавить в корзину');
+                    +'<h1>' + data.price + '</h1>'
+                    +"<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name>"
+                + '<p>'
+                + '<p>'
+                + '<p>'
+                + data.description
+                +'</div>');
+
+               $('#title').append(data.name);
 
             }
         });

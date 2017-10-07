@@ -13,5 +13,8 @@ INSERT INTO users_roles (users_id, roles_id)
 VALUES (1, 1), (2, 2);
 
 -- products
-INSERT INTO products (name, price)
-VALUES ('Akai BT100', 10000), ('Телескоп Levenhuk Skyline', 40000);
+INSERT INTO products (name, price, description)
+VALUES ('Akai BT100', 10000, 'description'),
+  ('Телескоп Levenhuk Skyline', 60000, 'description'),
+  ('Камера GoPro', 2000, 'Экшн-камера - позволяет записывать с разрешением 4К и очень плавным изображением до 25 кадров в секунду с дисплеем 2″ TFT LCD.'),
+  ('Велосипед EzCity', 1000, 'description');

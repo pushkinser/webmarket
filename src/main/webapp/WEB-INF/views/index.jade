@@ -1,10 +1,12 @@
 doctype html
 html
     head
-        link(rel="stylesheet", href="/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+        link(rel="stylesheet", href="/css/jquery.dataTables.min.css")
         script(src="/js/jquery-2.2.1.min.js")
-        script(src="/js/bootstrap.min.js")
-        title Список продуктов
+        script(src="/js/jquery.dataTables.min.js")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+        title Главная страница
     body
         nav.navbar.navbar-default
             .container-fluid
@@ -17,42 +19,58 @@ html
                         a(href="/products/") Товары
                 lu.nav.navbar-nav.navbar-right
                     li
+                        img(src='/images/shopping_cart/empty.png', class='img-responsive')
+                    li
                         if isAuthorized
                             a(href="/logout") Выйти
                         else
                             a(href="/login") Войти
 
         .container
-            .p.h1 Добро пожаловать!
+            .p Добро пожаловать
+                    table.table.dataTable(id = "info")
+                        thead
+                            tr
+                                th
+                                th Название
+                                th Стоимость
+                                th
+                        tfoot
+                            tr
+                                th
+                                th Название
+                                th Стоимость
+                                th
 
-
-        .col-md-8
-            table.table.dataTable(id = "info")
-                thead
-                    tr
-                        th Название
-                        th Стоимость
-                        th
-                tfoot
-                    tr
-                        th Название
-                        th Стоимость
-                        th
-
-
-script.
-
-    $(document).ready(function () {
-        $('#info').DataTable({
-            "ajax": {"url": "http://localhost:8080/api/product/", "dataSrc": ""},
-            "columns": [
-                {'data': "name"},
-                {'data': "price"},
-                {"defaultContent": "Добавить в корзину"}
-            ],
-            "deferRender": true
+    script.
+        $(document).ready(function () {
+            $('#info').DataTable({
+                "ajax": {"url": "http://localhost:8080/api/product/", "dataSrc": ""},
+                "columns": [
+                    {
+                        'data': null,
+                        'searchable': false,
+                        'sortable': false,
+                        "render": function (data, type, row) {
+                            return "<img src='/images/product/" + data.id + ".jpg' class='img-circle' alt='image' width='100px' height='100px' >";
+                        }
+                    },
+                    {
+                        'data': null,
+                        "render": function (data, type, row) {
+                            return "<a href='/product/" + data.id + "/'>" + data.name + "</a>";
+                        }
+                    },
+                    {'data': "price"},
+                    {
+                        "defaultContent": "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name>",
+                        'searchable': false,
+                        'sortable': false
+                    }
+                ],
+                "deferRender": true
+            });
         });
-    });
 
 //a. Заголовок. +
 //b. Цена. +

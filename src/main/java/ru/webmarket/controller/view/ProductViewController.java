@@ -15,7 +15,7 @@ import ru.webmarket.service.impl.ProductServiceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+@Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
 @Controller
 public class ProductViewController {
 
@@ -30,8 +30,6 @@ public class ProductViewController {
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
     public ModelAndView getItem(@PathVariable("id") long id) {
-//        ProductDTO productDTO = productService.getProduct(id);
-//        result.put("product", productDTO);
         return new ModelAndView("product", SecurityUtils.getAuthInfo());
     }
 }
