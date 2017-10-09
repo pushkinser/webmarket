@@ -160,7 +160,8 @@ ALTER SEQUENCE orders_orders_id_seq OWNED BY orders.orders_id;
 CREATE TABLE products (
   products_id integer NOT NULL,
   name character varying(255),
-  price numeric
+  price numeric,
+  description character varying(255)
 );
 
 
