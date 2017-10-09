@@ -1,10 +1,8 @@
 doctype html
 html
     head
-        link(rel="stylesheet", href="/css/bootstrap.min.css")
-        script(src="/js/jquery-2.2.1.min.js")
-        script(src="/js/bootstrap.min.js")
-        title index
+        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css")
+        title login
     body
         nav.navbar.navbar-default
             .container-fluid
@@ -34,41 +32,3 @@ html
                             button.btn.btn-lg.btn-primary.btn-block(type="submit") Войти
                             //a.btn.btn-lg.btn-primary.btn-block(type="button", href="/register") Регистрация
                             a.btn.btn-lg.btn-primary.btn-block.disabled(type="button") Регистрация
-
-
-
-
-
-//doctype html
-//    html
-//        head
-//            link(rel="stylesheet", href="/css/bootstrap.min.css")
-//            link(rel="stylesheet", href="/css/login.css")
-//            script(src="/js/jquery-2.2.1.min.js")
-//            script(src="/js/bootstrap.min.js")
-//            title Вход
-//        body
-//            .container
-//                .row
-//                    .col-md-4
-//                    .col-md-4
-//                        .panel.panel-success
-//                            .panel-heading.clearfix
-//                                h3.panel-title.pull-left(style="padding-top: 7.5px;") Аккаунт
-//                                .btn-group.pull-right
-//                                    a.btn.btn-link(href="/reset") Забыли пароль?
-//                            .panel-body
-//                                if error
-//                                    .alert.alert-danger
-//                                        strong #{error}
-//                                if isAuthorized
-//                                    a.btn.btn-lg.btn-primary.btn-block(type="button", href="/logout") Выйти
-//                                else
-//                                    form(role="form", action="/perform_login", method="POST")
-//                                        .form-group
-//                                            input(type="text", class="form-control", name="username", placeholder="Логин")
-//                                        .form-group
-//                                            input(type="password", class="form-control", name="password", placeholder="Пароль")
-//                                        button.btn.btn-lg.btn-primary.btn-block(type="submit") Войти
-//                                        a.btn.btn-lg.btn-warning.btn-block(type="button", href="/register") Регистрация
-//      
