@@ -4,16 +4,8 @@ html
         link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css")
         title login
     body
-        nav.navbar.navbar-default
-            .container-fluid
-                .navbar-header
-                    .navbar-brand Webmarket
-                lu.nav.navbar-nav.navbar-right
-                    li
-                        if isAuthorized
-                            a(href="/logout") Выйти
-                        else
-                            a(href="/login") Войти
+        include navbar
+
         .container
             .row
                 .col-md-4

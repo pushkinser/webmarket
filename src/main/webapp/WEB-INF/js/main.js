@@ -1,6 +1,5 @@
 
 
-
 // noinspection JSFileReferences
 require.config({
     baseUrl: '/js/webmarket',

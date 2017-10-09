@@ -4,60 +4,14 @@ html
         include environment
         title(id='title')
     body
-        nav.navbar.navbar-default
-            .container-fluid
-                .navbar-header
-                    .navbar-brand Webmarket
-                lu.nav.navbar-nav.nav-tabs
-                    li
-                        a(href="/") Главная
-                    li
-                        a(href="/products/") Товары
-                lu.nav.navbar-nav.navbar-right
-                    li
-                        img(src='/images/shopping_cart/empty.png', class='img-responsive')
-                    li
-                        if isAuthorized
-                            a(href="/logout") Выйти
-                        else
-                            a(href="/login") Войти
+        include navbar
+
         .container
             .col-md-8(id='info')
 
     script.
-        require([
-            "jquery",
-            "bootstrap",
-            "require-css!bootstrap-css"
-        ], function ($) {
-            var str = document.location.href;
-            var regexp = 'product/';
-            var index_id = str.indexOf(regexp);
-            var id = str.slice(index_id + regexp.length);
-            var url = "/api/product/" + id;
-            $.ajax({
-                type: 'get',
-                url: url,
-                dataType: 'json',
-                success: function (data) {
+        require(['pages/Product'], function (Product) {
 
-                    $('#info').append('<p>'
-                        + '<div class="row">'
-                        + '<div class="col-md-6">'
-                        + "<img src='/images/product/" + data.id + ".jpg' class='img-thumbnail' alt=data.name width='100%' height='100%'>" + '</div>'
-                        + '<div class="col-md-6">'
-                        + '<h1>' + data.name + '</h1>'
-                        + '<p>'
-                        + '<h1>' + data.price + '</h1>'
-                        + "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name>"
-                        + '<p>'
-                        + '<p>'
-                        + '<p>'
-                        + data.description
-                        + '</div>');
-
-                    $('#title').append(data.name);
-
-                }
-            });
+            var productPage = new Product();
+            productPage.draw();
         });

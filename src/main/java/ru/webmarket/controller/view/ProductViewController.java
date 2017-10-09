@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 @Controller
 public class ProductViewController {
 
-    @Autowired
-    private ProductServiceImpl productService;
-
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ModelAndView getItems() {
 

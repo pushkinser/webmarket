@@ -20,15 +20,12 @@ import java.security.Principal;
 public class IndexController {
 
     @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
     private UserDetailsManager userDetailsManager;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     public ModelAndView index() {
-        ModelAndView model = new ModelAndView("index", SecurityUtils.getAuthInfo());
+        ModelAndView model = new ModelAndView("products", SecurityUtils.getAuthInfo());
 
         return model;
     }
@@ -46,6 +43,4 @@ public class IndexController {
         }
         return model;
     }
-
-
 }

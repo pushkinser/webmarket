@@ -4,23 +4,7 @@ html
         include environment
         title Список товаров
     body
-        nav.navbar.navbar-default
-            .container-fluid
-                .navbar-header
-                    .navbar-brand Webmarket
-                lu.nav.navbar-nav.nav-tabs
-                    li
-                        a(href="/") Главная
-                    li
-                        a(href="/products/") Товары
-                lu.nav.navbar-nav.navbar-right
-                    li
-                        img(src='/images/shopping_cart/empty.png', class='img-responsive')
-                    li
-                        if isAuthorized
-                            a(href="/logout") Выйти
-                        else
-                            a(href="/login") Войти
+        include navbar
 
         .container
 
