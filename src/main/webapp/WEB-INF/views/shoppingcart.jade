@@ -1,0 +1,34 @@
+doctype html
+html
+    head
+        include environment
+        title Список товаров
+    body
+        include navbar
+
+        .container
+            .col-md-12
+                table.table.dataTable(id = "info")
+                    thead
+                        tr
+                            th
+                            th Название
+                            th Стоимость
+                            th Количество
+                    tfoot
+                        tr
+                            th
+                            th Название
+                            th Стоимость
+                            th Количество
+
+
+    script.
+
+        require(['pages/ShoppingCart'], function (ShoppingCart) {
+            const options = {
+                productsTableElementId: 'info'
+            };
+            var shoppingCartPage = new ShoppingCart();
+            shoppingCartPage.draw();
+        });

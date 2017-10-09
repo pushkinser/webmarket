@@ -26,7 +26,9 @@ public interface ShoppingCartService {
 
     void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 
-    List<ProductDTO> getProduct(Long id);
+    List<ProductDTO> getProducts(ShoppingCartDTO shoppingCartDTO);
 
     Double getTotal (ShoppingCartDTO shoppingCartDTO);
+
+    int getCountProducts (ShoppingCartDTO shoppingCartDTO);
 }
