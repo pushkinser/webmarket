@@ -1,10 +1,7 @@
 package ru.webmarket.service;
 
-import org.springframework.stereotype.Service;
-import ru.webmarket.entity.Order;
 import ru.webmarket.entity.dto.OrderDTO;
 import ru.webmarket.entity.dto.ProductDTO;
-import ru.webmarket.entity.dto.ShoppingCartDTO;
 
 import java.util.List;
 
@@ -16,20 +13,18 @@ public interface OrderService {
 
     void addOrder(OrderDTO orderDTO);
 
-    void setOrder(OrderDTO orderDTO, ShoppingCartDTO shoppingCartDTO);
-
-    List<OrderDTO> getAllOrder();
-
-    void addProduct(OrderDTO orderDTO, ProductDTO productDTO);
-
-    void addProduct(OrderDTO orderDTO, List<ProductDTO> productDTOS);
+    List<OrderDTO> getOrders();
 
     OrderDTO getOrder(Long id);
 
     void editOrder(OrderDTO orderDTO);
 
-    void deleteOrder(Long id);
+    void addProduct(OrderDTO orderDTO, ProductDTO productDTO, int count);
 
-    List<ProductDTO> getProduct(Long id);
+    // Намного выгоднее делать? void addProducts(OrderDTO, List<ProductDTO>)
+
+    List<ProductDTO> getProducts(OrderDTO orderDTO);
+
+    void deleteOrder(Long id);
 
 }

@@ -27,7 +27,8 @@ html
 
         require(['pages/ShoppingCart'], function (ShoppingCart) {
             const options = {
-                productsTableElementId: 'info'
+                productsTableElementId: 'info',
+                userId: #{user.id}
             };
             var shoppingCartPage = new ShoppingCart();
             shoppingCartPage.draw();

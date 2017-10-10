@@ -19,10 +19,10 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public ProductDTO(Long id, String name, Double price) {
-        this.id = id;
+    public ProductDTO(String name, Double price, String description) {
         this.name = name;
         this.price = price;
+        this.description = description;
     }
 
     public ProductDTO(Long id, String name, Double price, List<CategoryDTO> categories) {

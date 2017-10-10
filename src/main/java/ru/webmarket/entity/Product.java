@@ -30,7 +30,10 @@ public class Product {
     private List<Order> orders;
 
     public Product() {
+    }
 
+    public Product(Long id) {
+        this.id = id;
     }
 
     public Product(String name, Double price, List<Category> categories, List<Order> orders) {

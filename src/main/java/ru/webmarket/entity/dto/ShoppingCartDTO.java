@@ -1,10 +1,5 @@
 package ru.webmarket.entity.dto;
 
-import ru.webmarket.entity.Order;
-import ru.webmarket.entity.User;
-
-import java.util.List;
-
 public class ShoppingCartDTO {
     private Long id;
 
@@ -38,6 +33,7 @@ public class ShoppingCartDTO {
     public void setOrder(OrderDTO order) {
         this.order = order;
     }
+
 
 
     @Override

@@ -18,7 +18,7 @@ public interface RoleService {
 
     void deleteRole(Long id);
 
-    List<RoleDTO> getAllRoles();
+    List<RoleDTO> getRoles();
 
     RoleDTO findByName(String name);
 }

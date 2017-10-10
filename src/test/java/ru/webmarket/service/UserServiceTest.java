@@ -10,6 +10,7 @@ import ru.webmarket.service.impl.UserServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class UserServiceTest extends AppTest {
@@ -27,15 +28,20 @@ public class UserServiceTest extends AppTest {
         }
     }
 
+    final Random random = new Random();
 
     @Test
-    public void shouldEditUser() {
-        UserDTO userDTO = new UserDTO("username", "name", "lastname", "@", "pas");
-        Long id = 7L;
-        userDTO.setId(id);
+    public void shouldAddAndEditUserAndDelete() {
+        int r =  random.nextInt();
+        UserDTO userDTO = new UserDTO("username"+r, "name", "lastname", "@", "pas");
+        userService.addUser(userDTO);
+        userDTO.setName("new name");
         userService.editUser(userDTO);
-        Assert.assertNotNull(userService.getUser(id));
-        Assert.assertEquals(userDTO.getUserName(), userService.getUser(id).getUserName());
+        Long userId = userService.findByUserName(userDTO.getUserName()).getId();
+        Assert.assertNotNull(userService.getUser(userId));
+        Assert.assertNotEquals("username"+r, userService.getUser(userId).getName());
+        userService.deleteUser(userId);
+        Assert.assertNull(userService.getUser(userId));
     }
 
 }

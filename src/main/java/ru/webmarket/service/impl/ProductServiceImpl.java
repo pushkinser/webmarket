@@ -36,8 +36,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void editProduct(ProductDTO productDTO) {
-        if (productDTO == null) throw new NullPointerException();
-        if (productRepository.findOne(productDTO.getId()) != null)
             productRepository.save(ProductConverter.dtoToEntity(productDTO));
     }
 
@@ -48,12 +46,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getAllProduct() {
+    public List<ProductDTO> getProducts() {
         return ProductConverter.entityToDto(productRepository.findAll());
     }
 
     @Override
-    public List<CategoryDTO> getAllCategory(ProductDTO productDTO) {
+    public List<CategoryDTO> getCategories(ProductDTO productDTO) {
         return productDTO.getCategories();
     }
 

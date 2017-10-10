@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
         this.roleRepository = roleRepository;
     }
 
-
     @Override
     public void addUser(UserDTO userDTO) {
         if (userDTO == null) throw new NullPointerException();
@@ -45,7 +44,6 @@ public class UserServiceImpl implements UserService {
         roles.add(roleRepository.findByName("CUSTOMER"));
         user.setRoles(roles);
         userRepository.save(user);
-
     }
 
     @Override

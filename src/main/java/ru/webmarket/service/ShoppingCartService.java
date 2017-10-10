@@ -14,15 +14,13 @@ public interface ShoppingCartService {
 
     void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
-    List<ShoppingCartDTO> getShoppingCart();
+    List<ShoppingCartDTO> getShoppingCarts();
 
     ShoppingCartDTO getShoppingCart(Long id);
 
     void editShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
-    void deleteShoppingCart(Long id);
-
-    void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
+    void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO, int count);
 
     void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 
@@ -31,4 +29,8 @@ public interface ShoppingCartService {
     Double getTotal (ShoppingCartDTO shoppingCartDTO);
 
     int getCountProducts (ShoppingCartDTO shoppingCartDTO);
+
+    void editProductCount(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO, int count );
+
+    void deleteShoppingCart(Long id);
 }

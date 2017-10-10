@@ -33,7 +33,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void editCategory(CategoryDTO toEditCategoryDTO) {
-        categoryRepository.save(CategoryConverter.dtoToEntity(toEditCategoryDTO));
+        if (toEditCategoryDTO == null) throw new NullPointerException();
+        if (categoryRepository.findOne(toEditCategoryDTO.getId()) != null)
+            categoryRepository.save(CategoryConverter.dtoToEntity(toEditCategoryDTO));
     }
 
     @Override
@@ -43,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDTO> getAllCategories() {
+    public List<CategoryDTO> getCategories() {
         return CategoryConverter.entityToDto(categoryRepository.findAll());
     }
 

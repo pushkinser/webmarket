@@ -25,7 +25,7 @@ public class IndexController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     public ModelAndView index() {
-        ModelAndView model = new ModelAndView("products", SecurityUtils.getAuthInfo());
+        final ModelAndView model = new ModelAndView("products", SecurityUtils.getAuthInfo());
 
         return model;
     }

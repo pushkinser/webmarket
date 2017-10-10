@@ -20,9 +20,10 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
                     'searchable': false,
                     'sortable': false,
                     'render': function () {
-                        return '<img src="/images/product/default_item.jpg" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >';
+                        return '<img src="/images/product/loader.gif" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >';
                     },
                     'createdCell': this._onImageCellCreated
+                //    TODO: переделать c cell на render
                 },
                 {
                     'data': null,
@@ -71,7 +72,6 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
         }, "") + "," + p[1] + '&#8381 ';
         $(td).html(res);
     };
-
 
     return Products;
 });

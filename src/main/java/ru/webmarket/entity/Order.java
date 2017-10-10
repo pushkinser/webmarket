@@ -1,6 +1,8 @@
 package ru.webmarket.entity;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.sql.rowset.Joinable;
 import java.util.List;
 
 @Entity
@@ -12,9 +14,6 @@ public class Order {
     @Column(name = "orders_id")
     private Long id;
 
-    @Column(name = "total")
-    private Double total;
-
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
@@ -25,8 +24,15 @@ public class Order {
     @OneToOne(mappedBy = "order")
     private ShoppingCart shoppingCart;
 
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
+
     public Order() {
 
+    }
+
+    public Order(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -35,14 +41,6 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
     }
 
     public User getUser() {
@@ -69,6 +67,22 @@ public class Order {
         this.shoppingCart = shoppingCart;
     }
 
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    //    public int getCount() {
+//        return count;
+//    }
+//
+//    public void setCount(int count) {
+//        this.count = count;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,7 +91,6 @@ public class Order {
         Order order = (Order) o;
 
         if (id != null ? !id.equals(order.id) : order.id != null) return false;
-        if (total != null ? !total.equals(order.total) : order.total != null) return false;
         if (user != null ? !user.equals(order.user) : order.user != null) return false;
         return shoppingCart != null ? shoppingCart.equals(order.shoppingCart) : order.shoppingCart == null;
     }
@@ -85,7 +98,6 @@ public class Order {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (total != null ? total.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (shoppingCart != null ? shoppingCart.hashCode() : 0);
         return result;
@@ -94,8 +106,9 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "total=" + total +
                 ", products=" + products +
                 '}';
     }
+
+
 }

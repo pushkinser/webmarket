@@ -1,37 +1,27 @@
 package ru.webmarket.entity.dto;
 
-import ru.webmarket.entity.Product;
-import ru.webmarket.entity.ShoppingCart;
-import ru.webmarket.entity.User;
 
 import java.util.List;
+
+import static java.lang.System.in;
 
 public class OrderDTO {
 
     private Long id;
 
-    private Double total;
-
-    private List<ProductDTO> products;
+    private List<OrderItemDTO> orderItems;
 
     public OrderDTO () {
 
     }
 
-    public OrderDTO(Long id, Double total, List<ProductDTO> products) {
+    public OrderDTO(Long id, List<OrderItemDTO> orderItems) {
         this.id = id;
-        this.total = total;
-        this.products = products;
+        this.orderItems = orderItems;
     }
 
-    private Double countTotal (List<ProductDTO> products) {
-        Double count = Double.valueOf(0);
-
-        for (ProductDTO productDTO: products) {
-            count = count + productDTO.getPrice();
-        }
-
-        return count;
+    public OrderDTO(List<OrderItemDTO> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Long getId() {
@@ -42,27 +32,22 @@ public class OrderDTO {
         this.id = id;
     }
 
-    public Double getTotal() {
-        return countTotal(products);
+
+    public List<OrderItemDTO> getOrderItems() {
+        return orderItems;
     }
 
-    public void setTotal(Double total) {
-        this.total = total;
+    public void setOrderItems(List<OrderItemDTO> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    public List<ProductDTO> getProducts() {
-        return products;
+    public void addOrderItemDTO(OrderItemDTO orderItemDTO) {
+        this.orderItems.add(orderItemDTO);
     }
 
-    public void setProducts(List<ProductDTO> products) {
-        this.products = products;
+    public void deleteOrderItemDTO(OrderItemDTO orderItemDTO) {
+        if ((orderItemDTO != null)&(this.orderItems.contains(orderItemDTO)))
+        this.orderItems.remove(orderItemDTO);
     }
 
-    @Override
-    public String toString() {
-        return "OrderDTO{" +
-                "total=" + total +
-                ", products=" + products +
-                '}';
-    }
 }
