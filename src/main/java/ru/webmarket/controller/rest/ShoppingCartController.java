@@ -1,19 +1,20 @@
 package ru.webmarket.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
+import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.service.impl.ShoppingCartServiceImpl;
 import ru.webmarket.service.impl.UserServiceImpl;
 
-import java.util.List;
-
 
 @RestController
-@RequestMapping(value = "/api/bag")
+@RequestMapping(value = "/api/shoppingcart")
+@Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
 public class ShoppingCartController {
 
     @Autowired
@@ -22,15 +23,19 @@ public class ShoppingCartController {
     @Autowired
     private UserServiceImpl userService;
 
-    // Получить корзину по id пользователя
+    private ShoppingCartDTO getCurrentShoppingCart () {
+        return shoppingCartService.getShoppingCartByUserId(SecurityUtils.getCurrentDetails().getId());
+    }
+
+    // Получить корзину по id корзины
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ShoppingCartDTO getShoppingCart(@PathVariable("id") Long id) {
-        return userService.getShoppingCart(id);
+    public ShoppingCartDTO getShoppingCartById(@PathVariable("id") Long id) {
+        return shoppingCartService.getShoppingCart(id);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<ShoppingCartDTO> getAllShoppingCart() {
-        return shoppingCartService.getShoppingCarts();
+    public ShoppingCartDTO getShoppingCart() {
+          return getCurrentShoppingCart();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -41,6 +46,11 @@ public class ShoppingCartController {
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public void updateShoppingCart(ShoppingCartDTO shoppingCartDTO) {
         shoppingCartService.editShoppingCart(shoppingCartDTO);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void addProduct(@PathVariable("id") Long id) {
+        shoppingCartService.addProduct(getCurrentShoppingCart(), id);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)

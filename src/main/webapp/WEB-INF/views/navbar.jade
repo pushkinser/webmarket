@@ -12,8 +12,7 @@ nav.navbar.navbar-default
                     .h1 #{user.userName}
             li
                 if isAuthorized
-                    - var a = user.id;
-                    a(href="/bag/" + a)
+                    a(href="/shoppingcart")
                         img(src='/images/shopping_cart/empty.png', class='img-responsive')
             li
                 if isAuthorized

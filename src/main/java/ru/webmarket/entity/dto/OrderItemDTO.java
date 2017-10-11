@@ -8,9 +8,7 @@ public class OrderItemDTO {
 
     private Long productId;
 
-    private OrderDTO orderDTO;
-
-    private ProductDTO productDTO;
+    private ProductDTO product;
 
     private int count;
 
@@ -18,14 +16,18 @@ public class OrderItemDTO {
 
     }
 
-    public OrderItemDTO(Long id, ProductDTO productDTO, int count) {
+    public OrderItemDTO(ProductDTO product) {
+        this.product = product;
+    }
+
+    public OrderItemDTO(Long id, ProductDTO product, int count) {
         this.id = id;
-        this.productDTO = productDTO;
+        this.product = product;
         this.count = count;
     }
 
-    public OrderItemDTO(ProductDTO productDTO, int count) {
-        this.productDTO = productDTO;
+    public OrderItemDTO(ProductDTO product, int count) {
+        this.product = product;
         this.count = count;
     }
 
@@ -53,20 +55,12 @@ public class OrderItemDTO {
         this.productId = productId;
     }
 
-    public OrderDTO getOrderDTO() {
-        return orderDTO;
+    public ProductDTO getProduct() {
+        return product;
     }
 
-    public void setOrderDTO(OrderDTO orderDTO) {
-        this.orderDTO = orderDTO;
-    }
-
-    public ProductDTO getProductDTO() {
-        return productDTO;
-    }
-
-    public void setProductDTO(ProductDTO productDTO) {
-        this.productDTO = productDTO;
+    public void setProduct(ProductDTO productDTO) {
+        this.product = productDTO;
     }
 
     public int getCount() {
@@ -105,8 +99,7 @@ public class OrderItemDTO {
                 "id=" + id +
                 ", orderId=" + orderId +
                 ", productId=" + productId +
-                ", orderDTO=" + orderDTO +
-                ", productDTO=" + productDTO +
+                ", product=" + product +
                 ", count=" + count +
                 '}';
     }

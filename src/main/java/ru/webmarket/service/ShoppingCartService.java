@@ -18,9 +18,13 @@ public interface ShoppingCartService {
 
     ShoppingCartDTO getShoppingCart(Long id);
 
+    ShoppingCartDTO getShoppingCartByUserId (Long id);
+
     void editShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
-    void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO, int count);
+    void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
+
+    void addProduct(ShoppingCartDTO shoppingCartDTO, Long id);
 
     void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 

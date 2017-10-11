@@ -46,7 +46,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public void addProduct(OrderItemDTO orderItemDTO, ProductDTO productDTO) {
-        orderItemDTO.setProductDTO(productDTO);
+        orderItemDTO.setProduct(productDTO);
         editOrderItem(orderItemDTO);
     }
 
@@ -58,7 +58,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public ProductDTO getProduct(OrderItemDTO orderItemDTO) {
-        return orderItemDTO.getProductDTO();
+        return orderItemDTO.getProduct();
     }
 
     @Override

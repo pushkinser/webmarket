@@ -23,7 +23,7 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
                         return '<img src="/images/product/loader.gif" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >';
                     },
                     'createdCell': this._onImageCellCreated
-                //    TODO: переделать c cell на render
+                    //    TODO: переделать c cell на render
                 },
                 {
                     'data': null,
@@ -33,13 +33,16 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
                 },
                 {
                     'data': null,
-                    'render': function() {
+                    'render': function () {
                         return 0;
                     },
                     'createdCell': this._priseCellConvertRuble
                 },
                 {
-                    'defaultContent': "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name>",
+                    'data': null,
+                    'render': function (data) {
+                        return "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name onclick='productsPage.addProductInShoppingCart(" + data.id + ")'>";
+                    },
                     'searchable': false,
                     'sortable': false
                 }
@@ -64,11 +67,23 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
         }
     };
 
-    Products.prototype._priseCellConvertRuble  = function (td, cellData) {
+    Products.addProductInShoppingCart = function (id) {
+        // $.ajax({
+        //     type: 'PUT',
+        //     data: id,
+        //     // success: function() { ... },
+        //     // error: function(){ ... },
+        //     url: '/api/shoppingcat/',
+        //     cache:false
+        // });
+        console.log('Добавляем ');
+    };
+
+    Products.prototype._priseCellConvertRuble = function (td, cellData) {
         var num = cellData.price;
         var p = num.toFixed(2).split(".");
-        var res =  p[0].split("").reverse().reduce(function(acc, num, i, orig) {
-            return  num=="-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
+        var res = p[0].split("").reverse().reduce(function (acc, num, i, orig) {
+            return num == "-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
         }, "") + "," + p[1] + '&#8381 ';
         $(td).html(res);
     };

@@ -28,6 +28,7 @@ public class SecurityUtils {
         } else {
             result.put("isAuthorized", true);
             result.put("user", userDTO);
+//            result.put("shoppingCart", userDTO.getShoppingCart());
         }
         return result;
     }

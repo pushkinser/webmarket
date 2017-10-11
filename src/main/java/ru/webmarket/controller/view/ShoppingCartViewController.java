@@ -12,8 +12,8 @@ import ru.webmarket.security.SecurityUtils;
 @Controller
 public class ShoppingCartViewController {
 
-    @RequestMapping(value = "/bag/{id}", method = RequestMethod.GET)
-    public ModelAndView getItems(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/shoppingcart", method = RequestMethod.GET)
+    public ModelAndView getItems() {
 
         return new ModelAndView("shoppingcart", SecurityUtils.getAuthInfo());
     }

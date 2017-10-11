@@ -25,8 +25,6 @@ public interface UserService {
 
     UserDTO findByEmail(String email);
 
-    ShoppingCartDTO getShoppingCart (Long id);
-
     List<RoleDTO> getRoles (Long id);
 
     List<OrderDTO> getOrders (Long id);

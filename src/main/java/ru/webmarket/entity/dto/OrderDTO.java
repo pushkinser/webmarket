@@ -50,4 +50,11 @@ public class OrderDTO {
         this.orderItems.remove(orderItemDTO);
     }
 
+    @Override
+    public String toString() {
+        return "OrderDTO{" +
+                "id=" + id +
+                ", orderItems=" + orderItems +
+                '}';
+    }
 }

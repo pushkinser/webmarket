@@ -2,22 +2,22 @@ doctype html
 html
     head
         include environment
-        title Список товаров
+        title Корзина
     body
         include navbar
 
         .container
             .col-md-12
-                table.table.dataTable(id = "info")
+                table.table.dataTable(id = "shoppingCartTableId")
                     thead
                         tr
-                            th
+                            th Изображение
                             th Название
                             th Стоимость
                             th Количество
                     tfoot
                         tr
-                            th
+                            th Изображение
                             th Название
                             th Стоимость
                             th Количество
@@ -27,9 +27,9 @@ html
 
         require(['pages/ShoppingCart'], function (ShoppingCart) {
             const options = {
-                productsTableElementId: 'info',
-                userId: #{user.id}
+                shoppingCartTableElementId: 'shoppingCartTableId'
             };
-            var shoppingCartPage = new ShoppingCart();
+            var shoppingCartPage = new ShoppingCart(options);
             shoppingCartPage.draw();
         });
+

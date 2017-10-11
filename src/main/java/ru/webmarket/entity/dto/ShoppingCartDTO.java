@@ -5,6 +5,8 @@ public class ShoppingCartDTO {
 
     private OrderDTO order;
 
+    private Long userId;
+
     public ShoppingCartDTO () {
 
     }
@@ -16,6 +18,12 @@ public class ShoppingCartDTO {
     public ShoppingCartDTO(Long id, OrderDTO order) {
         this.id = id;
         this.order = order;
+    }
+
+    public ShoppingCartDTO(Long id, OrderDTO order, Long userId) {
+        this.id = id;
+        this.order = order;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -34,13 +42,20 @@ public class ShoppingCartDTO {
         this.order = order;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String toString() {
         return "ShoppingCartDTO{" +
                 "id=" + id +
                 ", order=" + order +
+                ", userId=" + userId +
                 '}';
     }
 }

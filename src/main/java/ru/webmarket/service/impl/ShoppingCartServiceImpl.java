@@ -2,16 +2,13 @@ package ru.webmarket.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.webmarket.entity.converter.OrderConverter;
 import ru.webmarket.entity.converter.OrderItemConverter;
+import ru.webmarket.entity.converter.ProductConverter;
 import ru.webmarket.entity.converter.ShoppingCartConverter;
-import ru.webmarket.entity.dto.OrderDTO;
 import ru.webmarket.entity.dto.OrderItemDTO;
 import ru.webmarket.entity.dto.ProductDTO;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
-import ru.webmarket.repository.OrderItemRepository;
-import ru.webmarket.repository.OrderRepository;
-import ru.webmarket.repository.ShoppingCartRepository;
+import ru.webmarket.repository.*;
 import ru.webmarket.service.ShoppingCartService;
 
 import java.util.ArrayList;
@@ -24,12 +21,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
+    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, OrderItemRepository orderItemRepository, ProductRepository productRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -49,6 +48,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public ShoppingCartDTO getShoppingCartByUserId(Long id) {
+        return ShoppingCartConverter.entityToDto(shoppingCartRepository.findByUser_Id(id));
+    }
+
+    @Override
     public void editShoppingCart(ShoppingCartDTO shoppingCartDTO) {
         if (shoppingCartDTO == null) throw new NullPointerException();
         if (shoppingCartRepository.findOne(shoppingCartDTO.getId()) != null)
@@ -57,7 +61,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     // Можно сделать через editShoppingCart
     @Override
-    public void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO, int count) {
+    public void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
+        shoppingCartDTO.getOrder().addOrderItemDTO(new OrderItemDTO(productDTO));
+        editShoppingCart(shoppingCartDTO);
 //        OrderDTO orderDTO = OrderConverter.entityToDto(orderRepository.getOne(shoppingCartDTO.getOrder().getId()));
 //        orderDTO.addOrderItemDTO(new OrderItemDTO(productDTO, count));
 //        orderRepository.save(OrderConverter.dtoToEntity(orderDTO));
@@ -65,10 +71,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public void addProduct(ShoppingCartDTO shoppingCartDTO, Long id) {
+        addProduct(shoppingCartDTO, ProductConverter.entityToDto(productRepository.getOne(id)));
+    }
+
+    @Override
     public void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
         List<OrderItemDTO> orderItemDTOS = shoppingCartDTO.getOrder().getOrderItems();
         for (OrderItemDTO orderItemDTO: orderItemDTOS) {
-            if (orderItemDTO.getProductDTO() == productDTO) orderItemRepository.delete(OrderItemConverter.dtoToEntity(orderItemDTO));
+            if (orderItemDTO.getProduct() == productDTO) orderItemRepository.delete(OrderItemConverter.dtoToEntity(orderItemDTO));
         }
     }
 
@@ -77,7 +88,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         List<ProductDTO> productDTOS = new ArrayList<>();
 
         for (OrderItemDTO orderItemDTO : shoppingCartDTO.getOrder().getOrderItems()) {
-            productDTOS.add(orderItemDTO.getProductDTO());
+            productDTOS.add(orderItemDTO.getProduct());
         }
         return productDTOS;
     }
@@ -87,7 +98,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Double total = 0.0;
 
         for (OrderItemDTO orderItemDTO : shoppingCartDTO.getOrder().getOrderItems()) {
-            total = total + orderItemDTO.getProductDTO().getPrice();
+            total = total + orderItemDTO.getProduct().getPrice();
         }
 
         return total;

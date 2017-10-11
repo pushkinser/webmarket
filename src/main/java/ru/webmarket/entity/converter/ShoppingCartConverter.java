@@ -18,6 +18,7 @@ public class ShoppingCartConverter {
 
         shoppingCartDTO.setId(shoppingCart.getId());
         shoppingCartDTO.setOrder(OrderConverter.entityToDto(shoppingCart.getOrder()));
+        shoppingCartDTO.setUserId(shoppingCart.getUser().getId());
 
         return shoppingCartDTO;
     }
@@ -28,7 +29,6 @@ public class ShoppingCartConverter {
 
         shoppingCart.setId(shoppingCartDTO.getId());
         shoppingCart.setOrder(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
-
 
         return shoppingCart;
     }

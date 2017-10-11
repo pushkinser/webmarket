@@ -82,11 +82,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ShoppingCartDTO getShoppingCart(Long id) {
-        return UserConverter.entityToDto(userRepository.findById(id)).getShoppingCart();
-    }
-
-    @Override
     public List<RoleDTO> getRoles(Long id) {
         if (userRepository.findById(id) == null) return null;
         return userRepository.findById(id).getRoles().stream()

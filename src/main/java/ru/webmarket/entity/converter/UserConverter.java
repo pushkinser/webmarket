@@ -57,7 +57,6 @@ public class UserConverter {
         user.setPassword(userDTO.getPassword());
         user.setRoles(RoleConverter.dtoToEntity(userDTO.getRoles()));
         user.setOrdes(OrderConverter.dtoToEntity(userDTO.getOrders()));
-        user.setShoppingCart(ShoppingCartConverter.dtoToEntity(userDTO.getShoppingCart()));
 
         return user;
     }
@@ -74,7 +73,6 @@ public class UserConverter {
         userDTO.setPassword(user.getPassword());
         userDTO.setRoles(RoleConverter.entityToDto(user.getRoles()));
         userDTO.setOrders(OrderConverter.entityToDto(user.getOrdes()));
-        userDTO.setShoppingCart(ShoppingCartConverter.entityToDto(user.getShoppingCart()));
 
         return userDTO;
     }

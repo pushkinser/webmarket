@@ -18,8 +18,6 @@ public class UserDTO {
 
     private List<RoleDTO> roles;
 
-    private ShoppingCartDTO shoppingCart;
-
     private List<OrderDTO> orders;
 
     public UserDTO() {
@@ -35,9 +33,9 @@ public class UserDTO {
 
     public UserDTO(Long id, String username, String name, String lastname, String email, String password) {
         this.id = id;
-        this.userName = userName;
+        this.userName = username;
         this.name = name;
-        this.lastName = lastName;
+        this.lastName = lastname;
         this.email = email;
         this.password = password;
     }
@@ -98,14 +96,6 @@ public class UserDTO {
         this.roles = roles;
     }
 
-    public ShoppingCartDTO getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public void setShoppingCart(ShoppingCartDTO shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
-
     public List<OrderDTO> getOrders() {
         return orders;
     }
@@ -124,7 +114,6 @@ public class UserDTO {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
-                ", shoppingCart=" + shoppingCart +
                 ", orders=" + orders +
                 '}';
     }

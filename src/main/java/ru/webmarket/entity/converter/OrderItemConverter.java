@@ -14,8 +14,7 @@ public class OrderItemConverter {
         OrderItem orderItem = new OrderItem();
 
         orderItem.setId(orderItemDTO.getId());
-        orderItem.setProduct(ProductConverter.dtoToEntity(orderItemDTO.getProductDTO()));
-        orderItem.setOrder(OrderConverter.dtoToEntity(orderItemDTO.getOrderDTO()));
+        orderItem.setProduct(ProductConverter.dtoToEntity(orderItemDTO.getProduct()));
         orderItem.setCount(orderItemDTO.getCount());
 
         return orderItem;
@@ -29,8 +28,7 @@ public class OrderItemConverter {
         orderItemDTO.setId(orderItem.getId());
         orderItemDTO.setProductId(orderItem.getProduct().getId());
         orderItemDTO.setOrderId(orderItemDTO.getOrderId());
-        orderItemDTO.setProductDTO(ProductConverter.entityToDto(orderItem.getProduct()));
-//        orderItemDTO.setOrderDTO(OrderConverter.entityToDto(orderItem.getOrder()));
+        orderItemDTO.setProduct(ProductConverter.entityToDto(orderItem.getProduct()));
         orderItemDTO.setCount(orderItem.getCount());
 
         return orderItemDTO;
