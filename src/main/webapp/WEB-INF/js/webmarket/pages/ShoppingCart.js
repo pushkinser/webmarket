@@ -34,7 +34,24 @@ define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-cs
                     'data': 'count'
                 }
             ],
-            "deferRender": true
+            "deferRender": true,
+            "oLanguage": {
+                "sProcessing":   "Подождите...",
+                "sLengthMenu":   "Показать _MENU_ позиций",
+                "sZeroRecords":  "Записи отсутствуют.",
+                "sInfo":         "Записи с _START_ до _END_ из _TOTAL_ записей",
+                "sInfoEmpty":    "Записи с 0 до 0 из 0 записей",
+                "sInfoFiltered": "(отфильтровано из _MAX_ записей)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Поиск:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst": "Первая",
+                    "sPrevious": "Назад",
+                    "sNext": "Вперед",
+                    "sLast": "Последняя"
+                }
+            }
         });
     };
 
