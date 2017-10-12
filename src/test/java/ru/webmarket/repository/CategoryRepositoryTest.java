@@ -22,6 +22,4 @@ public class CategoryRepositoryTest extends AppTest {
         Iterable<Category> allCategory = categoryRepository.findAll();
         Assert.assertNotNull(allCategory);
     }
-
-
 }

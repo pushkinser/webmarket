@@ -33,14 +33,4 @@ public class OrderServiceTest extends AppTest {
             }
         }
     }
-
-    @Test
-    public void ShouldGetCountProduct() {
-        List<OrderDTO> orderDTOS = orderService.getOrders();
-        for (OrderDTO orderDTO : orderDTOS) {
-            Assert.assertNotNull(orderService.getProducts(orderDTO));
-        }
-    }
-
-
 }

@@ -13,14 +13,17 @@ INSERT INTO users_roles (users_id, roles_id)
 VALUES (1, 1), (2, 2);
 
 -- products
-INSERT INTO products (name, price, description)
-VALUES ('Akai BT100', 10000, 'description'),
-  ('Телескоп Levenhuk Skyline', 60000, 'description'),
-  ('Камера GoPro', 2000,
+INSERT INTO products (id, name, price, description)
+VALUES (1, 'Akai BT100', 10000, 'description'),
+  (2, 'Телескоп Levenhuk Skyline', 60000, 'description'),
+  (3, 'Камера GoPro', 2000,
    'Экшн-камера - позволяет записывать с разрешением 4К и очень плавным изображением до 25 кадров в секунду с дисплеем 2″ TFT LCD.'),
-  ('Велосипед EzCity', 1000, 'description'),
-  ('Палатка North',	540, 'description'),
-  ('Наушники Sony ',	444, 'description');
+  (4, 'Велосипед EzCity', 1000, 'description'),
+  (5, 'Палатка North',	540, 'description'),
+  (6, 'Наушники Sony ',	444, 'description');
+
+insert into categories (id, name) values (1, 'Категория 1');
+insert into products_categories (products_id, categories_id) VALUES (1, 1);
 
 -- orders
 INSERT INTO orders (users_id)
