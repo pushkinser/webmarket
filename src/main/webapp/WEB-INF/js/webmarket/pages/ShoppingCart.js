@@ -1,4 +1,4 @@
-define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-css', 'bootstrap', 'require-css!bootstrap-css', 'domReady!'], function ($) {
+define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-css', 'require-css!tables-css', 'bootstrap', 'require-css!bootstrap-css', 'domReady!'], function ($) {
 
     function ShoppingCart(options) {
         $.extend(this, options);

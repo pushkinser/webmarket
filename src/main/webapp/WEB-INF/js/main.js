@@ -11,6 +11,7 @@ require.config({
         'bootstrap-css': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap',
         'datatables': '//cdn.datatables.net/1.10.16/js/jquery.dataTables',
         'datatables-css': '//cdn.datatables.net/1.10.16/css/jquery.dataTables',
+        'tables-css': '/css/tables',
         'domReady': '//cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady'
     },
     shim: {

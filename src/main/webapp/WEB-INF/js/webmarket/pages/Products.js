@@ -4,7 +4,7 @@
 // TODO: remove inlined styles
 // TODO: find out how to handle sourcemaps properly
 
-define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 'bootstrap', 'require-css!bootstrap-css', 'domReady!'], function ($) {
+define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 'require-css!tables-css', 'bootstrap', 'require-css!bootstrap-css', 'domReady!'], function ($) {
 
     function Products(options) {
         this.productsTableElementId = 'info';
