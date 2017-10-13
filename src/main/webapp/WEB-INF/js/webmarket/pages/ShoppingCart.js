@@ -6,7 +6,7 @@ define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-cs
 
     ShoppingCart.prototype.draw = function () {
         $('#' + this.shoppingCartTableElementId).DataTable({
-            'ajax': {'url': '/api/shoppingcart/', 'dataSrc': this._a},
+            'ajax': {'url': '/api/shoppingcart/', 'dataSrc': this._getJson},
             'columns': [
                 {
                     'data': null,
@@ -20,7 +20,7 @@ define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-cs
                 {
                     'data': null,
                     'render': function (data) {
-                        return '<a href="/product/' + data.productId + '/">' + data.product.name + '</a>';
+                        return '<a href="/product/' + data.product.id + '/">' + data.product.name + '</a>';
                     }
                 },
                 {
@@ -32,6 +32,12 @@ define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-cs
                 },
                 {
                     'data': 'count'
+                },
+                {
+                    'data': null,
+                    'searchable': false,
+                    'sortable': false,
+                    'createdCell': this._a.bind(this)
                 }
             ],
             "deferRender": true,
@@ -56,11 +62,11 @@ define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-cs
     };
 
     ShoppingCart.prototype._onImageCellCreated = function (td, cellData) {
-        if (cellData && cellData.productId) {
+        if (cellData && cellData.product.id) {
             try {
-                $.get('/images/product/' + cellData.productId + '.jpg').then(
+                $.get('/images/product/' + cellData.product.id + '.jpg').then(
                     function () {
-                        $(td).html('<img src="/images/product/' + cellData.productId + '.jpg" class="img-circle" alt="image" width="100px" height="100px" >');
+                        $(td).html('<img src="/images/product/' + cellData.product.id + '.jpg" class="img-circle" alt="image" width="100px" height="100px" >');
                     },
                     function () {
                         $(td).html('<img src="/images/product/pain.png" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >');
@@ -80,7 +86,24 @@ define('pages/ShoppingCart', ['jquery', 'datatables', 'require-css!datatables-cs
         $(td).html(res);
     };
 
-    ShoppingCart.prototype._a  = function (json) {
+    ShoppingCart.prototype._a = function (td, cellData) {
+        $(td).html("<img src='/images/shopping_cart/remove.png' class='img-responsive' width=\"50px\" height=\"50px\" alt=" + cellData.product.name + "'>");
+        $(td).bind("click", function () { this._deleteProductFromShoppingCart.apply(this, [cellData.id])}.bind(this));
+    };
+
+    ShoppingCart.prototype._deleteProductFromShoppingCart = function (id) {
+        $.ajax({
+            url: '/api/shoppingcart/',
+            type: 'DELETE',
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({'id': id}),
+            success: function() {  }
+        });
+
+    };
+
+    ShoppingCart.prototype._getJson  = function (json) {
         return json.order.orderItems;
     };
 

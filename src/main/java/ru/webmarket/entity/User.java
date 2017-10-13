@@ -9,9 +9,9 @@ import java.util.*;
 
 /**
  * @author Сергей
- * <p>
  *
- *     TODO: equals/hashCode for List
+ *
+ *
  */
 
 
@@ -57,6 +57,10 @@ public class User implements UserDetails {
 
     public User() {
 
+    }
+
+    public User (Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -154,12 +158,12 @@ public class User implements UserDetails {
         this.shoppingCart = shoppingCart;
     }
 
-    public List<Order> getOrdes() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrdes(List<Order> ordes) {
-        this.orders = ordes;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

@@ -1,5 +1,18 @@
 /*
  * Product table customisations
  */
-table.products {
+table.products
+
+a:active {
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
 }
+
+a:link {
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+}
+
+

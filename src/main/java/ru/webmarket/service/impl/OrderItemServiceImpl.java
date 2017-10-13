@@ -3,7 +3,9 @@ package ru.webmarket.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.OrderItem;
+import ru.webmarket.entity.converter.OrderConverter;
 import ru.webmarket.entity.converter.OrderItemConverter;
+import ru.webmarket.entity.dto.OrderDTO;
 import ru.webmarket.entity.dto.OrderItemDTO;
 import ru.webmarket.entity.dto.ProductDTO;
 import ru.webmarket.repository.OrderItemRepository;
@@ -22,8 +24,9 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public void addOrderItem(OrderItemDTO orderItemDTO) {
+    public void addOrderItemToOrder(OrderItemDTO orderItemDTO, OrderDTO orderDTO) {
         OrderItem orderItem = OrderItemConverter.dtoToEntity(orderItemDTO);
+        orderItem.setOrder(OrderConverter.dtoToEntity(orderDTO));
         if (orderItem != null) orderItemRepository.save(orderItem);
     }
 

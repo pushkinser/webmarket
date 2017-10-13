@@ -1,6 +1,8 @@
 package ru.webmarket.entity.converter;
 
+import ru.webmarket.entity.Order;
 import ru.webmarket.entity.OrderItem;
+import ru.webmarket.entity.dto.OrderDTO;
 import ru.webmarket.entity.dto.OrderItemDTO;
 
 import java.util.ArrayList;
@@ -15,6 +17,20 @@ public class OrderItemConverter {
 
         orderItem.setId(orderItemDTO.getId());
         orderItem.setProduct(ProductConverter.dtoToEntity(orderItemDTO.getProduct()));
+//        orderItem.setOrder(OrderConverter.dtoToEntity(orderItemDTO.getOrder()));
+        orderItem.setCount(orderItemDTO.getCount());
+
+        return orderItem;
+    }
+
+    public static OrderItem dtoToEntity(OrderDTO orderDTO, OrderItemDTO orderItemDTO) {
+        if (orderItemDTO == null) return null;
+
+        OrderItem orderItem = new OrderItem();
+
+        orderItem.setId(orderItemDTO.getId());
+        orderItem.setProduct(ProductConverter.dtoToEntity(orderItemDTO.getProduct()));
+        orderItem.setOrder(OrderConverter.dtoToEntity(orderDTO));
         orderItem.setCount(orderItemDTO.getCount());
 
         return orderItem;
@@ -26,9 +42,8 @@ public class OrderItemConverter {
         OrderItemDTO orderItemDTO = new OrderItemDTO();
 
         orderItemDTO.setId(orderItem.getId());
-        orderItemDTO.setProductId(orderItem.getProduct().getId());
-        orderItemDTO.setOrderId(orderItemDTO.getOrderId());
         orderItemDTO.setProduct(ProductConverter.entityToDto(orderItem.getProduct()));
+//        orderItemDTO.setOrder(OrderConverter.entityToDto(orderItem.getOrder()));
         orderItemDTO.setCount(orderItem.getCount());
 
         return orderItemDTO;

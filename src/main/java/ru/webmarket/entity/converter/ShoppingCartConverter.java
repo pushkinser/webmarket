@@ -1,6 +1,7 @@
 package ru.webmarket.entity.converter;
 
 import ru.webmarket.entity.ShoppingCart;
+import ru.webmarket.entity.User;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ShoppingCartConverter {
 
         shoppingCart.setId(shoppingCartDTO.getId());
         shoppingCart.setOrder(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
+        shoppingCart.setUser(new User(shoppingCartDTO.getUserId()));
 
         return shoppingCart;
     }

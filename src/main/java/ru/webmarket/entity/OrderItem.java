@@ -7,14 +7,9 @@ import javax.persistence.*;
 public class OrderItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orders_items_id")
     private Long id;
-
-    @Column(name = "products_id", insertable = false, updatable = false)
-    private Long productId;
-
-    @Column(name = "orders_id", insertable = false, updatable = false)
-    private Long orderId;
 
     @Column(name = "count")
     private int count;
@@ -71,16 +66,16 @@ public class OrderItem {
 
         if (count != orderItem.count) return false;
         if (id != null ? !id.equals(orderItem.id) : orderItem.id != null) return false;
-        if (productId != null ? !productId.equals(orderItem.productId) : orderItem.productId != null) return false;
-        return orderId != null ? orderId.equals(orderItem.orderId) : orderItem.orderId == null;
+        if (order != null ? !order.equals(orderItem.order) : orderItem.order != null) return false;
+        return product != null ? product.equals(orderItem.product) : orderItem.product == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (productId != null ? productId.hashCode() : 0);
-        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
         result = 31 * result + count;
+        result = 31 * result + (order != null ? order.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
         return result;
     }
 
@@ -88,8 +83,8 @@ public class OrderItem {
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
-                ", productId=" + productId +
-                ", orderId=" + orderId +
+                ", product=" + product +
+                ", order=" + order +
                 ", count=" + count +
                 '}';
     }

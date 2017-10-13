@@ -4,9 +4,7 @@ public class OrderItemDTO {
 
     private Long id;
 
-    private Long orderId;
-
-    private Long productId;
+    private OrderDTO order;
 
     private ProductDTO product;
 
@@ -20,13 +18,8 @@ public class OrderItemDTO {
         this.product = product;
     }
 
-    public OrderItemDTO(Long id, ProductDTO product, int count) {
-        this.id = id;
-        this.product = product;
-        this.count = count;
-    }
-
-    public OrderItemDTO(ProductDTO product, int count) {
+    public OrderItemDTO(OrderDTO order, ProductDTO product, int count) {
+        this.order = order;
         this.product = product;
         this.count = count;
     }
@@ -39,20 +32,12 @@ public class OrderItemDTO {
         this.id = id;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public OrderDTO getOrder() {
+        return order;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setOrder(OrderDTO order) {
+        this.order = order;
     }
 
     public ProductDTO getProduct() {
@@ -80,15 +65,15 @@ public class OrderItemDTO {
 
         if (count != that.count) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
-        return productId != null ? productId.equals(that.productId) : that.productId == null;
+        if (order != null ? !order.equals(that.order) : that.order != null) return false;
+        return product != null ? product.equals(that.product) : that.product == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
-        result = 31 * result + (productId != null ? productId.hashCode() : 0);
+        result = 31 * result + (order != null ? order.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
         result = 31 * result + count;
         return result;
     }
@@ -97,9 +82,6 @@ public class OrderItemDTO {
     public String toString() {
         return "OrderItemDTO{" +
                 "id=" + id +
-                ", orderId=" + orderId +
-                ", productId=" + productId +
-                ", product=" + product +
                 ", count=" + count +
                 '}';
     }

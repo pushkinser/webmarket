@@ -18,9 +18,6 @@ public class Order {
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "orders")
-    private List<Product> products;
-
     @OneToOne(mappedBy = "order")
     private ShoppingCart shoppingCart;
 
@@ -29,10 +26,6 @@ public class Order {
 
     public Order() {
 
-    }
-
-    public Order(Long id) {
-        this.id = id;
     }
 
     public Long getId() {
@@ -51,14 +44,6 @@ public class Order {
         this.user = user;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
@@ -74,14 +59,6 @@ public class Order {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
-
-    //    public int getCount() {
-//        return count;
-//    }
-//
-//    public void setCount(int count) {
-//        this.count = count;
-//    }
 
     @Override
     public boolean equals(Object o) {
@@ -106,7 +83,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                ", products=" + products +
+                ", id=" + id +
                 '}';
     }
 

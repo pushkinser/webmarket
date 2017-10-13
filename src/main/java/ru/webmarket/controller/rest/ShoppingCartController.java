@@ -2,10 +2,7 @@ package ru.webmarket.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
 import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.service.impl.ShoppingCartServiceImpl;
@@ -43,14 +40,19 @@ public class ShoppingCartController {
         shoppingCartService.addShoppingCart(shoppingCartDTO);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public void updateShoppingCart(ShoppingCartDTO shoppingCartDTO) {
-        shoppingCartService.editShoppingCart(shoppingCartDTO);
+//    @RequestMapping(value = "/", method = RequestMethod.PUT)
+//    public void updateShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+//        shoppingCartService.editShoppingCart(shoppingCartDTO);
+//    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT, consumes = "application/json")
+    public void addProduct(@RequestBody ProductBodyJson a) {
+        shoppingCartService.addProduct(getCurrentShoppingCart(), a.getId(), a.getCount());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void addProduct(@PathVariable("id") Long id) {
-        shoppingCartService.addProduct(getCurrentShoppingCart(), id);
+    @RequestMapping(value = "/", method = RequestMethod.DELETE, consumes = "application/json")
+    public void deleteProduct(@RequestBody ProductBodyJson a) {
+        shoppingCartService.deleteProduct(getCurrentShoppingCart(), a.getId());
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)

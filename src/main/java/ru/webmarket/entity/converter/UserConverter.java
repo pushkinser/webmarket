@@ -56,7 +56,7 @@ public class UserConverter {
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
         user.setRoles(RoleConverter.dtoToEntity(userDTO.getRoles()));
-        user.setOrdes(OrderConverter.dtoToEntity(userDTO.getOrders()));
+        user.setOrders(OrderConverter.dtoToEntity(userDTO.getOrders()));
 
         return user;
     }
@@ -72,7 +72,7 @@ public class UserConverter {
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
         userDTO.setRoles(RoleConverter.entityToDto(user.getRoles()));
-        userDTO.setOrders(OrderConverter.entityToDto(user.getOrdes()));
+        userDTO.setOrders(OrderConverter.entityToDto(user.getOrders()));
 
         return userDTO;
     }

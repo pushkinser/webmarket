@@ -26,6 +26,11 @@ public class ShoppingCartDTO {
         this.userId = userId;
     }
 
+    public ShoppingCartDTO(OrderDTO order, Long userId) {
+        this.order = order;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }

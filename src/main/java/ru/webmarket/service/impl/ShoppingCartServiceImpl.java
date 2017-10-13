@@ -2,6 +2,9 @@ package ru.webmarket.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.webmarket.entity.OrderItem;
+import ru.webmarket.entity.Product;
+import ru.webmarket.entity.converter.OrderConverter;
 import ru.webmarket.entity.converter.OrderItemConverter;
 import ru.webmarket.entity.converter.ProductConverter;
 import ru.webmarket.entity.converter.ShoppingCartConverter;
@@ -55,19 +58,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void editShoppingCart(ShoppingCartDTO shoppingCartDTO) {
         if (shoppingCartDTO == null) throw new NullPointerException();
-        if (shoppingCartRepository.findOne(shoppingCartDTO.getId()) != null)
+        if (shoppingCartRepository.findOne(shoppingCartDTO.getId()) != null) {
+            orderRepository.save(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
             shoppingCartRepository.save(ShoppingCartConverter.dtoToEntity(shoppingCartDTO));
+        }
     }
 
-    // Можно сделать через editShoppingCart
+    @Override
+    public void editShoppingCart(ShoppingCartDTO shoppingCartDTO, OrderItemDTO orderItemDTO) {
+        if ((shoppingCartDTO == null)||(orderItemDTO == null)) throw new NullPointerException();
+        if (shoppingCartRepository.findOne(shoppingCartDTO.getId()) != null) {
+            orderItemRepository.save(OrderItemConverter.dtoToEntity(orderItemDTO));
+            orderRepository.save(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
+            shoppingCartRepository.save(ShoppingCartConverter.dtoToEntity(shoppingCartDTO));
+        }
+    }
+
     @Override
     public void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
         shoppingCartDTO.getOrder().addOrderItemDTO(new OrderItemDTO(productDTO));
         editShoppingCart(shoppingCartDTO);
+
 //        OrderDTO orderDTO = OrderConverter.entityToDto(orderRepository.getOne(shoppingCartDTO.getOrder().getId()));
 //        orderDTO.addOrderItemDTO(new OrderItemDTO(productDTO, count));
 //        orderRepository.save(OrderConverter.dtoToEntity(orderDTO));
-//        TODO: addProduct
     }
 
     @Override
@@ -75,12 +89,42 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         addProduct(shoppingCartDTO, ProductConverter.entityToDto(productRepository.getOne(id)));
     }
 
+
+    // Внимание: комментарий без смысловой нагрузки! После n+1-го прочтения удалить.,
+    // Работает!!!!1111111
+    @Override
+    public void addProduct(ShoppingCartDTO shoppingCartDTO, Long id, int count) {
+
+        ProductDTO productDTO =  ProductConverter.entityToDto(productRepository.getOne(id));
+        OrderItemDTO orderItemDTO = new OrderItemDTO(shoppingCartDTO.getOrder(), productDTO, count);
+
+        orderItemDTO.setOrder(shoppingCartDTO.getOrder());
+        OrderItem orderItem = OrderItemConverter.dtoToEntity(shoppingCartDTO.getOrder(), orderItemDTO);
+        shoppingCartDTO.getOrder().addOrderItemDTO(orderItemDTO);
+        orderItemRepository.save(orderItem);
+    }
+
     @Override
     public void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
-        List<OrderItemDTO> orderItemDTOS = shoppingCartDTO.getOrder().getOrderItems();
-        for (OrderItemDTO orderItemDTO: orderItemDTOS) {
-            if (orderItemDTO.getProduct() == productDTO) orderItemRepository.delete(OrderItemConverter.dtoToEntity(orderItemDTO));
+//        List<OrderItemDTO> orderItemDTOS = shoppingCartDTO.getOrder().getOrderItems();
+//        for (OrderItemDTO orderItemDTO: orderItemDTOS) {
+//            if (orderItemDTO.getProduct() == productDTO) {
+//                orderItemRepository.delete(OrderItemConverter.dtoToEntity(orderItemDTO));
+//            }
+//        }
+        Product product = ProductConverter.dtoToEntity(productDTO);
+        List<OrderItem> orderItems = OrderItemConverter.dtoToEntity(shoppingCartDTO.getOrder().getOrderItems());
+        for (OrderItem orderItem: orderItems) {
+            if (orderItem.getProduct() == product) {
+                orderItemRepository.delete(orderItem);
+                System.out.println(orderItem);
+            }
         }
+    }
+
+    @Override
+    public void deleteProduct(ShoppingCartDTO shoppingCartDTO, Long id) {
+        orderItemRepository.delete(id);
     }
 
     @Override

@@ -19,6 +19,10 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
+    public ProductDTO(String name) {
+        this.name = name;
+    }
+
     public ProductDTO(String name, Double price, String description) {
         this.name = name;
         this.price = price;
@@ -96,9 +100,9 @@ public class ProductDTO {
     @Override
     public String toString() {
         return "ProductDTO{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", price=" + price +
-                ", categories=" + categories +
                 '}';
     }
 }

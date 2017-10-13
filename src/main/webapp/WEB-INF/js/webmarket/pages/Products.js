@@ -36,15 +36,16 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
                     'render': function () {
                         return 0;
                     },
-                    'createdCell': this._priseCellConvertRuble
+                    'createdCell': this._priceCellConvertRuble
                 },
-                {
+                {   //
                     'data': null,
-                    'render': function (data) {
-                        return "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name onclick='productsPage.addProductInShoppingCart(" + data.id + ")'>";
-                    },
+                    // 'render': function (data) {
+                    //     return "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name onclick='this._addProductInShoppingCart("+data.id+","+1+")'>";
+                    // },
                     'searchable': false,
-                    'sortable': false
+                    'sortable': false,
+                    'createdCell': this._addProductCell.bind(this)
                 }
             ],
             "deferRender": true,
@@ -84,19 +85,39 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
         }
     };
 
-    Products.addProductInShoppingCart = function (id) {
-        // $.ajax({
-        //     type: 'PUT',
-        //     data: id,
-        //     // success: function() { ... },
-        //     // error: function(){ ... },
-        //     url: '/api/shoppingcat/',
-        //     cache:false
-        // });
-        console.log('Добавляем ');
+    Products.prototype._addProductCell = function (td, cellData) {
+        $(td).html("<img src='/images/shopping_cart/add.png' class='img-responsive' alt=" + cellData.name + "'>");
+        $(td).bind("click", function () { this._addProductInShoppingCart.apply(this, [cellData.id, 1])}.bind(this));
     };
 
-    Products.prototype._priseCellConvertRuble = function (td, cellData) {
+    Products.prototype._addProductInShoppingCart = function (id, count) {
+        $.ajax({
+            url: '/api/shoppingcart/',
+            type: 'PUT',
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({'id': id, 'count': count}),
+            success: function() { console.log('Добавили'); },
+            // error: function(){ ... },
+        });
+
+    };
+
+
+    // Products.addProductInShoppingCart = function () {
+    //     alert();
+    //     // $.ajax({
+    //     //     type: 'PUT',
+    //     //     data: id,
+    //     //     // success: function() { ... },
+    //     //     // error: function(){ ... },
+    //     //     url: '/api/shoppingcat/',
+    //     //     cache:false
+    //     // });
+    //     // console.log('Добавляем ');
+    // };
+
+    Products.prototype._priceCellConvertRuble = function (td, cellData) {
         var num = cellData.price;
         var p = num.toFixed(2).split(".");
         var res = p[0].split("").reverse().reduce(function (acc, num, i, orig) {

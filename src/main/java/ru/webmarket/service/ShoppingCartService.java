@@ -1,6 +1,7 @@
 package ru.webmarket.service;
 
 import org.springframework.stereotype.Service;
+import ru.webmarket.entity.dto.OrderItemDTO;
 import ru.webmarket.entity.dto.ProductDTO;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
 
@@ -22,11 +23,17 @@ public interface ShoppingCartService {
 
     void editShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
+    public void editShoppingCart(ShoppingCartDTO shoppingCartDTO, OrderItemDTO orderItemDTO);
+
     void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 
     void addProduct(ShoppingCartDTO shoppingCartDTO, Long id);
 
+    void addProduct(ShoppingCartDTO shoppingCartDTO, Long id, int count);
+
     void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
+
+    void deleteProduct(ShoppingCartDTO shoppingCartDTO,  Long id);
 
     List<ProductDTO> getProducts(ShoppingCartDTO shoppingCartDTO);
 
