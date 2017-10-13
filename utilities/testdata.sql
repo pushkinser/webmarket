@@ -13,7 +13,7 @@ INSERT INTO users_roles (users_id, roles_id)
 VALUES (1, 1), (2, 2);
 
 -- products
-INSERT INTO products (id, name, price, description)
+INSERT INTO products (products_id, name, price, description)
 VALUES (1, 'Akai BT100', 10000, 'description'),
   (2, 'Телескоп Levenhuk Skyline', 60000, 'description'),
   (3, 'Камера GoPro', 2000,
@@ -22,7 +22,7 @@ VALUES (1, 'Akai BT100', 10000, 'description'),
   (5, 'Палатка North',	540, 'description'),
   (6, 'Наушники Sony ',	444, 'description');
 
-insert into categories (id, name) values (1, 'Категория 1');
+insert into categories (categories_id, name) values (1, 'Категория 1');
 insert into products_categories (products_id, categories_id) VALUES (1, 1);
 
 -- orders
