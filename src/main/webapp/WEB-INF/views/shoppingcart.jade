@@ -23,15 +23,19 @@ html
                             th Стоимость
                             th Количество
                             th
+                 div(id = 'shoppingCartControl')
 
 
     script.
 
         require(['pages/ShoppingCart'], function (ShoppingCart) {
             const options = {
-                shoppingCartTableElementId: 'shoppingCartTableId'
+                shoppingCartTableElementId: 'shoppingCartTableId',
+                controlElementId: 'shoppingCartControl'
             };
             var shoppingCartPage = new ShoppingCart(options);
             shoppingCartPage.draw();
         });
+
+
 

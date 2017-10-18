@@ -13,9 +13,22 @@ nav.navbar.navbar-default
             li
                 if isAuthorized
                     a(href="/shoppingcart")
-                        img(src='/images/shopping_cart/empty.png', class='img-responsive')
+                        div(id = 'shoppingCartInfo')
+                            img(src='/images/shopping_cart/empty.png', class='img-responsive')
+                        div(id = 'shoppingCartCost')
             li
                 if isAuthorized
                     a(href="/logout") Выйти
                 else
                     a(href="/login") Войти
+
+    script.
+
+        require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+            const options = {
+                shoppingCartCostElementId: 'shoppingCartCost'
+            };
+            var navigationMenuCost = new CostShoppingCart(options);
+            navigationMenuCost.draw();
+
+        });

@@ -1,7 +1,7 @@
 /*
  * Product table customisations
  */
-table.products
+#table.products
 
 a:active {
     text-decoration: none;

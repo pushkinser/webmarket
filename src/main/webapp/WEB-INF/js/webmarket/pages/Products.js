@@ -4,10 +4,11 @@
 // TODO: remove inlined styles
 // TODO: find out how to handle sourcemaps properly
 
-define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 'require-css!tables-css', 'bootstrap', 'require-css!bootstrap-css', 'domReady!'], function ($) {
+define('pages/Products',
+    ['jquery', 'datatables','bootstrap', 'jgrowl', 'require-css!datatables-css', 'require-css!tables-css','require-css!bootstrap-css', 'require-css!jgrowl-css', 'require-css!growl-css',  'domReady!'],
+    function (jq, dt, bt, g) {
 
     function Products(options) {
-        this.productsTableElementId = 'info';
         $.extend(this, options);
     }
 
@@ -86,36 +87,30 @@ define('pages/Products', ['jquery', 'datatables', 'require-css!datatables-css', 
     };
 
     Products.prototype._addProductCell = function (td, cellData) {
-        $(td).html("<img src='/images/shopping_cart/add.png' class='img-responsive' alt=" + cellData.name + "'>");
-        $(td).bind("click", function () { this._addProductInShoppingCart.apply(this, [cellData.id, 1])}.bind(this));
+        $(td).html("<img src='/images/shopping_cart/add.png' class='img-responsive' alt=" + cellData.name + " width='50px' height='50px' >");
+        $(td).bind("click", function () { this._addProductInShoppingCart.apply(this, [cellData, 1])}.bind(this));
+
     };
 
-    Products.prototype._addProductInShoppingCart = function (id, count) {
+    Products.prototype._addProductInShoppingCart = function (cellData, count) {
         $.ajax({
             url: '/api/shoppingcart/',
             type: 'PUT',
             contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({'id': id, 'count': count}),
-            success: function() { console.log('Добавили'); },
-            // error: function(){ ... },
+            data: JSON.stringify({'id': cellData.id, 'count': count}),
+            success: function() {
+                $.jGrowl(cellData.name + ' добавлен в корзину!', { life:1500, theme: 'success'});
+                require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+                    var navigationMenuCost = new CostShoppingCart();
+                    navigationMenuCost.draw();
+                });
+            }.bind(this),
+            error: function () {
+                $.jGrowl(cellData.name + ' не добавлен :(', { life:3000, theme: 'error'});
+            }.bind(this)
         });
 
     };
-
-
-    // Products.addProductInShoppingCart = function () {
-    //     alert();
-    //     // $.ajax({
-    //     //     type: 'PUT',
-    //     //     data: id,
-    //     //     // success: function() { ... },
-    //     //     // error: function(){ ... },
-    //     //     url: '/api/shoppingcat/',
-    //     //     cache:false
-    //     // });
-    //     // console.log('Добавляем ');
-    // };
 
     Products.prototype._priceCellConvertRuble = function (td, cellData) {
         var num = cellData.price;
