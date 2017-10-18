@@ -51,7 +51,7 @@ public interface ShoppingCartService {
 
     void addProduct(ShoppingCartDTO shoppingCartDTO, Long id, int count);
 
-    void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
+    void deleteProducts(ShoppingCartDTO shoppingCartDTO);
 
     void deleteProduct(ShoppingCartDTO shoppingCartDTO,  Long id);
 

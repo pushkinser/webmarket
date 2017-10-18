@@ -3,10 +3,11 @@ package ru.webmarket.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import ru.webmarket.controller.rest.requestBody.FlagBodyJson;
+import ru.webmarket.controller.rest.requestBody.ProductBodyJson;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
 import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.service.impl.ShoppingCartServiceImpl;
-import ru.webmarket.service.impl.UserServiceImpl;
 
 
 @RestController
@@ -16,9 +17,6 @@ public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartServiceImpl shoppingCartService;
-
-    @Autowired
-    private UserServiceImpl userService;
 
     private ShoppingCartDTO getCurrentShoppingCart () {
         return shoppingCartService.getShoppingCartByUserId(SecurityUtils.getCurrentDetails().getId());
@@ -33,6 +31,11 @@ public class ShoppingCartController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ShoppingCartDTO getShoppingCart() {
           return getCurrentShoppingCart();
+    }
+
+    @RequestMapping(value = "/total", method = RequestMethod.GET)
+    public Double getTotalsShoppingCart() {
+        return shoppingCartService.getTotal(getCurrentShoppingCart());
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -51,9 +54,16 @@ public class ShoppingCartController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE, consumes = "application/json")
-    public void deleteProduct(@RequestBody ProductBodyJson a) {
-        shoppingCartService.deleteProduct(getCurrentShoppingCart(), a.getId());
+    public void deleteProduct(@RequestBody ProductBodyJson productBody) {
+        if (productBody.getFlag()) shoppingCartService.deleteProducts(getCurrentShoppingCart());
+        else shoppingCartService.deleteProduct(getCurrentShoppingCart(), productBody.getId());
     }
+
+//    // Удаление всех товаров из корзины
+//    @RequestMapping(value = "/", method = RequestMethod.DELETE, consumes = "application/json")
+//    public void deleteProducts(@RequestBody FlagBodyJson flag) {
+//        if (flag.getFlag()) shoppingCartService.deleteProducts(getCurrentShoppingCart());
+//    }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public void deleteShoppingCart(Long id) {

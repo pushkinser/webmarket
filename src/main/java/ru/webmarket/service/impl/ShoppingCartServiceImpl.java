@@ -3,7 +3,6 @@ package ru.webmarket.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.webmarket.entity.OrderItem;
-import ru.webmarket.entity.Product;
 import ru.webmarket.entity.converter.OrderConverter;
 import ru.webmarket.entity.converter.OrderItemConverter;
 import ru.webmarket.entity.converter.ProductConverter;
@@ -11,7 +10,10 @@ import ru.webmarket.entity.converter.ShoppingCartConverter;
 import ru.webmarket.entity.dto.OrderItemDTO;
 import ru.webmarket.entity.dto.ProductDTO;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
-import ru.webmarket.repository.*;
+import ru.webmarket.repository.OrderItemRepository;
+import ru.webmarket.repository.OrderRepository;
+import ru.webmarket.repository.ProductRepository;
+import ru.webmarket.repository.ShoppingCartRepository;
 import ru.webmarket.service.ShoppingCartService;
 
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void editShoppingCart(ShoppingCartDTO shoppingCartDTO, OrderItemDTO orderItemDTO) {
-        if ((shoppingCartDTO == null)||(orderItemDTO == null)) throw new NullPointerException();
+        if ((shoppingCartDTO == null) || (orderItemDTO == null)) throw new NullPointerException();
         if (shoppingCartRepository.findOne(shoppingCartDTO.getId()) != null) {
             orderItemRepository.save(OrderItemConverter.dtoToEntity(orderItemDTO));
             orderRepository.save(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
@@ -95,7 +97,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void addProduct(ShoppingCartDTO shoppingCartDTO, Long id, int count) {
 
-        ProductDTO productDTO =  ProductConverter.entityToDto(productRepository.getOne(id));
+        ProductDTO productDTO = ProductConverter.entityToDto(productRepository.getOne(id));
         OrderItemDTO orderItemDTO = new OrderItemDTO(shoppingCartDTO.getOrder(), productDTO, count);
 
         orderItemDTO.setOrder(shoppingCartDTO.getOrder());
@@ -105,20 +107,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void deleteProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
-//        List<OrderItemDTO> orderItemDTOS = shoppingCartDTO.getOrder().getOrderItems();
-//        for (OrderItemDTO orderItemDTO: orderItemDTOS) {
-//            if (orderItemDTO.getProduct() == productDTO) {
-//                orderItemRepository.delete(OrderItemConverter.dtoToEntity(orderItemDTO));
-//            }
-//        }
-        Product product = ProductConverter.dtoToEntity(productDTO);
+    public void deleteProducts(ShoppingCartDTO shoppingCartDTO) {
         List<OrderItem> orderItems = OrderItemConverter.dtoToEntity(shoppingCartDTO.getOrder().getOrderItems());
-        for (OrderItem orderItem: orderItems) {
-            if (orderItem.getProduct() == product) {
-                orderItemRepository.delete(orderItem);
-                System.out.println(orderItem);
-            }
+        for (OrderItem orderItem : orderItems) {
+            orderItemRepository.delete(orderItem);
         }
     }
 
