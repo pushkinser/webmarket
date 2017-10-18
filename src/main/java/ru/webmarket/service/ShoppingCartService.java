@@ -11,6 +11,26 @@ import java.util.List;
  * @author Сергей
  */
 
+  // Перепланирование сервиса
+    /*
+    void             Создание корзины. 
+    void             Удаление корзины.
+    boolean          Пустотота корзины.
+    List<ProductDTO> Получить текующие позиции из корзины.
+    int              Текущая стоимость корзины.
+    void             Добавление товара.
+    void             Удаление товара.
+    void             Изменение количества покупаемого товара.
+    void             Очистить корзину от товаров.
+    void             Оформить заказ.
+    
+    Тогда, как сделать заказ, если корзина содержит order?
+    Нужно отличать order-заказы от order-корзин.
+    
+    
+    
+    */
+
 public interface ShoppingCartService {
 
     void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
