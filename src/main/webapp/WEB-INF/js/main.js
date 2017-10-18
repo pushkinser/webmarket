@@ -12,10 +12,16 @@ require.config({
         'datatables': '//cdn.datatables.net/1.10.16/js/jquery.dataTables',
         'datatables-css': '//cdn.datatables.net/1.10.16/css/jquery.dataTables',
         'tables-css': '/css/tables',
+        'jgrowl' :    '//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.6/jquery.jgrowl',
+        'jgrowl-css': '//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.6/jquery.jgrowl',
+        'growl-css' : '/css/growl',
         'domReady': '//cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady'
     },
     shim: {
         'bootstrap': {
+            deps: ['jquery']
+        },
+        'jgrowl': {
             deps: ['jquery']
         }
     }
