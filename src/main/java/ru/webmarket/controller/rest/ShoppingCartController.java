@@ -3,7 +3,6 @@ package ru.webmarket.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import ru.webmarket.controller.rest.requestBody.FlagBodyJson;
 import ru.webmarket.controller.rest.requestBody.ProductBodyJson;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
 import ru.webmarket.security.SecurityUtils;
@@ -18,7 +17,7 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartServiceImpl shoppingCartService;
 
-    private ShoppingCartDTO getCurrentShoppingCart () {
+    private ShoppingCartDTO getCurrentShoppingCart() {
         return shoppingCartService.getShoppingCartByUserId(SecurityUtils.getCurrentDetails().getId());
     }
 
@@ -30,7 +29,7 @@ public class ShoppingCartController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ShoppingCartDTO getShoppingCart() {
-          return getCurrentShoppingCart();
+        return getCurrentShoppingCart();
     }
 
     @RequestMapping(value = "/total", method = RequestMethod.GET)
