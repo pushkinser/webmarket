@@ -2,7 +2,11 @@ package ru.webmarket.controller.rest.requestBody;
 
 import java.io.Serializable;
 
-public class ProductBodyJson implements Serializable {
+/*
+    @param(flag) принимает логическое значение удаление всех товаров корзины
+ */
+
+public class OrderItemBodyJson implements Serializable {
     Long id;
     Integer count;
     Boolean flag;

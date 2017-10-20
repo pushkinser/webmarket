@@ -3,7 +3,7 @@ package ru.webmarket.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import ru.webmarket.controller.rest.requestBody.ProductBodyJson;
+import ru.webmarket.controller.rest.requestBody.OrderItemBodyJson;
 import ru.webmarket.entity.dto.ShoppingCartDTO;
 import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.service.impl.ShoppingCartServiceImpl;
@@ -48,12 +48,12 @@ public class ShoppingCartController {
 //    }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT, consumes = "application/json")
-    public void addProduct(@RequestBody ProductBodyJson a) {
+    public void addProduct(@RequestBody OrderItemBodyJson a) {
         shoppingCartService.addProduct(getCurrentShoppingCart(), a.getId(), a.getCount());
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE, consumes = "application/json")
-    public void deleteProduct(@RequestBody ProductBodyJson productBody) {
+    public void deleteProduct(@RequestBody OrderItemBodyJson productBody) {
         if (productBody.getFlag()) shoppingCartService.deleteProducts(getCurrentShoppingCart());
         else shoppingCartService.deleteProduct(getCurrentShoppingCart(), productBody.getId());
     }
