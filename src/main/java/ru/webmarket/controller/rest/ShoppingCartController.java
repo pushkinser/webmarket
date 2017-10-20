@@ -21,7 +21,6 @@ public class ShoppingCartController {
         return shoppingCartService.getShoppingCartByUserId(SecurityUtils.getCurrentDetails().getId());
     }
 
-    // Получить корзину по id корзины
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ShoppingCartDTO getShoppingCartById(@PathVariable("id") Long id) {
         return shoppingCartService.getShoppingCart(id);
@@ -37,10 +36,10 @@ public class ShoppingCartController {
         return shoppingCartService.getTotal(getCurrentShoppingCart());
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void addShoppingCart(ShoppingCartDTO shoppingCartDTO) {
-        shoppingCartService.addShoppingCart(shoppingCartDTO);
-    }
+//    @RequestMapping(value = "/", method = RequestMethod.POST)
+//    public void addShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+//        shoppingCartService.addShoppingCart(shoppingCartDTO);
+//    }
 
 //    @RequestMapping(value = "/", method = RequestMethod.PUT)
 //    public void updateShoppingCart(ShoppingCartDTO shoppingCartDTO) {

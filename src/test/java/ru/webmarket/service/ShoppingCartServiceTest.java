@@ -23,8 +23,6 @@ public class ShoppingCartServiceTest extends AppTest {
     private ProductService productService;
     @Autowired
     private OrderService orderService;
-    @Autowired
-    private OrderItemService orderItemService;
 
     @Test
     public void ShouldGetAllShoppingCart() {
@@ -87,16 +85,16 @@ public class ShoppingCartServiceTest extends AppTest {
         System.out.println( shoppingCartService.getShoppingCartByUserId(userDTO.getId()));
     }
 
-    @Test
-    public void ShouldDeleteProduct () {
-        Assert.assertNotNull(userService.findByUserName("test"));
-        UserDTO userDTO = userService.findByUserName("test");
-        ShoppingCartDTO shoppingCartDTO = shoppingCartService.getShoppingCartByUserId(userDTO.getId());
-        ProductDTO productDTO = productService.getProduct(36L);
-        shoppingCartService.addProduct(shoppingCartDTO, productDTO.getId(), 77);
-        Assert.assertNotNull(shoppingCartService.getShoppingCartByUserId(userDTO.getId()).getOrder().getOrderItems().contains(productDTO));
-        shoppingCartService.deleteProduct(shoppingCartService.getShoppingCartByUserId(userDTO.getId()), productDTO);
-        Assert.assertFalse(shoppingCartService.getShoppingCartByUserId(userDTO.getId()).getOrder().getOrderItems().contains(productDTO));
-    }
+//    @Test
+//    public void ShouldDeleteProduct () {
+//        Assert.assertNotNull(userService.findByUserName("test"));
+//        UserDTO userDTO = userService.findByUserName("test");
+//        ShoppingCartDTO shoppingCartDTO = shoppingCartService.getShoppingCartByUserId(userDTO.getId());
+//        ProductDTO productDTO = productService.getProduct(36L);
+//        shoppingCartService.addProduct(shoppingCartDTO, productDTO.getId(), 77);
+//        Assert.assertNotNull(shoppingCartService.getShoppingCartByUserId(userDTO.getId()).getOrder().getOrderItems().contains(productDTO));
+//        shoppingCartService.deleteProduct(shoppingCartService.getShoppingCartByUserId(userDTO.getId()), productDTO);
+//        Assert.assertFalse(shoppingCartService.getShoppingCartByUserId(userDTO.getId()).getOrder().getOrderItems().contains(productDTO));
+//    }
 
 }
