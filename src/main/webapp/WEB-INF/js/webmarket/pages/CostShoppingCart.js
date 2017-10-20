@@ -13,13 +13,19 @@ define('pages/CostShoppingCart',
                 url: '/api/shoppingcart/total/',
                 type: 'GET',
                 success: function (data) {
-                    $('#' + this.shoppingCartCostElementId).html(data);
-                    // $(td).bind("click", function () { this._addProductInShoppingCart.apply(this, [cellData, 1])}.bind(this));
+                    $('#' + this.shoppingCartCostElementId).html('<div style= "text-align: center;">'+this._costConvertRuble(data)+'</div>');
                 }.bind(this)
             });
 
-            // $(td).html("<img src='/images/shopping_cart/add.png' class='img-responsive' alt=" + cellData.name + " width='50px' height='50px' >");
-            // $(td).bind("click", function () { this._addProductInShoppingCart.apply(this, [cellData, 1])}.bind(this));
+        };
+
+        CostShoppingCart.prototype._costConvertRuble = function (data) {
+            var num = data;
+            var p = num.toFixed(2).split(".");
+            var res = p[0].split("").reverse().reduce(function (acc, num, i, orig) {
+                return num == "-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
+            }, "") + "," + p[1] + '&#8381 ';
+           return res;
         };
 
 

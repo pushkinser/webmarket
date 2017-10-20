@@ -7,15 +7,17 @@ nav.navbar.navbar-default
                 if isAuthorized
                     a(href="/products") Товары
         lu.nav.navbar-nav.navbar-right.nav-tabs
-            li
-                if isAuthorized
+            if isAuthorized
+                li
                     .h1 #{user.userName}
-            li
-                if isAuthorized
+                li
                     a(href="/shoppingcart")
                         div(id = 'shoppingCartInfo')
                             img(src='/images/shopping_cart/empty.png', class='img-responsive')
+                li
+                    .h1
                         div(id = 'shoppingCartCost')
+
             li
                 if isAuthorized
                     a(href="/logout") Выйти

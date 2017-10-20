@@ -99,14 +99,14 @@ define('pages/Products',
             contentType: "application/json",
             data: JSON.stringify({'id': cellData.id, 'count': count}),
             success: function() {
-                $.jGrowl(cellData.name + ' добавлен в корзину!', { life:1500, theme: 'success'});
+                $.jGrowl(cellData.name + ' добавлен в корзину!', { life:1500, theme: 'success', position : 'bottom-right'});
                 require(['pages/CostShoppingCart'], function (CostShoppingCart) {
                     var navigationMenuCost = new CostShoppingCart();
                     navigationMenuCost.draw();
                 });
             }.bind(this),
             error: function () {
-                $.jGrowl(cellData.name + ' не добавлен :(', { life:3000, theme: 'error'});
+                $.jGrowl(cellData.name + ' не добавлен :(', { life:3000, theme: 'error', position : 'bottom-right'});
             }.bind(this)
         });
 

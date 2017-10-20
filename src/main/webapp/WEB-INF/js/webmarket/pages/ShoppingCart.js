@@ -4,8 +4,6 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
         $.extend(this, options);
     }
 
-    var table = $('#' + this.shoppingCartTableElementId).DataTable();
-
     ShoppingCart.prototype.draw = function () {
         $('#' + this.shoppingCartTableElementId).DataTable({
             'ajax': {'url': '/api/shoppingcart/', 'dataSrc': this._getJson},
@@ -75,7 +73,6 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
         $('#' + controlElementId).bind("click", function () {
             this._deleteAllProductFromShoppingCart();
         }.bind(this));
-
     };
 
     ShoppingCart.prototype._deleteAllProductFromShoppingCart = function () {
@@ -85,17 +82,17 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
             contentType: "application/json",
             data: JSON.stringify({'flag': true}),
             success: function () {
-                table.clear();
-                table.draw();
+                $('#shoppingCartTableId').DataTable().clear();
+                $('#shoppingCartTableId').DataTable().draw();
             }
         }).then(function() {
-            $.jGrowl('Корзина очищена', {life:1500, theme: 'success'});
+            $.jGrowl('Корзина очищена', {life:1500, theme: 'success', position : 'bottom-right'});
             require(['pages/CostShoppingCart'], function (CostShoppingCart) {
                 var navigationMenuCost = new CostShoppingCart();
                 navigationMenuCost.draw();
             });
         }, function () {
-            $.jGrowl('Не очищена', { life:3000, theme: 'error'});
+            $.jGrowl('Не очищена', { life:3000, theme: 'error', position : 'bottom-right'});
         });
     };
 
@@ -141,16 +138,16 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
             success: function () {
                 var tr = $(td).parents('tr');
                 tr.remove();
-                table.draw();
+                //table.draw();
             }
         }).then(function() {
-            $.jGrowl(cellData.product.name + ' удален из корзины', {life:1500, theme: 'success'});
+            $.jGrowl(cellData.product.name + ' удален из корзины', {life:1500, theme: 'success', position : 'bottom-right'});
             require(['pages/CostShoppingCart'], function (CostShoppingCart) {
                 var navigationMenuCost = new CostShoppingCart();
                 navigationMenuCost.draw();
             });
         }, function () {
-            $.jGrowl(cellData.product.name + ' не удален', { life:3000, theme: 'error'});
+            $.jGrowl(cellData.product.name + ' не удален', { life:3000, theme: 'error', position : 'bottom-right'});
         });
     };
 
