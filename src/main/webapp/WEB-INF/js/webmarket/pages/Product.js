@@ -11,15 +11,18 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
         var url = "/api/product/" + id;
         var productImageElementId = 'productImageId';
         var descriptionId = 'descriptionId';
+        var shoppingCartIconId = 'shoppingcartId';
         $.ajax({
             type: 'get',
             url: url,
             dataType: 'json',
-            success: function(data) {this._drawProductPage(productImageElementId, descriptionId, data); }.bind(this)
+            success: function (data) {
+                this._drawProductPage(productImageElementId, descriptionId, shoppingCartIconId, data);
+            }.bind(this)
         });
     };
 
-    Product.prototype._drawProductPage = function (productImageElementId, descriptionId, data) {
+    Product.prototype._drawProductPage = function (productImageElementId, descriptionId, shoppingCartIconId, data) {
         $('#info').html('<p>'
             + '<div class="row">'
             + '<div class="col-md-6">'
@@ -29,15 +32,17 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
             + '<h1>' + data.name + '</h1>'
             + '<p>'
             + '<h1>' + this._convertRuble(data.price) + '</h1>'
-            + "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name>"
+            + '<div id = "' + shoppingCartIconId + '"></div>'
+            // + "<img src='/images/shopping_cart/add.png' class='img-responsive' alt=data.name>"
             + '<p>'
             + '<p>'
             + '<p>'
-            + '<div id="'+ descriptionId +'"></div>'
+            + '<div id="' + descriptionId + '"></div>'
             + '</div>');
         this._drawTitle(data);
         this._drawProductImage(productImageElementId, data);
         this._drawDescription(descriptionId, data);
+        this._addProductCell(shoppingCartIconId, data);
     };
 
     Product.prototype._drawProductImage = function (productImageElementId, data) {
@@ -56,20 +61,48 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
         }
     };
 
-    Product.prototype._drawTitle = function(data) {
+    Product.prototype._addProductCell = function (shoppingCartIconId, data) {
+        var iconId = 'iconId';
+        $('#' + shoppingCartIconId).html("<img src='/images/shopping_cart/add.png' id = " + iconId + " class='img-responsive' width='50px' height='50px' >");
+        $('#' + iconId).bind("click", function () {
+            this._addProductInShoppingCart.apply(this, [data, 1])
+        }.bind(this));
+    };
+
+    Product.prototype._addProductInShoppingCart = function (data, count) {
+        $.ajax({
+            url: '/api/shoppingcart/',
+            type: 'PUT',
+            contentType: "application/json",
+            data: JSON.stringify({'id': data.id, 'count': count}),
+            success: function () {
+                $.jGrowl(data.name + ' добавлен в корзину!', {life: 1500, theme: 'success', position: 'bottom-right'});
+                require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+                    var navigationMenuCost = new CostShoppingCart();
+                    navigationMenuCost.draw();
+                });
+            }.bind(this),
+            error: function () {
+                $.jGrowl(data.name + ' не добавлен :(', {life: 3000, theme: 'error', position: 'bottom-right'});
+            }.bind(this)
+        });
+
+    };
+
+    Product.prototype._drawTitle = function (data) {
         $('#title').append(data.name);
     };
 
     Product.prototype._convertRuble = function (num) {
         var p = num.toFixed(2).split(".");
-        return  p[0].split("").reverse().reduce(function(acc, num, i, orig) {
-            return  num=="-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
+        return p[0].split("").reverse().reduce(function (acc, num, i, orig) {
+            return num == "-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
         }, "") + "," + p[1] + '&#8381';
     };
 
     Product.prototype._drawDescription = function (descriptionId, data) {
-        if (data && data.description) $('#'+descriptionId).html(data.description)
-        else $('#'+descriptionId).html('');
+        if (data && data.description) $('#' + descriptionId).html(data.description)
+        else $('#' + descriptionId).html('');
     };
 
 
