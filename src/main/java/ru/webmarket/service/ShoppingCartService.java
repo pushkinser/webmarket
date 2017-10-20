@@ -15,7 +15,6 @@ import java.util.List;
     /*
     void             Создание корзины. 
     void             Удаление корзины.
-    boolean          Пустотота корзины.
     List<ProductDTO> Получить текующие позиции из корзины.
     int              Текущая стоимость корзины.
     void             Добавление товара.
@@ -23,19 +22,20 @@ import java.util.List;
     void             Изменение количества покупаемого товара.
     void             Очистить корзину от товаров.
     void             Оформить заказ.
+    boolean          Пустотота корзины.
     
     Тогда, как сделать заказ, если корзина содержит order?
     Нужно отличать order-заказы от order-корзин.
-    
-    
-    
+
     */
 
 public interface ShoppingCartService {
 
     void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
-    List<ShoppingCartDTO> getShoppingCarts();
+    void deleteShoppingCart(Long id);
+
+    List<ProductDTO> getProducts(ShoppingCartDTO shoppingCartDTO);
 
     ShoppingCartDTO getShoppingCart(Long id);
 
@@ -43,7 +43,7 @@ public interface ShoppingCartService {
 
     void editShoppingCart(ShoppingCartDTO shoppingCartDTO);
 
-    public void editShoppingCart(ShoppingCartDTO shoppingCartDTO, OrderItemDTO orderItemDTO);
+    void editShoppingCart(ShoppingCartDTO shoppingCartDTO, OrderItemDTO orderItemDTO);
 
     void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 
@@ -55,7 +55,7 @@ public interface ShoppingCartService {
 
     void deleteProduct(ShoppingCartDTO shoppingCartDTO,  Long id);
 
-    List<ProductDTO> getProducts(ShoppingCartDTO shoppingCartDTO);
+
 
     Double getTotal (ShoppingCartDTO shoppingCartDTO);
 
@@ -63,5 +63,5 @@ public interface ShoppingCartService {
 
     void editProductCount(Long id, int count );
 
-    void deleteShoppingCart(Long id);
+
 }

@@ -1,0 +1,3 @@
+green  #00A550
+red    #C7262C
+purple #C5A1CB

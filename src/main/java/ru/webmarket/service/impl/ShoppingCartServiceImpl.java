@@ -43,11 +43,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public List<ShoppingCartDTO> getShoppingCarts() {
-        return ShoppingCartConverter.entityToDto(shoppingCartRepository.findAll());
-    }
-
-    @Override
     public ShoppingCartDTO getShoppingCart(Long id) {
         return ShoppingCartConverter.entityToDto(shoppingCartRepository.findOne(id));
     }
