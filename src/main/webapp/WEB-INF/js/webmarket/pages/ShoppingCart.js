@@ -1,4 +1,4 @@
-define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'require-css!datatables-css', 'require-css!tables-css', 'bootstrap', 'require-css!bootstrap-css', 'require-css!jgrowl-css', 'require-css!growl-css', 'domReady!'], function ($) {
+define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-css!datatables-css', 'require-css!tables-css', 'bootstrap', 'require-css!bootstrap-css', 'require-css!jgrowl-css', 'require-css!growl-css', 'domReady!'], function ($) {
 
     function ShoppingCart(options) {
         $.extend(this, options);
@@ -32,10 +32,12 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
                 },
                 {
                     'data': null,
+                    'searchable': false,
+                    'sortable': false,
                     'render': function (data) {
-                        return '<input id="spinner" type="number" value="'+data.count+'">';
+                        return '<input id="spinner" type="number" value="' + data.count + '">';
                     },
-                    'createdCell': this._productCellCountSpinner
+                    'createdCell': this._productCellCountSpinner.bind(this)
                 },
                 {
                     'data': null,
@@ -85,14 +87,14 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
                 $('#shoppingCartTableId').DataTable().clear();
                 $('#shoppingCartTableId').DataTable().draw();
             }
-        }).then(function() {
-            $.jGrowl('Корзина очищена', {life:1500, theme: 'success', position : 'bottom-right'});
+        }).then(function () {
+            $.jGrowl('Корзина очищена', {life: 1500, theme: 'success', position: 'bottom-right'});
             require(['pages/CostShoppingCart'], function (CostShoppingCart) {
                 var navigationMenuCost = new CostShoppingCart();
                 navigationMenuCost.draw();
             });
         }, function () {
-            $.jGrowl('Не очищена', { life:3000, theme: 'error', position : 'bottom-right'});
+            $.jGrowl('Не очищена', {life: 3000, theme: 'error', position: 'bottom-right'});
         });
     };
 
@@ -126,7 +128,6 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
         $(td).bind("click", function () {
             this._deleteProductFromShoppingCart.apply(this, [cellData, td])
         }.bind(this));
-
     };
 
     ShoppingCart.prototype._deleteProductFromShoppingCart = function (cellData, td) {
@@ -140,14 +141,18 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
                 tr.remove();
                 //table.draw();
             }
-        }).then(function() {
-            $.jGrowl(cellData.product.name + ' удален из корзины', {life:1500, theme: 'success', position : 'bottom-right'});
+        }).then(function () {
+            $.jGrowl(cellData.product.name + ' удален из корзины', {
+                life: 1500,
+                theme: 'success',
+                position: 'bottom-right'
+            });
             require(['pages/CostShoppingCart'], function (CostShoppingCart) {
                 var navigationMenuCost = new CostShoppingCart();
                 navigationMenuCost.draw();
             });
         }, function () {
-            $.jGrowl(cellData.product.name + ' не удален', { life:3000, theme: 'error', position : 'bottom-right'});
+            $.jGrowl(cellData.product.name + ' не удален', {life: 3000, theme: 'error', position: 'bottom-right'});
         });
     };
 
@@ -157,11 +162,48 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables',  'jgrowl', 'r
 
     ShoppingCart.prototype._productCellCountSpinner = function (td, cellData) {
         var spinnerId = "spinner" + cellData.id;
-        $(td).html('<input id=spinnerId  value="'+cellData.count+'" type="number">');
-        $(td).bind( function(cellData) {
-            var spiner = $('#' + spinnerId).spinner("values", cellData.count);
-            spiner.spinner({min : 0})
-        });
+        $('#' + spinnerId).spinner('value', cellData);
+        // $(td).html('<input type="spinner" id=spinnerId  type="number">');
+
+        $(td).html('<div class="inputBlock">' +
+            '  <div id="minus" class="minus" >-</div>' +
+            '   <input type="text" value='+cellData.count+'>' +
+            '  <div class="plus" >+</div>' +
+            '</div>');
+
+        // var plusBut = $(td).children('inputBlock');
+
+        var div_plus = $(td).children('plus');
+
+        $(div_plus).bind("click", function () {
+            $.jGrowl('plus ' + cellData.id, {life: 3000, theme: 'success'});
+        }).bind(this);
+
+        $('#input').bind("click", function(){
+            $.jGrowl('inputBlock ', {life: 3000, theme: 'success'});
+        }).bind(this);
+
+
+        // $('#plus').click(function () {
+        //     $.jGrowl('plus ' + cellData.id, {life: 3000, theme: 'success'});
+        // }).bind(this);
+        //
+        // $('.minus').bind("click", function () {
+        //     $.jGrowl('minus ' + cellData.id, {life: 3000, theme: 'success'});
+        // });
+
+
+        // $(td).bind(function (cellData) {
+        //     var spiner = $('#' + spinnerId).spinner("values", 100);
+        //     spiner.spinner({min: 0})
+        // });
+
+        $('#inputBlock').blur(function () {
+            $.jGrowl('Блер ' + cellData.id, {life: 3000, theme: 'success'})
+        }).bind(this);
+        $('#' + spinnerId).focus(function () {
+            $.jGrowl('Блер ' + cellData.id, {life: 3000, theme: 'success'})
+        }).bind(this);
 
     };
 

@@ -151,8 +151,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void editProductCount(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO, int count) {
-//    TODO: editProductCount
+    public void editProductCount(Long id, int count) {
+        OrderItem orderItem = orderItemRepository.findOne(id);
+        orderItem.setCount(count);
+        orderItemRepository.save(orderItem);
     }
 
     @Override

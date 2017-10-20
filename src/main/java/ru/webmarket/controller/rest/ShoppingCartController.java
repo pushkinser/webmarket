@@ -52,6 +52,11 @@ public class ShoppingCartController {
         shoppingCartService.addProduct(getCurrentShoppingCart(), a.getId(), a.getCount());
     }
 
+    @RequestMapping(value = "/count", method = RequestMethod.PUT, consumes = "application/json")
+    public void editProductCount(@RequestBody OrderItemBodyJson productBody) {
+        shoppingCartService.editProductCount(productBody.getId(), productBody.getCount());
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.DELETE, consumes = "application/json")
     public void deleteProduct(@RequestBody OrderItemBodyJson productBody) {
         if (productBody.getFlag()) shoppingCartService.deleteProducts(getCurrentShoppingCart());

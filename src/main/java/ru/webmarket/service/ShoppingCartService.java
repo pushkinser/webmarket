@@ -61,7 +61,7 @@ public interface ShoppingCartService {
 
     int getCountProducts (ShoppingCartDTO shoppingCartDTO);
 
-    void editProductCount(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO, int count );
+    void editProductCount(Long id, int count );
 
     void deleteShoppingCart(Long id);
 }

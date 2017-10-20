@@ -16,3 +16,28 @@ a:link {
 }
 
 
+.inputBlock input {
+    background: #ffffff;
+    border: 1px solid #a3a3a3;
+    padding: 10px 10px 10px 10px;
+    font-size: 14px;
+    float: left;
+    width: 50px;
+    text-align: center;
+}
+
+.minus {
+    font-size: 30px;
+    font-weight: bold;
+    margin: -2px 10px 0px 0px;
+    float: left;
+    cursor: pointer;
+}
+
+.plus {
+    font-size: 30px;
+    font-weight: bold;
+    margin: -2px 0px 0px 5px;
+    float: left;
+    cursor: pointer;
+}
