@@ -11,7 +11,7 @@ import ru.webmarket.service.impl.ShoppingCartServiceImpl;
 
 @RestController
 @RequestMapping(value = "/api/shoppingcart")
-@Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+@Secured({"ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER"})
 public class ShoppingCartController {
 
     @Autowired

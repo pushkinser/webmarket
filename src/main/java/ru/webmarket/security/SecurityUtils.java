@@ -6,7 +6,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import ru.webmarket.entity.User;
 import ru.webmarket.entity.converter.UserConverter;
+import ru.webmarket.entity.dto.RoleDTO;
 import ru.webmarket.entity.dto.UserDTO;
+
+import java.util.Objects;
 
 public class SecurityUtils {
     
@@ -28,7 +31,12 @@ public class SecurityUtils {
         } else {
             result.put("isAuthorized", true);
             result.put("user", userDTO);
-//            result.put("shoppingCart", userDTO.getShoppingCart());
+            for (RoleDTO roleDTO: userDTO.getRoles()) {
+                System.out.println(roleDTO.getName());
+                System.out.println(Objects.equals(roleDTO.getName(), "SELLER"));
+                if (Objects.equals(roleDTO.getName(), "SELLER")) result.put("isSeller", true);
+            }
+
         }
         return result;
     }

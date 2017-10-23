@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.webmarket.security.SecurityUtils;
 
-@Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+@Secured({"ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER"})
 @Controller
 public class ShoppingCartViewController {
 

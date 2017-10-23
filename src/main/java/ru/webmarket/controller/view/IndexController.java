@@ -23,7 +23,7 @@ public class IndexController {
     private UserDetailsManager userDetailsManager;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+    @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER"})
     public ModelAndView index() {
         final ModelAndView model = new ModelAndView("products", SecurityUtils.getAuthInfo());
 
