@@ -2,15 +2,16 @@
 -- login = password
 INSERT INTO users (username, name, lastname, email, password)
 VALUES ('admin', 'name', 'lastname', '@', '$2a$06$3BHW3i/tVjeNmAhORQ0u8.fL.EbGSX2JSqrtw61NzV/TJR0vAJa8W'),
-  ('test', 'name', 'lastname', '@', '$2a$06$ZbDBuVr41088Gaz.z.6E2.8gPne1fy11fT2tbu5A/1k5mUHswuv3i');
+  ('test', 'name', 'lastname', '@', '$2a$06$ZbDBuVr41088Gaz.z.6E2.8gPne1fy11fT2tbu5A/1k5mUHswuv3i'),
+  ('testSeller', 'name', 'lastname', '@','$2a$06$ZbDBuVr41088Gaz.z.6E2.8gPne1fy11fT2tbu5A/1k5mUHswuv3i');
 
 -- roles
-INSERT INTO roles (name)
-VALUES ('ADMIN'), ('CUSTOMER');
+INSERT INTO roles (roles_id, name)
+VALUES (1, 'ADMIN'), (2, 'CUSTOMER'), (3, 'SELLER');
 
 -- users_roles
 INSERT INTO users_roles (users_id, roles_id)
-VALUES (1, 1), (2, 2);
+VALUES (1, 1), (2, 2), (3,3);
 
 -- products
 INSERT INTO products (products_id, name, price, description)
@@ -27,10 +28,10 @@ insert into products_categories (products_id, categories_id) VALUES (1, 1);
 
 -- orders
 INSERT INTO orders (users_id)
-VALUES (1), (2);
+VALUES (1), (2) , (3);
 
 -- shopping cart
-INSERT INTO shopping_cart (users_id, orders_id) VALUES (1, 1), (2, 2);
+INSERT INTO shopping_cart (users_id, orders_id) VALUES (1, 1), (2, 2), (3,3);
 
 -- orders_items
 INSERT INTO orders_items (orders_id, products_id, count) VALUES (1, 2, 10), (1, 4, 5), (2, 1, 7);
