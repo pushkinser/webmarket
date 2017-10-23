@@ -72,7 +72,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
 
     ShoppingCart.prototype._productsCellDelete = function (controlElementId) {
         $('#' + controlElementId).html("Очистить корзину <img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
-        $('#' + controlElementId).bind("click", function () {
+        $('#' + controlElementId).children('img').bind("click", function () {
             this._deleteAllProductFromShoppingCart();
         }.bind(this));
     };
@@ -125,7 +125,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
 
     ShoppingCart.prototype._productCellDelete = function (td, cellData) {
         $(td).html("<img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px' alt=" + cellData.product.name + "'>");
-        $(td).bind("click", function () {
+        $(td).children('img').bind("click", function () {
             this._deleteProductFromShoppingCart.apply(this, [cellData, td])
         }.bind(this));
     };
@@ -161,28 +161,140 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
     };
 
     ShoppingCart.prototype._productCellCountSpinner = function (td, cellData) {
-        var spinnerId = "spinner" + cellData.id;
-        $('#' + spinnerId).spinner('value', cellData);
+
+
+        // var spinnerId = "spinner" + cellData.id;
+        // $('#' + spinnerId).spinner('value', cellData);
         // $(td).html('<input type="spinner" id=spinnerId  type="number">');
 
-        $(td).html('<div class="inputBlock">' +
-            '  <div id="minus" class="minus" >-</div>' +
-            '   <input type="text" value='+cellData.count+'>' +
-            '  <div class="plus" >+</div>' +
-            '</div>');
+        var orderItem = 'input' + cellData.id;
+
+        $(td).html('<div class="minus" >-</div>' +
+            '<div class="inputBlock"><input id = ' + orderItem + ' type="text" value=' + cellData.count + '></div>' +
+            '<div class="plus" >+</div>');
+
+        var inputId = $(td).children('.inputBlock').children('#' + orderItem);
+
+        $(inputId).bind("blur",  function () {
+            if (isNaN(parseInt(inputId.val()))) {
+                $.jGrowl('Вы ввели не чилсо. Установлено предыдущие значение.', {life: 3000, position: 'bottom-right', theme: 'error'});
+                inputId.val(cellData.count);
+                inputId.change();
+            }
+            else {
+                count = parseInt(inputId.val());
+                inputId.val(count);
+                inputId.change();
+
+                $.ajax({
+                    url: '/api/shoppingcart/count',
+                    type: 'PUT',
+                    contentType: "application/json",
+                    data: JSON.stringify({'id': cellData.id, 'count': count}),
+                    success: function () {
+                        require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+                            var navigationMenuCost = new CostShoppingCart();
+                            navigationMenuCost.draw();
+                        });
+
+                        $.jGrowl('Количество ' + cellData.product.name + ' изменено до ' + count, {
+                            life: 600,
+                            position: 'bottom-right',
+                            theme: 'success'
+                        });
+                    }
+                });
+
+            }
+        })
+
+        $(td).children('.plus').bind("click", function () {
+            if (isNaN(parseInt(inputId.val()))) {
+                $.jGrowl('Вы ввели не чилсо. Установлено предыдущие значение.', {life: 3000, position: 'bottom-right', theme: 'error'});
+                inputId.val(cellData.count);
+                inputId.change();
+            }
+            else {
+                count = parseInt(inputId.val()) + 1;
+                inputId.val(count);
+                inputId.change();
+
+                $.ajax({
+                    url: '/api/shoppingcart/count',
+                    type: 'PUT',
+                    contentType: "application/json",
+                    data: JSON.stringify({'id': cellData.id, 'count': count}),
+                    success: function () {
+                        require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+                            var navigationMenuCost = new CostShoppingCart();
+                            navigationMenuCost.draw();
+                        });
+
+                        $.jGrowl('Количество ' + cellData.product.name + ' увеличено до ' + count, {
+                            life: 600,
+                            position: 'bottom-right',
+                            theme: 'success'
+                        });
+                    }
+                });
+
+            }
+        }.bind(this));
+
+        $(td).children('.minus').bind("click", function () {
+            if (isNaN(parseInt(inputId.val()))) {
+                $.jGrowl('Вы ввели не чилсо. Установлено предыдущие значение.', {life: 3000, theme: 'error'});
+                inputId.val(cellData.count);
+                inputId.change();
+            }
+            else {
+                if (parseInt(inputId.val()) > 1) {
+                    count = parseInt(inputId.val()) - 1;
+                    count = count < 1 ? 1 : count;
+                    inputId.val(count);
+                    inputId.change();
+
+                    $.ajax({
+                        url: '/api/shoppingcart/count',
+                        type: 'PUT',
+                        contentType: "application/json",
+                        data: JSON.stringify({'id': cellData.id, 'count': count}),
+                        success: function () {
+
+                            require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+                                var navigationMenuCost = new CostShoppingCart();
+                                navigationMenuCost.draw();
+                            });
+
+                            $.jGrowl('Количество ' + cellData.product.name + ' уменьшено до ' + count, {
+                                life: 600,
+                                position: 'bottom-right',
+                                theme: 'success'
+                            });
+                        }
+                    });
+
+                }
+            }
+
+        }.bind(this));
+
 
         // var plusBut = $(td).children('inputBlock');
 
-        var div_plus = $(td).children('plus');
+        // $(td).bind("click", function () {
+        //     $.jGrowl('plus ', {life: 3000, theme: 'success'}).apply(this);
+        // }).bind(this);
 
-        $(div_plus).bind("click", function () {
-            $.jGrowl('plus ' + cellData.id, {life: 3000, theme: 'success'});
-        }).bind(this);
-
-        $('#input').bind("click", function(){
-            $.jGrowl('inputBlock ', {life: 3000, theme: 'success'});
-        }).bind(this);
-
+        // var div_plus = $(td).children('plus');
+        //
+        // $(div_plus).bind("click", function () {
+        //     $.jGrowl('plus ' + cellData.id, {life: 3000, theme: 'success'});
+        // }).bind(this);
+        //
+        // $('#input').bind("click", function(){
+        //     $.jGrowl('inputBlock ', {life: 3000, theme: 'success'});
+        // }).bind(this);
 
         // $('#plus').click(function () {
         //     $.jGrowl('plus ' + cellData.id, {life: 3000, theme: 'success'});
@@ -198,12 +310,6 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
         //     spiner.spinner({min: 0})
         // });
 
-        $('#inputBlock').blur(function () {
-            $.jGrowl('Блер ' + cellData.id, {life: 3000, theme: 'success'})
-        }).bind(this);
-        $('#' + spinnerId).focus(function () {
-            $.jGrowl('Блер ' + cellData.id, {life: 3000, theme: 'success'})
-        }).bind(this);
 
     };
 

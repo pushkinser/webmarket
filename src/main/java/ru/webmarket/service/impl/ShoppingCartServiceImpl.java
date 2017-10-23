@@ -129,7 +129,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Double total = 0.0;
 
         for (OrderItemDTO orderItemDTO : shoppingCartDTO.getOrder().getOrderItems()) {
-            total = total + orderItemDTO.getProduct().getPrice();
+            total = total + orderItemDTO.getProduct().getPrice()*orderItemDTO.getCount();
         }
 
         return total;
