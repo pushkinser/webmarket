@@ -122,7 +122,8 @@ ALTER SEQUENCE order_items_order_items_id_seq OWNED BY orders_items.orders_id;
 
 CREATE TABLE orders (
   orders_id integer NOT NULL,
-  users_id integer
+  users_id integer,
+  address character varying(255)
 );
 
 

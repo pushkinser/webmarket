@@ -16,7 +16,7 @@ public class OrderConverter {
 
         order.setId(orderDTO.getId());
         order.setOrderItems(OrderItemConverter.dtoToEntity((orderDTO.getOrderItems())));
-
+        order.setAddress(orderDTO.getAddress());
 
         return order;
     }
@@ -27,7 +27,7 @@ public class OrderConverter {
 
         orderDTO.setId(order.getId());
         orderDTO.setOrderItems(OrderItemConverter.entityToDto(order.getOrderItems()));
-
+        orderDTO.setAddress(order.getAddress());
 
         return orderDTO;
     }

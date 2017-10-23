@@ -14,6 +14,9 @@ public class Order {
     @Column(name = "orders_id")
     private Long id;
 
+    @Column(name ="address")
+    private String address;
+
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "users_id")
     private User user;
@@ -58,6 +61,14 @@ public class Order {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

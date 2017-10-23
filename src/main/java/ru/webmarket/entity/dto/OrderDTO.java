@@ -9,6 +9,8 @@ public class OrderDTO {
 
     private Long id;
 
+    private String address;
+
     private List<OrderItemDTO> orderItems;
 
     public OrderDTO () {
@@ -32,6 +34,13 @@ public class OrderDTO {
         this.id = id;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public List<OrderItemDTO> getOrderItems() {
         return orderItems;
