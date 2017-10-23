@@ -88,7 +88,7 @@ define('pages/Products',
 
         Products.prototype._addProductCell = function (td, cellData) {
             $(td).html("<img src='/images/shopping_cart/add.png' class='img-responsive' width='50px' height='50px' >");
-            $(td).bind("click", function () {
+            $(td).children('img').bind("click", function () {
                 this._addProductInShoppingCart.apply(this, [cellData, 1])
             }.bind(this));
         };
