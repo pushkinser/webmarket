@@ -26,13 +26,13 @@ public class ShoppingCartServiceTest extends AppTest {
     @Autowired
     private OrderItemService orderItemService;
 
-    @Test
+    /*@Test
     public void ShouldGetAllShoppingCart() {
         List<ShoppingCartDTO> shoppingCartDTOS = shoppingCartService.getShoppingCarts();
         for (ShoppingCartDTO shoppingCartDTO : shoppingCartDTOS) {
             Assert.assertNotNull(shoppingCartDTO);
         }
-    }
+    }*/
 
     @Test
     public void ShouldGetShoppingCartByUserId() {
