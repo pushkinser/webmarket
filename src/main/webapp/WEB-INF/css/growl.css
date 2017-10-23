@@ -1,8 +1,8 @@
 .success {
-    background-color: darkgreen;
+    background-color: #00A550;
 
 }
 
 .error {
-    background-color: firebrick;
+    background-color:  #C7262C;
 }
