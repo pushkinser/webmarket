@@ -71,8 +71,9 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
     };
 
     ShoppingCart.prototype._productsCellDelete = function (controlElementId) {
-        $('#' + controlElementId).html("Очистить корзину <img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
-        $('#' + controlElementId).children('img').bind("click", function () {
+        var $controlId = $('#' + controlElementId);
+        $controlId.html("Очистить корзину <img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
+        $controlId.children('img').bind("click", function () {
             this._deleteAllProductFromShoppingCart();
         }.bind(this));
     };
@@ -84,8 +85,9 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
             contentType: "application/json",
             data: JSON.stringify({'flag': true}),
             success: function () {
-                $('#shoppingCartTableId').DataTable().clear();
-                $('#shoppingCartTableId').DataTable().draw();
+                $tableId = $('#shoppingCartTableId');
+                $tableId.DataTable().clear();
+                $tableId.DataTable().draw();
             }
         }).then(function () {
             $.jGrowl('Корзина очищена', {life: 1500, theme: 'success', position: 'bottom-right'});
@@ -117,8 +119,8 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
     ShoppingCart.prototype._priseCellConvertRuble = function (td, cellData) {
         var num = cellData.product.price;
         var p = num.toFixed(2).split(".");
-        var res = p[0].split("").reverse().reduce(function (acc, num, i, orig) {
-            return num == "-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
+        var res = p[0].split("").reverse().reduce(function (acc, num, i) {
+            return num === "-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
         }, "") + "," + p[1] + '&#8381 ';
         $(td).html(res);
     };
@@ -206,11 +208,11 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
                 });
 
             }
-        })
+        });
 
         $(td).children('.plus').bind("click", function () {
             if (isNaN(parseInt(inputId.val()))) {
-                $.jGrowl('Вы ввели не чилсо. Установлено предыдущие значение.', {life: 3000, position: 'bottom-right', theme: 'error'});
+                $.jGrowl('Вы ввели не число. Установлено предыдущие значение.', {life: 3000, position: 'bottom-right', theme: 'error'});
                 inputId.val(cellData.count);
                 inputId.change();
             }
@@ -243,7 +245,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
 
         $(td).children('.minus').bind("click", function () {
             if (isNaN(parseInt(inputId.val()))) {
-                $.jGrowl('Вы ввели не чилсо. Установлено предыдущие значение.', {life: 3000, theme: 'error'});
+                $.jGrowl('Вы ввели не число. Установлено предыдущие значение.', {life: 3000, theme: 'error'});
                 inputId.val(cellData.count);
                 inputId.change();
             }
@@ -278,38 +280,6 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
             }
 
         }.bind(this));
-
-
-        // var plusBut = $(td).children('inputBlock');
-
-        // $(td).bind("click", function () {
-        //     $.jGrowl('plus ', {life: 3000, theme: 'success'}).apply(this);
-        // }).bind(this);
-
-        // var div_plus = $(td).children('plus');
-        //
-        // $(div_plus).bind("click", function () {
-        //     $.jGrowl('plus ' + cellData.id, {life: 3000, theme: 'success'});
-        // }).bind(this);
-        //
-        // $('#input').bind("click", function(){
-        //     $.jGrowl('inputBlock ', {life: 3000, theme: 'success'});
-        // }).bind(this);
-
-        // $('#plus').click(function () {
-        //     $.jGrowl('plus ' + cellData.id, {life: 3000, theme: 'success'});
-        // }).bind(this);
-        //
-        // $('.minus').bind("click", function () {
-        //     $.jGrowl('minus ' + cellData.id, {life: 3000, theme: 'success'});
-        // });
-
-
-        // $(td).bind(function (cellData) {
-        //     var spiner = $('#' + spinnerId).spinner("values", 100);
-        //     spiner.spinner({min: 0})
-        // });
-
 
     };
 
