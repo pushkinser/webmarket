@@ -1,0 +1,25 @@
+doctype html
+
+html
+    head
+        include environment
+        title Добавить продукт
+    body
+        include navbar
+
+        .container
+        .row
+            .col-md-4
+            .col-md-4
+                .h1 Форма добавления продукта
+                div(id = "info" )
+
+    script.
+
+        require(['pages/AddProduct'], function (AddProduct) {
+            const options = {
+               formId: 'info'
+            };
+            var addProduct = new AddProduct(options);
+            addProduct.draw();
+        });

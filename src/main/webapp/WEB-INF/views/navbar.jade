@@ -6,6 +6,11 @@ nav.navbar.navbar-default
             li
                 if isAuthorized
                     a(href="/products") Товары
+            li
+                if isAuthorized
+                    if isSeller
+                        a(href="/addproduct") Добавить товар
+
         lu.nav.navbar-nav.navbar-right.nav-tabs
             if isAuthorized
                 li
@@ -32,5 +37,4 @@ nav.navbar.navbar-default
             };
             var navigationMenuCost = new CostShoppingCart(options);
             navigationMenuCost.draw();
-
         });
