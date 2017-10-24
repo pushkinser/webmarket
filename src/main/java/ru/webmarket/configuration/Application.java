@@ -7,6 +7,7 @@ import de.neuland.jade4j.spring.view.JadeViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -49,6 +50,13 @@ public class Application extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multi = new CommonsMultipartResolver();
+        multi.setMaxUploadSize(15*1024*1024);
+
+        return multi;
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

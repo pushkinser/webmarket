@@ -32,10 +32,10 @@ define('pages/AddProduct',
                 '<label for="inputDescription">Описание</label>' +
                 '<input type="text" class="form-control" id="' + productDescriptionId + '" placeholder="Введите описание">' +
                 '</div>' +
-                '<div class="form-group col-md ">' +
+                '<form id = "uploadForm" name = "uploadForm" enctype="multipart/form-data">'+
                 '<label for="inputImg">Загрузить изображение товара</label>' +
-                '<input type="file" id="' + productImageLoadId + '" data-filename-placement="inside" >' +
-                '</div>' +
+                '<input type="file" name="file" id="' + productImageLoadId + '">' +
+                '</form>'+
                 '<button type="button" id="' + buttonAddProductId + '" class="btn btn-lg btn-primary ">Добавить</button>');
 
             var priceInputElement = $('#' + productPriceId);
@@ -53,8 +53,9 @@ define('pages/AddProduct',
                 const name = $('#' + productNameId).val();
                 const price = priceInput.val();
                 const description = $('#' + productDescriptionId).val();
+                const img = $('#'+productImageLoadId);
 
-                var data = [name, price, description];
+                var data = [name, price, description, img];
 
                 this._addNewProduct.apply(this, [data]);
 
@@ -82,6 +83,25 @@ define('pages/AddProduct',
                 error: function () {
                     $.jGrowl(pName + ' не добавлен :(', {life: 3000, theme: 'error', position: 'bottom-right'});
                 }.bind(this)
+            });
+
+            var $input = data[3];
+            var formData = new FormData();
+
+            formData.append('file', document.getElementsByName("file")[0].files[0]);
+
+            $.ajax({
+                url: '/api/upload/',
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (d) {
+                    $.jGrowl('Успешно', {life: 3000, theme: 'success', position: 'bottom-right'});
+                },
+                error: function () {
+                    $.jGrowl('Не успешно', {life: 3000, theme: 'error', position: 'bottom-right'});
+                }
             });
 
         };
