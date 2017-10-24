@@ -14,7 +14,6 @@ public class ProductViewController {
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ModelAndView getItems() {
-
         return new ModelAndView("products", SecurityUtils.getAuthInfo());
     }
 
@@ -22,11 +21,5 @@ public class ProductViewController {
     public ModelAndView getItem(@PathVariable("id") long id) {
         return new ModelAndView("product", SecurityUtils.getAuthInfo());
     }
-
-    @RequestMapping(value = "/addproduct", method = RequestMethod.GET)
-    public ModelAndView getFormForAddProduct() {
-        return new ModelAndView("addproduct", SecurityUtils.getAuthInfo());
-    }
-
 
 }
