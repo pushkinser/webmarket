@@ -7,23 +7,25 @@ html
         include navbar
 
         .container
-            .col-md-12
-                table.table.dataTable(id = "shoppingCartTableId")
-                    thead
-                        tr
-                            th Изображение
-                            th Название
-                            th Стоимость
-                            th
-                            th
-                    tfoot
-                        tr
-                            th Изображение
-                            th Название
-                            th Стоимость
-                            th
-                            th
-                 div(id = 'shoppingCartControl')
+            .row
+                .col-md-10
+                    table.table.dataTable(id = "shoppingCartTableId")
+                        thead
+                            tr
+                                th Изображение
+                                th Название
+                                th Стоимость
+                                th
+                                th
+                        tfoot
+                            tr
+                                th Изображение
+                                th Название
+                                th Стоимость
+                                th
+                                th
+                .col-md-2
+                    div(id = 'shoppingCartControl')
 
 
     script.
@@ -36,6 +38,4 @@ html
             var shoppingCartPage = new ShoppingCart(options);
             shoppingCartPage.draw();
         });
-
-
 

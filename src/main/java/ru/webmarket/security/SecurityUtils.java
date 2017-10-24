@@ -32,8 +32,8 @@ public class SecurityUtils {
             result.put("isAuthorized", true);
             result.put("user", userDTO);
             for (RoleDTO roleDTO: userDTO.getRoles()) {
-                System.out.println(roleDTO.getName());
-                System.out.println(Objects.equals(roleDTO.getName(), "SELLER"));
+//                System.out.println(roleDTO.getName());
+//                System.out.println(Objects.equals(roleDTO.getName(), "SELLER"));
                 if (Objects.equals(roleDTO.getName(), "SELLER")) result.put("isSeller", true);
             }
 
