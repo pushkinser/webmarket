@@ -2,7 +2,7 @@ doctype html
 html
     head
         link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css")
-        title login
+        title login lflf
     body
         include navbar
 
@@ -14,9 +14,9 @@ html
                         .alert.alert-danger
                             strong #{error}
                     if isAuthorized
-                        a.btn.btn-lg.btn-primary.btn-block(type="button", href="/logout") Выйти
+                        a.btn.btn-lg.btn-primary.btn-block(type="button", href="logout") Выйти
                     else
-                        form(role="form", action="/perform_login", method="POST")
+                        form(role="form", action="perform_login", method="POST")
                             .form-group
                                 input(type = "username", class = "form-control", name = "username", placeholder="Имя пользователя")
                             .form-group
