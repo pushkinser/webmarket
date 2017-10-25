@@ -67,42 +67,48 @@ define('pages/AddProduct',
             const pName = data[0];
             const pPrice = data[1];
             const pDescription = data[2];
-
+            var responseId = '';
             $.ajax({
                 url: '/api/product/',
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({'name': pName, 'price': pPrice, 'description': pDescription}),
-                success: function () {
+                success: function (text) {
+                    responseId = text;
                     $.jGrowl(pName + ' добавлен в каталог', {life: 1500, theme: 'success', position: 'bottom-right'});
                     require(['pages/CostShoppingCart'], function (CostShoppingCart) {
                         var navigationMenuCost = new CostShoppingCart();
                         navigationMenuCost.draw();
                     });
+
+                    var $input = data[3];
+                    var formData = new FormData();
+                    formData.append('file', document.getElementsByName("file")[0].files[0]);
+                    formData.append('id', JSON.stringify(responseId));
+
+                    $.ajax({
+                        url: '/api/upload/',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        type: 'POST',
+                        success: function (d) {
+                            $.jGrowl('Успешно', {life: 3000, theme: 'success', position: 'bottom-right'});
+                        },
+                        error: function () {
+                            $.jGrowl('Не успешно', {life: 3000, theme: 'error', position: 'bottom-right'});
+                        }
+                    });
+
                 }.bind(this),
                 error: function () {
                     $.jGrowl(pName + ' не добавлен :(', {life: 3000, theme: 'error', position: 'bottom-right'});
                 }.bind(this)
             });
 
-            var $input = data[3];
-            var formData = new FormData();
 
-            formData.append('file', document.getElementsByName("file")[0].files[0]);
 
-            $.ajax({
-                url: '/api/upload/',
-                data: formData,
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: function (d) {
-                    $.jGrowl('Успешно', {life: 3000, theme: 'success', position: 'bottom-right'});
-                },
-                error: function () {
-                    $.jGrowl('Не успешно', {life: 3000, theme: 'error', position: 'bottom-right'});
-                }
-            });
+
 
         };
 

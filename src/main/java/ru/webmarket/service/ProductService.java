@@ -13,6 +13,8 @@ public interface ProductService {
 
     void addProduct(ProductDTO productDTO);
 
+    Long addProductAndGetId (ProductDTO productDTO);
+
     ProductDTO getProduct(Long id);
 
     void editProduct(ProductDTO productDTO);

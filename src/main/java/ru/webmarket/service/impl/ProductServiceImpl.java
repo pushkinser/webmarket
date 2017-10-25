@@ -30,6 +30,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Long addProductAndGetId (ProductDTO productDTO) {
+        if (productDTO == null) throw new NullPointerException();
+        return productRepository.save(ProductConverter.dtoToEntity(productDTO)).getId();
+    }
+
+    @Override
     public ProductDTO getProduct(Long id) {
         return ProductConverter.entityToDto(productRepository.findOne(id));
     }

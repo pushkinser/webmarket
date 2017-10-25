@@ -4,15 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.webmarket.controller.rest.requestBody.ProductBodyJson;
-import ru.webmarket.entity.Category;
-import ru.webmarket.entity.Product;
-import ru.webmarket.entity.dto.CategoryDTO;
 import ru.webmarket.entity.dto.ProductDTO;
-import ru.webmarket.repository.CategoryRepository;
 import ru.webmarket.service.impl.CategoryServiceImpl;
 import ru.webmarket.service.impl.ProductServiceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,11 +34,13 @@ public class ProductController {
 
     @Secured({"ROLE_ADMIN", "ROLE_SELLER"})
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void addProduct(@RequestBody ProductBodyJson a) {
+    @ResponseBody
+    public Long addProduct(@RequestBody ProductBodyJson a) {
 
         ProductDTO productDTO = new ProductDTO(a.getName(), a.getPrice(), a.getDescription());
-
-        productService.addProduct(productDTO);
+        Long productId = productService.addProductAndGetId(productDTO);
+//        productService.addProduct(productDTO);
+        return productId;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
