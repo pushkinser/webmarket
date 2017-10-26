@@ -44,4 +44,18 @@ public class UserServiceTest extends AppTest {
         Assert.assertNull(userService.getUser(userId));
     }
 
+    @Test
+    public void shouldAddUserWithRole() {
+        int r =  random.nextInt();
+        UserDTO userDTO = new UserDTO("username"+r, "name", "lastname", "@", "pas");
+
+        userService.addUser(userDTO);
+        Long userId = userService.findByUserName(userDTO.getUserName()).getId();
+
+        UserDTO userDTO1 = userService.getUser(userId);
+
+        Assert.assertNotNull(userDTO1);
+        Assert.assertNotNull(userDTO1.getRoles());
+    }
+
 }

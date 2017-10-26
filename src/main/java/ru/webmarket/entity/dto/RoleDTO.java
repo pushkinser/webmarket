@@ -18,6 +18,10 @@ public class RoleDTO {
         this.name = name;
     }
 
+    public RoleDTO(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

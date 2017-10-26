@@ -38,22 +38,17 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(mappedBy = "users")
+    @OneToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private List<Role> roles;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
     private ShoppingCart shoppingCart;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Order> orders;
-
-    public User(String userName, String name, String lastName, String email, String password) {
-        this.userName = userName;
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 
     public User() {
 
@@ -150,14 +145,6 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
@@ -173,12 +160,7 @@ public class User implements UserDetails {
 
         User user = (User) o;
 
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        return password != null ? password.equals(user.password) : user.password == null;
+        return userName != null ? !userName.equals(user.userName) : user.userName != null;
     }
 
     @Override
@@ -188,9 +170,7 @@ public class User implements UserDetails {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-//        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-//        result = 31 * result + (shoppingCart != null ? shoppingCart.hashCode() : 0);
-//        result = 31 * result + (orderList != null ? orderList.hashCode() : 0);
+
         return result;
     }
 
@@ -205,5 +185,9 @@ public class User implements UserDetails {
                 ", shoppingCart=" + shoppingCart +
                 ", orderList=" + orders +
                 '}';
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 }
