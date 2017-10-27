@@ -1,6 +1,4 @@
-package ru.webmarket.controller.rest.requestBody;
-
-import org.hibernate.type.descriptor.java.StringTypeDescriptor;
+package ru.webmarket.controller.rest.request;
 
 import java.io.Serializable;
 

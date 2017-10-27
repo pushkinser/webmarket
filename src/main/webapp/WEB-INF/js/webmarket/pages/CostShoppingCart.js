@@ -3,7 +3,7 @@ define('pages/CostShoppingCart',
     function () {
 
         function CostShoppingCart(options) {
-            this.shoppingCartCostElementId = 'shoppingCartCost';
+            // this.shoppingCartCostElementId = 'shoppingCartCost';
             $.extend(this, options);
         }
 
@@ -16,7 +16,6 @@ define('pages/CostShoppingCart',
                     $('#' + this.shoppingCartCostElementId).html('<div style= "text-align: center;">'+this._costConvertRuble(data)+'</div>');
                 }.bind(this)
             });
-
         };
 
         CostShoppingCart.prototype._costConvertRuble = function (data) {

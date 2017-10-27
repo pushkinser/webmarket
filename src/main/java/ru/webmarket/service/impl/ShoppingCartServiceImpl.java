@@ -87,8 +87,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
 
-    // Внимание: комментарий без смысловой нагрузки! После n+1-го прочтения удалить.,
-    // Работает!!!!1111111
     @Override
     public void addProduct(ShoppingCartDTO shoppingCartDTO, Long id, int count) {
 
@@ -104,9 +102,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void deleteProducts(ShoppingCartDTO shoppingCartDTO) {
         List<OrderItem> orderItems = OrderItemConverter.dtoToEntity(shoppingCartDTO.getOrder().getOrderItems());
-        for (OrderItem orderItem : orderItems) {
-            orderItemRepository.delete(orderItem);
-        }
+        orderItemRepository.delete(orderItems);
     }
 
     @Override

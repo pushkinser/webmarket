@@ -3,7 +3,7 @@ package ru.webmarket.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import ru.webmarket.controller.rest.requestBody.ProductBodyJson;
+import ru.webmarket.controller.rest.request.ProductBodyJson;
 import ru.webmarket.entity.dto.ProductDTO;
 import ru.webmarket.service.impl.CategoryServiceImpl;
 import ru.webmarket.service.impl.ProductServiceImpl;

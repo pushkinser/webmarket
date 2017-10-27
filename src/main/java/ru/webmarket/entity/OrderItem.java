@@ -25,6 +25,10 @@ public class OrderItem {
     public OrderItem() {
     }
 
+    public OrderItem(Product product) {
+        this.product = product;
+    }
+
     public Long getId() {
         return id;
     }

@@ -66,16 +66,17 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
             }
         });
 
-        this._productsCellDelete(this.controlElementId);
+        this._productsDrawControl(this.controlElementId);
 
     };
 
-    ShoppingCart.prototype._productsCellDelete = function (controlElementId) {
+    ShoppingCart.prototype._productsDrawControl = function (controlElementId) {
         var $controlId = $('#' + controlElementId);
         $controlId.html("Очистить корзину <img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
         $controlId.children('img').bind("click", function () {
             this._deleteAllProductFromShoppingCart();
         }.bind(this));
+        $controlId.append(" Оформить заказ <a href='/order'><img src='/images/shopping_cart/stores.png' class='img-responsive' width='50px' height='50px'></a>");
     };
 
     ShoppingCart.prototype._deleteAllProductFromShoppingCart = function () {

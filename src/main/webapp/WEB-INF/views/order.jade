@@ -1,0 +1,34 @@
+doctype html
+
+html
+    head
+        include environment
+        title Оформить заказ
+    body
+        include navbar
+
+        .container
+
+            .col-md-12
+                table.table.dataTable(id = "info" )
+                    thead
+                        tr
+                            th
+                            th Название
+                            th Стоимость
+                            th
+
+
+            .div(id = 'orderControl')
+
+script.
+
+    require(['pages/Order'], function (Order) {
+        const options = {
+            orderTableElementId: 'info',
+            orderControlId: 'orderControl'
+        };
+        var orderPage = new Order(options);
+        orderPage.draw();
+
+    });

@@ -1,4 +1,4 @@
-package ru.webmarket.controller.rest.requestBody;
+package ru.webmarket.controller.rest.request;
 
 import java.io.Serializable;
 

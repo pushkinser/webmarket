@@ -8,6 +8,9 @@ nav.navbar.navbar-default
                     a(href="/products") Товары
             li
                 if isAuthorized
+                    a(href="/orders") Заказы
+            li
+                if isAuthorized
                     if isSeller
                         a(href="/addproduct") Добавить товар
 
