@@ -16,5 +16,4 @@ public class AddProductViewController {
         return new ModelAndView("addproduct", SecurityUtils.getAuthInfo());
     }
 
-
 }

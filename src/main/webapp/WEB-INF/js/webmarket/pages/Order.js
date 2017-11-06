@@ -82,6 +82,33 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
 
             controlId.children('button').bind("click", function () {
                 $.jGrowl('yep ' + controlId.children('input').val(), {life: 3000, theme: 'success', position: 'bottom-right'});
+
+                $.ajax({
+                    url: '/api/order/complete',
+                    type: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify({'address': controlId.children('input').val()}),
+                    success: function () {
+
+                        $tableId = $('#info');
+                        $tableId.DataTable().clear();
+                        $tableId.DataTable().draw();
+
+                        require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+                            var navigationMenuCost = new CostShoppingCart();
+                            navigationMenuCost.draw();
+                        });
+
+                        $.jGrowl('yep  ' +  controlId.children('input').val(), {
+                            life: 600,
+                            position: 'bottom-right',
+                            theme: 'success'
+                        });
+
+                        $(window).attr('location','/');
+                    }
+                });
+
             }.bind(this));
 
             // $controlId.children('btn').bind("click", function () {
@@ -127,7 +154,7 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
         };
 
         Order.prototype._getJson = function (json) {
-            return json.order.orderItems;
+            return json;
         };
 
         return Order;

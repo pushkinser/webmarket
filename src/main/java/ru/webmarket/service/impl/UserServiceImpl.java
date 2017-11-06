@@ -3,129 +3,73 @@ package ru.webmarket.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.webmarket.entity.Order;
-import ru.webmarket.entity.Role;
-import ru.webmarket.entity.ShoppingCart;
-import ru.webmarket.entity.User;
-import ru.webmarket.entity.converter.OrderConverter;
-import ru.webmarket.entity.converter.RoleConverter;
-import ru.webmarket.entity.converter.ShoppingCartConverter;
-import ru.webmarket.entity.converter.UserConverter;
-import ru.webmarket.entity.dto.OrderDTO;
-import ru.webmarket.entity.dto.RoleDTO;
-import ru.webmarket.entity.dto.ShoppingCartDTO;
-import ru.webmarket.entity.dto.UserDTO;
-import ru.webmarket.repository.OrderRepository;
-import ru.webmarket.repository.RoleRepository;
-import ru.webmarket.repository.ShoppingCartRepository;
+import ru.webmarket.model.dto.RoleDTO;
+import ru.webmarket.model.dto.ShoppingCartDTO;
+import ru.webmarket.model.dto.UserDTO;
+import ru.webmarket.model.mapper.UserMap;
 import ru.webmarket.repository.UserRepository;
-import ru.webmarket.service.ShoppingCartService;
+import ru.webmarket.service.RoleService;
 import ru.webmarket.service.UserService;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
- /*
- *
- */
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final ShoppingCartServiceImpl shoppingCartService;
 
-    private final RoleRepository roleRepository;
+    private final RoleServiceImpl roleService;
+
+    private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    private final OrderRepository orderRepository;
-
-    private final ShoppingCartRepository shoppingCartRepository;
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, OrderRepository orderRepository, ShoppingCartRepository shoppingCartRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleServiceImpl roleService, ShoppingCartServiceImpl shoppingCartService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
+        this.shoppingCartService = shoppingCartService;
         this.passwordEncoder = passwordEncoder;
-        this.orderRepository = orderRepository;
-        this.shoppingCartRepository = shoppingCartRepository;
     }
 
+    /**
+     * Возвращает сохраненного нового User с ролью CUSTOMER и с пустой корзиной.
+     */
     @Override
-    public void addUser(UserDTO userDTO) {
+    public UserDTO register(UserDTO userDTO) {
+        if (userDTO == null) return null;
 
-        if (userDTO == null) throw new NullPointerException();
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userDTO.setRoles(Collections.singletonList(roleService.get("CUSTOMER")));
+        userDTO = UserMap.toDto(userRepository.save(UserMap.toEntity(userDTO)));
 
-        String password = passwordEncoder.encode(userDTO.getPassword());
-        userDTO.setPassword(password);
+        ShoppingCartDTO shoppingCartDTO = shoppingCartService.addByUser(userDTO);
 
-        User user = UserConverter.dtoToEntity(userDTO);
-
-        List<Role> roles = new ArrayList<>();
-        Role role = roleRepository.findByName("CUSTOMER");
-        roles.add(role);
-        user.setRoles(roles);
-
-        userRepository.save(user);
-
-        Order order = orderRepository.save(new Order(user));
-
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(user);
-        shoppingCart.setOrder(order);
-        shoppingCartRepository.save(shoppingCart);
-
+        return userDTO;
     }
 
+    /**
+     * Возвращает пользователя по идентификатору.
+     */
     @Override
-    public UserDTO getUser(Long id) {
-        return UserConverter.entityToDto(userRepository.findOne(id));
+    public UserDTO get(Long userId) {
+        return UserMap.toDto(userRepository.findOne(userId));
     }
 
+    /**
+    Возвращает пользовтеля по логину.
+     */
     @Override
-    public void editUser(UserDTO userDTO) {
-        if (userDTO == null) throw new NullPointerException();
-        if (userRepository.findById(userDTO.getId()) != null) userRepository.save(UserConverter.dtoToEntity(userDTO));
+    public UserDTO get(String userName) {
+        return UserMap.toDto(userRepository.findByUserName(userName));
     }
 
+    /**
+    Возвращает список ролей у пользователя.
+     */
     @Override
-    public void deleteUser(Long id) {
-        if (userRepository.findById(id) == null) throw new NullPointerException();
-        userRepository.delete(id);
-    }
-
-    @Override
-    public List<UserDTO> getAllUsers() {
-        if (userRepository.findAll() == null) return null;
-        return userRepository.findAll().stream()
-                .map(UserConverter::entityToDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public UserDTO findByUserName(String username) {
-        return UserConverter.entityToDto(userRepository.findByUserName(username));
-    }
-
-    @Override
-    public UserDTO findByEmail(String email) {
-        return UserConverter.entityToDto(userRepository.findByEmail(email));
-    }
-
-    @Override
-    public List<RoleDTO> getRoles(Long id) {
-        if (userRepository.findById(id) == null) return null;
-        return userRepository.findById(id).getRoles().stream()
-                .map(RoleConverter::entityToDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OrderDTO> getOrders(Long id) {
-        if (userRepository.findById(id) == null) return null;
-        return UserConverter.entityToDto(userRepository.findById(id)).getOrders();
+    public List<RoleDTO> getRoles(UserDTO userDTO) {
+        return userDTO.getRoles();
     }
 }

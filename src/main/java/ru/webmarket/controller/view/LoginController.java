@@ -1,6 +1,5 @@
 package ru.webmarket.controller.view;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.webmarket.entity.dto.UserDTO;
+import ru.webmarket.model.dto.UserDTO;
 import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.service.impl.RoleServiceImpl;
 import ru.webmarket.service.impl.UserServiceImpl;
@@ -48,7 +47,7 @@ public class LoginController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView addUSer(@ModelAttribute("user") UserDTO userDTO) {
 
-        userService.addUser(userDTO);
+        userService.register(userDTO);
 
         return new ModelAndView("redirect:/", SecurityUtils.getAuthInfo());
     }

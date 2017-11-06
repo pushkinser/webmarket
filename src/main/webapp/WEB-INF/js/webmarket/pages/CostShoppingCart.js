@@ -3,7 +3,7 @@ define('pages/CostShoppingCart',
     function () {
 
         function CostShoppingCart(options) {
-            // this.shoppingCartCostElementId = 'shoppingCartCost';
+            this.shoppingCartCostElementId = 'shoppingCartCost';
             $.extend(this, options);
         }
 

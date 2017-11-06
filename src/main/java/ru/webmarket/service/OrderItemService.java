@@ -1,30 +1,34 @@
 package ru.webmarket.service;
 
-import ru.webmarket.entity.dto.OrderDTO;
-import ru.webmarket.entity.dto.OrderItemDTO;
-import ru.webmarket.entity.dto.ProductDTO;
+import ru.webmarket.model.dto.OrderDTO;
+import ru.webmarket.model.dto.OrderItemDTO;
+import ru.webmarket.model.dto.ProductDTO;
+import ru.webmarket.model.entity.OrderItem;
 
 import java.util.List;
 
 public interface OrderItemService {
 
-    void addOrderItemToOrder(OrderItemDTO orderItemDTO, OrderDTO order);
+    List<OrderItemDTO> add ( List<OrderItemDTO> orderItemDTOLists);
 
-    List<OrderItemDTO> getOrdersItems();
+    List<OrderItemDTO> getOrderItemByOrder(OrderDTO orderDTO);
 
-    OrderItemDTO getOrderItem(Long id);
+    ProductDTO addProduct(OrderDTO orderDTO, ProductDTO productDTO);
 
-    void editOrderItem(OrderItemDTO orderItemDTO);
+    OrderItemDTO addProductAndReturnItem (OrderDTO orderDTO, ProductDTO productDTO);
 
-    void addProduct(OrderItemDTO orderItemDTO, ProductDTO productDTO);
+    ProductDTO addProduct(OrderDTO orderDTO, ProductDTO productDTO, Integer count);
 
-    void addProduct(Long orderId, ProductDTO productDTO);
+    void delete(OrderItemDTO orderItemDTO);
 
-    ProductDTO getProduct(OrderItemDTO orderItemDTO);
+    void delete(List<OrderItemDTO> orderItemDTOLists);
 
-    void setCount(OrderItemDTO orderItemDTO, int count);
+    void delete(OrderDTO orderDTO);
 
-    int getCount(OrderItemDTO orderItemDTO);
+    void delete(Long orderItemId);
 
-    void deleteOrderItem(Long id);
+    void editCount(OrderItemDTO orderItemDTO, Integer count);
+
+    OrderItemDTO get (Long id);
+
 }

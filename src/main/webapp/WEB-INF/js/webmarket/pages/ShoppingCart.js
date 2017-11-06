@@ -160,7 +160,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
     };
 
     ShoppingCart.prototype._getJson = function (json) {
-        return json.order.orderItems;
+        return json;
     };
 
     ShoppingCart.prototype._productCellCountSpinner = function (td, cellData) {

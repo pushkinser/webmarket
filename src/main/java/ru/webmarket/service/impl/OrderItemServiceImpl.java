@@ -2,12 +2,12 @@ package ru.webmarket.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.webmarket.entity.OrderItem;
-import ru.webmarket.entity.converter.OrderConverter;
-import ru.webmarket.entity.converter.OrderItemConverter;
-import ru.webmarket.entity.dto.OrderDTO;
-import ru.webmarket.entity.dto.OrderItemDTO;
-import ru.webmarket.entity.dto.ProductDTO;
+import ru.webmarket.model.dto.OrderDTO;
+import ru.webmarket.model.dto.OrderItemDTO;
+import ru.webmarket.model.dto.ProductDTO;
+import ru.webmarket.model.entity.OrderItem;
+import ru.webmarket.model.mapper.OrderItemMap;
+import ru.webmarket.model.mapper.ProductMap;
 import ru.webmarket.repository.OrderItemRepository;
 import ru.webmarket.service.OrderItemService;
 
@@ -23,61 +23,108 @@ public class OrderItemServiceImpl implements OrderItemService {
         this.orderItemRepository = orderItemRepository;
     }
 
+    /**
+     * Возвращает сохраненный список позиций заказа.
+     */
     @Override
-    public void addOrderItemToOrder(OrderItemDTO orderItemDTO, OrderDTO orderDTO) {
-        OrderItem orderItem = OrderItemConverter.dtoToEntity(orderItemDTO);
-        orderItem.setOrder(OrderConverter.dtoToEntity(orderDTO));
-        if (orderItem != null) orderItemRepository.save(orderItem);
+    public List<OrderItemDTO> add(List<OrderItemDTO> orderItemDTOLists) {
+        return OrderItemMap.toDto(orderItemRepository.save(OrderItemMap.toEntity(orderItemDTOLists)));
     }
 
+    /**
+     * Возвращает позиии заказа из заказа.
+     */
     @Override
-    public List<OrderItemDTO> getOrdersItems() {
-        return OrderItemConverter.entityToDto(orderItemRepository.findAll());
+    public List<OrderItemDTO> getOrderItemByOrder(OrderDTO orderDTO) {
+        if (orderDTO == null) return null;
+        return OrderItemMap.toDto(orderItemRepository.findOrderItemsByOrderId(orderDTO.getId()));
     }
 
+    /**
+     * Возвращает товар из сохраненного пункта заказа.
+     */
     @Override
-    public OrderItemDTO getOrderItem(Long id) {
-        return OrderItemConverter.entityToDto(orderItemRepository.findOne(id));
+    public ProductDTO addProduct(OrderDTO orderDTO, ProductDTO productDTO) {
+        return addProduct(orderDTO, productDTO, 1);
     }
 
+    /**
+     * Возвращает товар из сохраненного пункта заказа.
+     */
     @Override
-    public void editOrderItem(OrderItemDTO orderItemDTO) {
-        if (orderItemDTO == null) throw new NullPointerException();
-        if (orderItemRepository.findOne(orderItemDTO.getId()) != null)
-            orderItemRepository.save(OrderItemConverter.dtoToEntity(orderItemDTO));
-    }
-
-    @Override
-    public void addProduct(OrderItemDTO orderItemDTO, ProductDTO productDTO) {
+    public ProductDTO addProduct(OrderDTO orderDTO, ProductDTO productDTO, Integer count) {
+        if ((orderDTO == null) || (productDTO == null)) return null;
+        OrderItemDTO orderItemDTO = new OrderItemDTO();
+        orderItemDTO.setOrder(orderDTO);
         orderItemDTO.setProduct(productDTO);
-        editOrderItem(orderItemDTO);
-    }
-
-    @Override
-    public void addProduct(Long orderId, ProductDTO productDTO) {
-        OrderItemDTO orderItemDTO = OrderItemConverter.entityToDto(orderItemRepository.findOne(orderId));
-        addProduct(orderItemDTO, productDTO);
-    }
-
-    @Override
-    public ProductDTO getProduct(OrderItemDTO orderItemDTO) {
-        return orderItemDTO.getProduct();
-    }
-
-    @Override
-    public void setCount(OrderItemDTO orderItemDTO, int count) {
         orderItemDTO.setCount(count);
-        editOrderItem(orderItemDTO);
+
+        return ProductMap.toDto(orderItemRepository.save(OrderItemMap.toEntity(orderItemDTO)).getProduct());
     }
 
+    /**
+     * Возвращает добавленную позицию заказа.
+     */
     @Override
-    public int getCount(OrderItemDTO orderItemDTO) {
-        return orderItemDTO.getCount();
+    public OrderItemDTO addProductAndReturnItem(OrderDTO orderDTO, ProductDTO productDTO) {
+        if ((orderDTO == null) || (productDTO == null)) return null;
+        OrderItemDTO orderItemDTO = new OrderItemDTO();
+        orderItemDTO.setOrder(orderDTO);
+        orderItemDTO.setProduct(productDTO);
+        orderItemDTO.setCount(1);
+
+        return OrderItemMap.toDto(orderItemRepository.save(OrderItemMap.toEntity(orderItemDTO)));
     }
 
+    /**
+     * Удаляет товар(пункт заказа) из заказа.
+     */
     @Override
-    public void deleteOrderItem(Long id) {
-        if (orderItemRepository.findOne(id) == null) throw new NullPointerException();
-        orderItemRepository.delete(id);
+    public void delete(OrderItemDTO orderItemDTO) {
+        if (orderItemDTO != null) orderItemRepository.delete(OrderItemMap.toEntity(orderItemDTO));
+    }
+
+    /**
+     * Удаляет список товаров(пункты заказа) из заказа.
+     */
+    @Override
+    public void delete(List<OrderItemDTO> orderItemDTOLists) {
+        if (orderItemDTOLists != null) orderItemRepository.delete(OrderItemMap.toEntity(orderItemDTOLists));
+    }
+
+    /**
+     * Очищает список заказа.
+     */
+    @Override
+    public void delete(OrderDTO orderDTO) {
+        List<OrderItemDTO> orderItemDTOList = getOrderItemByOrder(orderDTO);
+        if (orderItemDTOList!= null) delete(orderItemDTOList);
+    }
+
+    /**
+     * Удаляет позицию заказа по идентификатору.
+     */
+    @Override
+    public void delete(Long orderItemId) {
+        orderItemRepository.delete(orderItemId);
+    }
+
+    /**
+     * Изменяет количество товара в пункте заказа.
+     */
+    @Override
+    public void editCount(OrderItemDTO orderItemDTO, Integer count) {
+        if (orderItemDTO != null) {
+            orderItemDTO.setCount(count);
+            orderItemRepository.save(OrderItemMap.toEntity(orderItemDTO));
+        }
+    }
+
+    /**
+     * Возвращает позицию заказа по идентификатору.
+     */
+    @Override
+    public OrderItemDTO get(Long id) {
+        return OrderItemMap.toDto(orderItemRepository.findOne(id));
     }
 }

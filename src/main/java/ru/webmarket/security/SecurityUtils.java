@@ -4,10 +4,10 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
-import ru.webmarket.entity.User;
-import ru.webmarket.entity.converter.UserConverter;
-import ru.webmarket.entity.dto.RoleDTO;
-import ru.webmarket.entity.dto.UserDTO;
+import ru.webmarket.model.dto.RoleDTO;
+import ru.webmarket.model.dto.UserDTO;
+import ru.webmarket.model.entity.User;
+import ru.webmarket.model.mapper.UserMap;
 
 import java.util.Objects;
 
@@ -19,7 +19,7 @@ public class SecurityUtils {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) return null;
 
-        return UserConverter.entityToDto((User) auth.getPrincipal());
+        return UserMap.toDto((User)auth.getPrincipal());
     }
 
     public static ModelMap getAuthInfo() {

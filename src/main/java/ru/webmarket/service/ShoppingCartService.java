@@ -1,67 +1,33 @@
 package ru.webmarket.service;
 
-import org.springframework.stereotype.Service;
-import ru.webmarket.entity.dto.OrderItemDTO;
-import ru.webmarket.entity.dto.ProductDTO;
-import ru.webmarket.entity.dto.ShoppingCartDTO;
-
-import java.util.List;
-
-/**
- * @author Сергей
- */
-
-  // Перепланирование сервиса
-    /*
-    void             Создание корзины. 
-    void             Удаление корзины.
-    List<ProductDTO> Получить текующие позиции из корзины.
-    int              Текущая стоимость корзины.
-    void             Добавление товара.
-    void             Удаление товара.
-    void             Изменение количества покупаемого товара.
-    void             Очистить корзину от товаров.
-    void             Оформить заказ.
-    boolean          Пустотота корзины.
-    
-    Тогда, как сделать заказ, если корзина содержит order?
-    Нужно отличать order-заказы от order-корзин.
-
-    */
+import ru.webmarket.model.dto.*;
 
 public interface ShoppingCartService {
 
-    void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
+    ShoppingCartDTO get (Long shoppingCartId);
 
-    void deleteShoppingCart(Long id);
+    ShoppingCartDTO addByUser (UserDTO userDTO);
 
-    List<ProductDTO> getProducts(ShoppingCartDTO shoppingCartDTO);
+    ShoppingCartDTO getByUserId (Long userId);
 
-    ShoppingCartDTO getShoppingCart(Long id);
+    OrderDTO getOrder (ShoppingCartDTO shoppingCartDTO);
 
-    ShoppingCartDTO getShoppingCartByUserId (Long id);
+    void addProduct (ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 
-    void editShoppingCart(ShoppingCartDTO shoppingCartDTO);
+    void addProduct (ShoppingCartDTO shoppingCartDTO, Long productId);
 
-    void editShoppingCart(ShoppingCartDTO shoppingCartDTO, OrderItemDTO orderItemDTO);
+    OrderItemDTO addProductAndReturnItem (ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 
-    void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
+    void editCountOrderItem (OrderItemDTO orderItemDTO, Integer count);
 
-    void addProduct(ShoppingCartDTO shoppingCartDTO, Long id);
+    void editCountOrderItem (Long orderItemId, Integer count);
 
-    void addProduct(ShoppingCartDTO shoppingCartDTO, Long id, int count);
+    void deleteOrderItem (OrderItemDTO orderItemDTO);
 
-    void deleteProducts(ShoppingCartDTO shoppingCartDTO);
+    void deleteOrderItem (Long orderItemId);
 
-    void deleteProduct(ShoppingCartDTO shoppingCartDTO,  Long id);
+    void deleteOrderItems (ShoppingCartDTO shoppingCartDTO);
 
-
-
-    Double getTotal (ShoppingCartDTO shoppingCartDTO);
-
-    int getCountProducts (ShoppingCartDTO shoppingCartDTO);
-
-    void editProductCount(Long id, int count );
-
+    Double getCount (ShoppingCartDTO shoppingCartDTO);
 
 }

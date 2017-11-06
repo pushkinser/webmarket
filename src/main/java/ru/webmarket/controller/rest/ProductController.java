@@ -1,14 +1,15 @@
 package ru.webmarket.controller.rest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.webmarket.controller.rest.request.ProductBodyJson;
-import ru.webmarket.entity.dto.ProductDTO;
-import ru.webmarket.service.impl.CategoryServiceImpl;
+import ru.webmarket.model.dto.ProductDTO;
 import ru.webmarket.service.impl.ProductServiceImpl;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/product")
@@ -17,19 +18,16 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
-    @Autowired
-    private CategoryServiceImpl categoryService;
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ProductDTO getProduct(@PathVariable("id") Long id) {
 
-        return productService.getProduct(id);
+        return productService.get(id);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<ProductDTO> getAllProduct() {
 
-        return productService.getProducts();
+        return productService.getAll();
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_SELLER"})
@@ -37,23 +35,27 @@ public class ProductController {
     @ResponseBody
     public Long addProduct(@RequestBody ProductBodyJson a) {
 
-        ProductDTO productDTO = new ProductDTO(a.getName(), a.getPrice(), a.getDescription());
-        Long productId = productService.addProductAndGetId(productDTO);
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setName(a.getName());
+        productDTO.setPrice(a.getPrice());
+        productDTO.setDescription(a.getDescription());
+
+        productDTO = productService.add(productDTO);
 //        productService.addProduct(productDTO);
-        return productId;
+        return productDTO.getId();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public void updateProduct(ProductDTO productDTO) {
+//    @RequestMapping(value = "/", method = RequestMethod.PUT)
+//    public void updateProduct(ProductDTO productDTO) {
+//
+//        productService.editProduct(productDTO);
+//    }
 
-        productService.editProduct(productDTO);
-    }
 
-
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteProduct(Long id) {
-        productService.deleteProduct(id);
-    }
+//    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+//    public void deleteProduct(Long id) {
+//        productService.deleteProduct(id);
+//    }
 
 
 }

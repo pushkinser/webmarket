@@ -1,29 +1,15 @@
 package ru.webmarket.service;
 
-import org.springframework.stereotype.Service;
-import ru.webmarket.entity.dto.CategoryDTO;
-import ru.webmarket.entity.dto.ProductDTO;
+import ru.webmarket.model.dto.ProductDTO;
 
 import java.util.List;
 
-/**
- * @author Сергей
- */
 public interface ProductService {
 
-    void addProduct(ProductDTO productDTO);
+    ProductDTO add (ProductDTO productDTO);
 
-    Long addProductAndGetId (ProductDTO productDTO);
+    ProductDTO get (Long id);
 
-    ProductDTO getProduct(Long id);
+    List<ProductDTO> getAll ();
 
-    void editProduct(ProductDTO productDTO);
-
-    void deleteProduct(Long id);
-
-    List<ProductDTO> getProducts();
-
-    List<CategoryDTO> getCategories(ProductDTO productDTO);
-
-    ProductDTO findByName(String name);
 }

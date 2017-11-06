@@ -6,7 +6,7 @@
 
 define('pages/Products',
     ['jquery', 'datatables', 'bootstrap', 'jgrowl', 'require-css!datatables-css', 'require-css!tables-css', 'require-css!bootstrap-css', 'require-css!jgrowl-css', 'require-css!growl-css', 'domReady!'],
-    function ($) {
+    function () {
 
         function Products(options) {
             $.extend(this, options);

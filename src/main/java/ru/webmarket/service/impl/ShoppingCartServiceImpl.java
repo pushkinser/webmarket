@@ -2,156 +2,144 @@ package ru.webmarket.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.webmarket.entity.OrderItem;
-import ru.webmarket.entity.converter.OrderConverter;
-import ru.webmarket.entity.converter.OrderItemConverter;
-import ru.webmarket.entity.converter.ProductConverter;
-import ru.webmarket.entity.converter.ShoppingCartConverter;
-import ru.webmarket.entity.dto.OrderItemDTO;
-import ru.webmarket.entity.dto.ProductDTO;
-import ru.webmarket.entity.dto.ShoppingCartDTO;
-import ru.webmarket.repository.OrderItemRepository;
-import ru.webmarket.repository.OrderRepository;
-import ru.webmarket.repository.ProductRepository;
+import ru.webmarket.model.dto.*;
+import ru.webmarket.model.mapper.ShoppingCartMap;
 import ru.webmarket.repository.ShoppingCartRepository;
 import ru.webmarket.service.ShoppingCartService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
-
     private final ShoppingCartRepository shoppingCartRepository;
-    private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
-    private final ProductRepository productRepository;
+
+    private final OrderItemServiceImpl orderItemService;
+
+    private final ProductServiceImpl productService;
 
     @Autowired
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, OrderItemRepository orderItemRepository, ProductRepository productRepository) {
+    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, OrderItemServiceImpl orderItemService, ProductServiceImpl productService) {
         this.shoppingCartRepository = shoppingCartRepository;
-        this.orderRepository = orderRepository;
-        this.orderItemRepository = orderItemRepository;
-        this.productRepository = productRepository;
+        this.orderItemService = orderItemService;
+        this.productService = productService;
     }
 
+    /**
+     * Вохвращает корзину пользователя по идентификатору корзины.
+     */
     @Override
-    public void addShoppingCart(ShoppingCartDTO shoppingCartDTO) {
-        if (shoppingCartDTO == null) throw new NullPointerException();
-        shoppingCartRepository.save(ShoppingCartConverter.dtoToEntity(shoppingCartDTO));
+    public ShoppingCartDTO get(Long shoppingCartId) {
+        return ShoppingCartMap.toDto(shoppingCartRepository.findOne(shoppingCartId));
     }
 
+    /**
+     * Сохраняет пустую корзину для пользователя.
+    */
     @Override
-    public ShoppingCartDTO getShoppingCart(Long id) {
-        return ShoppingCartConverter.entityToDto(shoppingCartRepository.findOne(id));
+    public ShoppingCartDTO addByUser(UserDTO userDTO) {
+        if (userDTO == null) return null;
+
+        ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO();
+
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setUser(userDTO);
+
+        shoppingCartDTO.setOrder(orderDTO);
+        shoppingCartDTO.setUser(userDTO);
+
+        return ShoppingCartMap.toDto(shoppingCartRepository.save(ShoppingCartMap.toEntity(shoppingCartDTO)));
     }
 
+    /**
+     * Вохвращает корзину пользователя по его идентификатору.
+     */
     @Override
-    public ShoppingCartDTO getShoppingCartByUserId(Long id) {
-        return ShoppingCartConverter.entityToDto(shoppingCartRepository.findByUser_Id(id));
+    public ShoppingCartDTO getByUserId(Long userId) {
+        return ShoppingCartMap.toDto(shoppingCartRepository.findByUser_Id(userId));
     }
 
+    /**
+     * Возвращает заказ корзины.
+     */
     @Override
-    public void editShoppingCart(ShoppingCartDTO shoppingCartDTO) {
-        if (shoppingCartDTO == null) throw new NullPointerException();
-        if (shoppingCartRepository.findOne(shoppingCartDTO.getId()) != null) {
-            orderRepository.save(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
-            shoppingCartRepository.save(ShoppingCartConverter.dtoToEntity(shoppingCartDTO));
-        }
+    public OrderDTO getOrder(ShoppingCartDTO shoppingCartDTO) {
+        return shoppingCartDTO.getOrder();
     }
 
+    /**
+     * Возвращает стоимость корзины.
+     */
     @Override
-    public void editShoppingCart(ShoppingCartDTO shoppingCartDTO, OrderItemDTO orderItemDTO) {
-        if ((shoppingCartDTO == null) || (orderItemDTO == null)) throw new NullPointerException();
-        if (shoppingCartRepository.findOne(shoppingCartDTO.getId()) != null) {
-            orderItemRepository.save(OrderItemConverter.dtoToEntity(orderItemDTO));
-            orderRepository.save(OrderConverter.dtoToEntity(shoppingCartDTO.getOrder()));
-            shoppingCartRepository.save(ShoppingCartConverter.dtoToEntity(shoppingCartDTO));
-        }
-    }
-
-    @Override
-    public void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
-        shoppingCartDTO.getOrder().addOrderItemDTO(new OrderItemDTO(productDTO));
-        editShoppingCart(shoppingCartDTO);
-
-//        OrderDTO orderDTO = OrderConverter.entityToDto(orderRepository.getOne(shoppingCartDTO.getOrder().getId()));
-//        orderDTO.addOrderItemDTO(new OrderItemDTO(productDTO, count));
-//        orderRepository.save(OrderConverter.dtoToEntity(orderDTO));
-    }
-
-    @Override
-    public void addProduct(ShoppingCartDTO shoppingCartDTO, Long id) {
-        addProduct(shoppingCartDTO, ProductConverter.entityToDto(productRepository.getOne(id)));
-    }
-
-
-    @Override
-    public void addProduct(ShoppingCartDTO shoppingCartDTO, Long id, int count) {
-
-        ProductDTO productDTO = ProductConverter.entityToDto(productRepository.getOne(id));
-        OrderItemDTO orderItemDTO = new OrderItemDTO(shoppingCartDTO.getOrder(), productDTO, count);
-
-        orderItemDTO.setOrder(shoppingCartDTO.getOrder());
-        OrderItem orderItem = OrderItemConverter.dtoToEntity(shoppingCartDTO.getOrder(), orderItemDTO);
-        shoppingCartDTO.getOrder().addOrderItemDTO(orderItemDTO);
-        orderItemRepository.save(orderItem);
-    }
-
-    @Override
-    public void deleteProducts(ShoppingCartDTO shoppingCartDTO) {
-        List<OrderItem> orderItems = OrderItemConverter.dtoToEntity(shoppingCartDTO.getOrder().getOrderItems());
-        orderItemRepository.delete(orderItems);
-    }
-
-    @Override
-    public void deleteProduct(ShoppingCartDTO shoppingCartDTO, Long id) {
-        orderItemRepository.delete(id);
-    }
-
-    @Override
-    public List<ProductDTO> getProducts(ShoppingCartDTO shoppingCartDTO) {
-        List<ProductDTO> productDTOS = new ArrayList<>();
-
-        for (OrderItemDTO orderItemDTO : shoppingCartDTO.getOrder().getOrderItems()) {
-            productDTOS.add(orderItemDTO.getProduct());
-        }
-        return productDTOS;
-    }
-
-    @Override
-    public Double getTotal(ShoppingCartDTO shoppingCartDTO) {
-        Double total = 0.0;
-
-        for (OrderItemDTO orderItemDTO : shoppingCartDTO.getOrder().getOrderItems()) {
-            total = total + orderItemDTO.getProduct().getPrice()*orderItemDTO.getCount();
-        }
-
-        return total;
-    }
-
-    @Override
-    public int getCountProducts(ShoppingCartDTO shoppingCartDTO) {
-        int count = 0;
-
-        for (OrderItemDTO orderItemDTO : shoppingCartDTO.getOrder().getOrderItems()) {
-            count = count + orderItemDTO.getCount();
+    public Double getCount(ShoppingCartDTO shoppingCartDTO) {
+        Double count = Double.valueOf(0);
+        if (shoppingCartDTO.getOrder() != null ) {
+            for (OrderItemDTO orderItemDTO: orderItemService.getOrderItemByOrder(shoppingCartDTO.getOrder()) ) {
+                count += orderItemDTO.getCount() * orderItemDTO.getProduct().getPrice();
+            }
         }
         return count;
     }
 
+    /**
+     * Добавляет товар в корзину.
+     */
     @Override
-    public void editProductCount(Long id, int count) {
-        OrderItem orderItem = orderItemRepository.findOne(id);
-        orderItem.setCount(count);
-        orderItemRepository.save(orderItem);
+    public void addProduct(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
+        orderItemService.addProduct(shoppingCartDTO.getOrder(), productDTO);
     }
 
+    /**
+     * Добавляет товар в корзину.
+     */
     @Override
-    public void deleteShoppingCart(Long id) {
-        if (shoppingCartRepository.findOne(id) == null) throw new NullPointerException();
-        shoppingCartRepository.delete(id);
+    public void addProduct(ShoppingCartDTO shoppingCartDTO, Long productId) {
+        addProduct(shoppingCartDTO, productService.get(productId));
     }
 
+    /**
+     * Возвращает OrderItem добавленного товара.
+     */
+    @Override
+    public OrderItemDTO addProductAndReturnItem(ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO) {
+        return orderItemService.addProductAndReturnItem(shoppingCartDTO.getOrder(), productDTO);
+    }
+
+    /**
+     * Изменяет количество товара в позиции заказа.
+     */
+    @Override
+    public void editCountOrderItem(OrderItemDTO orderItemDTO, Integer count) {
+        orderItemService.editCount(orderItemDTO, count);
+    }
+
+    /**
+     * Изменяет количество товара в позиции заказа.
+     */
+    @Override
+    public void editCountOrderItem(Long orderItemId, Integer count) {
+       editCountOrderItem(orderItemService.get(orderItemId), count);
+    }
+
+    /**
+     * Удаляет позицию заказа из корзины.
+     */
+    @Override
+    public void deleteOrderItem(OrderItemDTO orderItemDTO) {
+        orderItemService.delete(orderItemDTO);
+    }
+
+    /**
+     * Удаляет позицию заказа из корзины по ее идентификатору.
+     */
+    @Override
+    public void deleteOrderItem(Long orderItemId) {
+        orderItemService.delete(orderItemId);
+    }
+
+    /**
+     * Очищает корзину.
+     */
+    @Override
+    public void deleteOrderItems(ShoppingCartDTO shoppingCartDTO) {
+        orderItemService.delete(orderItemService.getOrderItemByOrder(shoppingCartDTO.getOrder()));
+    }
 }

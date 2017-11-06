@@ -7,12 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ru.webmarket.entity.User;
-import ru.webmarket.entity.converter.UserConverter;
-import ru.webmarket.entity.dto.UserDTO;
+import ru.webmarket.model.dto.UserDTO;
+import ru.webmarket.model.entity.User;
+import ru.webmarket.model.mapper.UserMap;
 import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.security.UserDetailsManager;
-import ru.webmarket.service.impl.UserServiceImpl;
 
 import java.security.Principal;
 
@@ -25,9 +24,7 @@ public class IndexController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER"})
     public ModelAndView index() {
-        final ModelAndView model = new ModelAndView("products", SecurityUtils.getAuthInfo());
-
-        return model;
+        return new ModelAndView("products", SecurityUtils.getAuthInfo());
     }
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
@@ -38,8 +35,8 @@ public class IndexController {
             model.addObject("username", user.getName());
 
             UserDetails userDetails = userDetailsManager.loadUserByUsername(user.getName());
-            UserDTO userDTO = UserConverter.entityToDto((User) userDetails);
-           model.addObject("roles", userDTO.getRoles());
+            UserDTO userDTO = UserMap.toDto((User) userDetails);
+            model.addObject("roles", userDTO.getRoles());
         }
         return model;
     }

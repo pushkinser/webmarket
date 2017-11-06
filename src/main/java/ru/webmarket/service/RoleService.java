@@ -1,24 +1,11 @@
 package ru.webmarket.service;
 
-import org.springframework.stereotype.Service;
-import ru.webmarket.entity.Role;
-import ru.webmarket.entity.User;
-import ru.webmarket.entity.dto.RoleDTO;
-import ru.webmarket.entity.dto.UserDTO;
-
-import java.util.List;
+import ru.webmarket.model.dto.RoleDTO;
 
 public interface RoleService {
 
-    void addRole(RoleDTO roleDTO);
+    RoleDTO get (Long id);
 
-    RoleDTO getRole(Long id);
+    RoleDTO get (String roleName);
 
-    void editRole(RoleDTO role);
-
-    void deleteRole(Long id);
-
-    List<RoleDTO> getRoles();
-
-    RoleDTO findByName(String name);
 }

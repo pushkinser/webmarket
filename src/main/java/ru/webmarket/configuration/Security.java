@@ -1,6 +1,5 @@
 package ru.webmarket.configuration;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,29 +32,29 @@ public class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
-                .authorizeRequests()
-                .antMatchers("/resources/**", "/**").permitAll()
-                .anyRequest().permitAll()
+                    .authorizeRequests()
+                    .antMatchers("/resources/**", "/**").permitAll()
+                    .anyRequest().permitAll()
                 .and()
-                .formLogin()
-                .permitAll()
-                .loginPage("/login")
-                .loginProcessingUrl("/perform_login")
-                .failureUrl("/login?error")
-                .usernameParameter("username")
-                .passwordParameter("password")
+                    .formLogin()
+                    .permitAll()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/perform_login")
+                    .failureUrl("/login?error")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
                 .and()
-                .logout()
-                .permitAll()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
+                    .logout()
+                    .permitAll()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
                 .and()
-                .exceptionHandling().accessDeniedPage("/403");
+                    .exceptionHandling().accessDeniedPage("/403");
     }
 
     @Bean
-    public UserDetailsManager getAccountDetailsManager(){
+    public UserDetailsManager getAccountDetailsManager() {
         return new UserDetailsManager();
     }
 
