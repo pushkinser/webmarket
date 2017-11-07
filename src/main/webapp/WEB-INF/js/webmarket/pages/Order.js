@@ -32,9 +32,7 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
                         'createdCell': this._priseCellConvertRuble
                     },
                     {
-                        'data': 'count',
-                        'searchable': false,
-                        'sortable': false
+                        'data': 'count'
                     }
                 ],
                 "searching": false,
@@ -78,7 +76,7 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
 
             controlId.append('<label for="addressId">Введите адрес доставки:</label>' +
                 '<input type="address" class="form-control" id="addressId"  placeholder="Адрес">'+
-                '<button type="button" class="btn btn-primary">Закаказть</button>');
+                '<button type="button" class="btn btn-primary">Заказать</button>');
 
             controlId.children('button').bind("click", function () {
                 $.jGrowl('yep ' + controlId.children('input').val(), {life: 3000, theme: 'success', position: 'bottom-right'});
