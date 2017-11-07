@@ -51,30 +51,30 @@ public class UserRepositoryTest extends AppTest {
 //
 //    }
 
-    @Test
-    public void shouldSaveNewUserWithRoleAndOrderAndShoppingCart() {
-
-        User user = new User();
-        user.setUserName("username");
-
-        Order order = new Order();
-        order.setUser(user);
-
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(user);
-        shoppingCart.setOrder(order);
-
-//        user.setRoles(Collections.singletonList(roleRepository.findByName("CUSTOMER")));
-
-        Assert.assertNotNull(userRepository.save(user).getRoles());
-
-        shoppingCart = shoppingCartRepository.save(shoppingCart);
-
-        Assert.assertNotNull(shoppingCart);
-
-//        user.setShoppingCart(shoppingCart);
-//        user.setOrders(Collections.singletonList(order));
-
-
-    }
+//    @Test
+//    public void shouldSaveNewUserWithRoleAndOrderAndShoppingCart() {
+//
+//        User user = new User();
+//        user.setUserName("username");
+//
+//        Order order = new Order();
+//        order.setUser(user);
+//
+//        ShoppingCart shoppingCart = new ShoppingCart();
+//        shoppingCart.setUser(user);
+//        shoppingCart.setOrder(order);
+//
+////        user.setRoles(Collections.singletonList(roleRepository.findByName("CUSTOMER")));
+//
+//        Assert.assertNotNull(userRepository.save(user).getRoles());
+//
+//        shoppingCart = shoppingCartRepository.save(shoppingCart);
+//
+//        Assert.assertNotNull(shoppingCart);
+//
+////        user.setShoppingCart(shoppingCart);
+////        user.setOrders(Collections.singletonList(order));
+//
+//
+//    }
 }
