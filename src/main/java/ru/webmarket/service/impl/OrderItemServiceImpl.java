@@ -121,7 +121,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     /**
-     * Возвращает позицию заказа по идентификатору.
+     * Возвращает пункт заказа по идентификатору.
      */
     @Override
     public OrderItemDTO get(Long id) {

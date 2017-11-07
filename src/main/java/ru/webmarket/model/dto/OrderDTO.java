@@ -16,7 +16,6 @@ public class OrderDTO {
     private Long id;
     private String address;
     private UserDTO user;
-//    private List<OrderItemDTO> orderItems;
 
     @Override
     public String toString() {
