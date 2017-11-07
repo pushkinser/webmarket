@@ -8,24 +8,20 @@ nav.navbar.navbar-default
                     a(href="/products") Товары
             li
                 if isAuthorized
-                    a(href="/orders") Заказы
-            li
-                if isAuthorized
                     if isSeller
                         a(href="/addproduct") Добавить товар
 
         lu.nav.navbar-nav.navbar-right.nav-tabs
             if isAuthorized
                 li
-                    .h1 #{user.userName}
+                    a(href="/orders") Мои заказы
                 li
                     a(href="/shoppingcart")
                         div(id = 'shoppingCartInfo')
                             img(src='/images/shopping_cart/empty.png', class='img-responsive')
                 li
-                    if isAuthorized
-                        .h1
-                            div(id = 'shoppingCartCost')
+                   .h1
+                        div(id = 'shoppingCartCost')
 
             li
                 if isAuthorized
