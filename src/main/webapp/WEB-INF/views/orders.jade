@@ -8,3 +8,16 @@ html
         include navbar
 
         .container
+            .col-md-12
+
+                .div(id = 'ordersControl')
+
+    script.
+        require(['pages/Orders'], function (Orders) {
+            const options = {
+                ordersControlId: 'ordersControl'
+            };
+            var ordersPage = new Orders(options);
+            ordersPage.draw();
+
+        });
