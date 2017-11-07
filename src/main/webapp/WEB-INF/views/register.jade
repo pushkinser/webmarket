@@ -12,9 +12,14 @@ html
                     .col-md-6
                             .panel-heading
                                 h1.panel-title Регистрация
+
                             .panel-body
                                 form(role="form", action="/register", modelAttribute="user", method="POST")
                                     .form-group
+                                        if error
+                                            .alert.alert-danger
+                                                strong #{error}
+
                                         input(type="text", class="form-control", name="userName", placeholder="Логин", required="true")
                                     .form-group
                                         input(type="password", class="form-control", name="password", placeholder="Пароль", required="true")

@@ -15,4 +15,5 @@ public interface UserService {
     UserDTO get (String userName);
 
     List<RoleDTO> getRoles (UserDTO userDTO);
+
 }
