@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class OrderBodyJson {
 
+    Long id;
     String address;
 }
