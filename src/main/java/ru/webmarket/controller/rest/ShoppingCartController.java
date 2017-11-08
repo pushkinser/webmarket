@@ -58,4 +58,9 @@ public class ShoppingCartController {
         else shoppingCartService.deleteOrderItem(orderItemBodyJson.getId());
     }
 
+    @RequestMapping(value = "/isempty", method = RequestMethod.GET)
+    public Boolean isEmpty() {
+        return shoppingCartService.isEmpty(getCurrentShoppingCart());
+    }
+
 }

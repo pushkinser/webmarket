@@ -6,6 +6,8 @@ public interface ShoppingCartService {
 
     ShoppingCartDTO get (Long shoppingCartId);
 
+    Boolean isEmpty (ShoppingCartDTO shoppingCartDTO);
+
     ShoppingCartDTO addByUser (UserDTO userDTO);
 
     ShoppingCartDTO getByUserId (Long userId);

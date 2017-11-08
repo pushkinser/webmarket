@@ -32,6 +32,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     /**
+     * Возвращает true, если пустая корзина
+     */
+    @Override
+    public Boolean isEmpty(ShoppingCartDTO shoppingCartDTO) {
+        return orderItemService.getOrderItemByOrder(shoppingCartDTO.getOrder()).isEmpty();
+    }
+
+    /**
      * Сохраняет пустую корзину для пользователя.
     */
     @Override
