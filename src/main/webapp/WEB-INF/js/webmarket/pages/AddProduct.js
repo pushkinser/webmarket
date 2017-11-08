@@ -26,16 +26,16 @@ define('pages/AddProduct',
                 '</div>' +
                 '<div class="form-group col-md ">' +
                 '<label for="inputPrice">Стоимость</label>' +
-                '<input type="text" class="form-control" id="' + productPriceId + '" value="0">' +
+                '<input type="text" class="form-control" id="' + productPriceId + '"placeholder="Введите стоимость продукта">' +
                 '</div>' +
                 '<div class="form-group col-md ">' +
                 '<label for="inputDescription">Описание</label>' +
                 '<input type="text" class="form-control" id="' + productDescriptionId + '" placeholder="Введите описание">' +
                 '</div>' +
-                '<form id = "uploadForm" name = "uploadForm" enctype="multipart/form-data">'+
+                '<form id = "uploadForm" name = "uploadForm" enctype="multipart/form-data">' +
                 '<label for="inputImg">Загрузить изображение товара</label>' +
                 '<input type="file" name="file" id="' + productImageLoadId + '">' +
-                '</form>'+
+                '</form>' +
                 '<button type="button" id="' + buttonAddProductId + '" class="btn btn-lg btn-primary ">Добавить</button>');
 
             var priceInputElement = $('#' + productPriceId);
@@ -43,7 +43,11 @@ define('pages/AddProduct',
             var priceInput = $(priceInputElement);
             priceInput.bind("blur", function () {
                 if (isNaN(parseFloat(priceInput.val()))) {
-                    $.jGrowl('Некорректный ввод', {life: 3000, position: 'bottom-right', theme: 'error'});
+                    $.jGrowl('Некорректный ввод стоимости. Введите число.', {
+                        life: 5000,
+                        position: 'bottom-right',
+                        theme: 'error'
+                    });
                     priceInput.val(0);
                     priceInput.change();
                 }
@@ -53,11 +57,22 @@ define('pages/AddProduct',
                 const name = $('#' + productNameId).val();
                 const price = priceInput.val();
                 const description = $('#' + productDescriptionId).val();
-                const img = $('#'+productImageLoadId);
+                const img = $('#' + productImageLoadId);
 
                 var data = [name, price, description, img];
 
-                this._addNewProduct.apply(this, [data]);
+
+
+                if (name < 1) {
+                    $.jGrowl('Не выбрано название товара.', {life: 4000, theme: 'error', position: 'bottom-right'});
+                }
+                else if ((price == 0) || (price < 0)) {
+                    $.jGrowl('Неправильно указана цена товара.', {life: 4000, theme: 'error', position: 'bottom-right'});
+                }
+                else if (document.getElementsByName("file")[0].files.length === 0) {
+                    $.jGrowl('Не выбрано изображение товара.', { life: 4000, theme: 'error', position: 'bottom-right'});
+                }
+                else this._addNewProduct.apply(this, [data]);
 
             }.bind(this));
         };
@@ -93,10 +108,18 @@ define('pages/AddProduct',
                         contentType: false,
                         type: 'POST',
                         success: function (d) {
-                            $.jGrowl('Успешно', {life: 3000, theme: 'success', position: 'bottom-right'});
+                            $.jGrowl('Изображение товара успешно загружено.', {
+                                life: 3000,
+                                theme: 'success',
+                                position: 'bottom-right'
+                            });
                         },
                         error: function () {
-                            $.jGrowl('Не успешно', {life: 3000, theme: 'error', position: 'bottom-right'});
+                            $.jGrowl('Изображение не загружено.', {
+                                life: 3000,
+                                theme: 'error',
+                                position: 'bottom-right'
+                            });
                         }
                     });
 
@@ -105,9 +128,6 @@ define('pages/AddProduct',
                     $.jGrowl(pName + ' не добавлен :(', {life: 3000, theme: 'error', position: 'bottom-right'});
                 }.bind(this)
             });
-
-
-
 
 
         };

@@ -72,11 +72,22 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
 
     ShoppingCart.prototype._productsDrawControl = function (controlElementId) {
         var $controlId = $('#' + controlElementId);
-        $controlId.html("Очистить корзину <img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
-        $controlId.children('img').bind("click", function () {
-            this._deleteAllProductFromShoppingCart();
-        }.bind(this));
-        $controlId.append(" Оформить заказ <a href='/order'><img src='/images/shopping_cart/stores.png' class='img-responsive' width='50px' height='50px'></a>");
+
+        $.ajax({
+            url: '/api/shoppingcart/isempty',
+            type: 'GET',
+            success: function (data) {
+               if (data)  $.jGrowl('Корзина еще пустая, давайте добавим товары :)', {life: 5000, theme: 'success', position: 'bottom-right'});
+               else {
+                   $controlId.append("Оформить заказ <a href='/order'><img src='/images/shopping_cart/stores.png' class='img-responsive' width='50px' height='50px'></a>");
+                   $controlId.append("Очистить корзину <img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
+                   $controlId.children('img').bind("click", function () {
+                       this._deleteAllProductFromShoppingCart();
+                   }.bind(this));
+                  }
+            }.bind(this)
+        }).bind(this);
+
     };
 
     ShoppingCart.prototype._deleteAllProductFromShoppingCart = function () {

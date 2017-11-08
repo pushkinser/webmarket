@@ -12,6 +12,8 @@ define('pages/Orders', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-
                 type: 'GET',
                 success: function (data) {
 
+                    if (data.length == 0) $('#' + this.ordersControlId).append('<h4> У вас нет заказов.</h4>');
+
                     var elementId;
                     for (var i = 0; i < data.length; i++) {
                         elementId = data[i].id;
@@ -91,9 +93,6 @@ define('pages/Orders', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-
                     }
 
 
-                }.bind(this),
-                error: function () {
-                    $('#' + this.ordersControlId).append('<h4> У вас нет заказов.</h4>');
                 }.bind(this)
             });
 

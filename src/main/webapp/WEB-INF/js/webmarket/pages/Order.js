@@ -79,33 +79,37 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
                 '<button type="button" class="btn btn-primary">Заказать</button>');
 
             controlId.children('button').bind("click", function () {
-                $.jGrowl('yep ' + controlId.children('input').val(), {life: 3000, theme: 'success', position: 'bottom-right'});
+                // $.jGrowl('yep ' + controlId.children('input').val(), {life: 3000, theme: 'success', position: 'bottom-right'});
 
-                $.ajax({
-                    url: '/api/order/complete',
-                    type: 'POST',
-                    contentType: "application/json",
-                    data: JSON.stringify({'address': controlId.children('input').val()}),
-                    success: function () {
+                if (controlId.children('input').val().length == 0) $.jGrowl('Не указан адрес доставки.' + controlId.children('input').val(), {life: 3000, theme: 'error', position: 'bottom-right'});
+                else {
+                    $.ajax({
+                        url: '/api/order/complete',
+                        type: 'POST',
+                        contentType: "application/json",
+                        data: JSON.stringify({'address': controlId.children('input').val()}),
+                        success: function () {
 
-                        $tableId = $('#info');
-                        $tableId.DataTable().clear();
-                        $tableId.DataTable().draw();
+                            $tableId = $('#info');
+                            $tableId.DataTable().clear();
+                            $tableId.DataTable().draw();
 
-                        require(['pages/CostShoppingCart'], function (CostShoppingCart) {
-                            var navigationMenuCost = new CostShoppingCart();
-                            navigationMenuCost.draw();
-                        });
+                            require(['pages/CostShoppingCart'], function (CostShoppingCart) {
+                                var navigationMenuCost = new CostShoppingCart();
+                                navigationMenuCost.draw();
+                            });
 
-                        $.jGrowl('yep  ' +  controlId.children('input').val(), {
-                            life: 600,
-                            position: 'bottom-right',
-                            theme: 'success'
-                        });
+                            $.jGrowl('Заказ успешно оформлен. Адрес: ' +  controlId.children('input').val(), {
+                                life: 600,
+                                position: 'bottom-right',
+                                theme: 'success'
+                            });
 
-                        $(window).attr('location','/');
-                    }
-                });
+                            $(window).attr('location','/');
+                        }
+                    });
+                }
+
 
             }.bind(this));
 
