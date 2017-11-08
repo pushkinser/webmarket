@@ -1,20 +1,13 @@
 /*
  * Product table customisations
  */
-#table.products
+#table
 
-a:active {
+a, a:active, a:visited, a:link {
     text-decoration: none;
     font-size: 18px;
     color: black;
 }
-
-a:link {
-    text-decoration: none;
-    font-size: 18px;
-    color: black;
-}
-
 
 .inputBlock input {
     background: #ffffff;
@@ -22,7 +15,7 @@ a:link {
     padding: 10px 10px 10px 10px;
     font-size: 14px;
     float: left;
-    width: 50px;
+    width: 70px;
     text-align: center;
 }
 
