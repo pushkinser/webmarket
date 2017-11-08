@@ -1,7 +1,8 @@
 nav.navbar.navbar-default
     .container-fluid
         .navbar-header
-            .navbar-brand Webmarket
+            .navbar-brand
+                a(href="/") Webmarket
         lu.nav.navbar-nav.nav-tabs
             li
                 if isAuthorized
@@ -14,6 +15,8 @@ nav.navbar.navbar-default
         lu.nav.navbar-nav.navbar-right.nav-tabs
             if isAuthorized
                 li
+                    .h1 #{user.userName}
+                li
                     a(href="/orders") Мои заказы
                 li
                     a(href="/shoppingcart")
@@ -22,7 +25,6 @@ nav.navbar.navbar-default
                 li
                    .h1
                         div(id = 'shoppingCartCost')
-
             li
                 if isAuthorized
                     a(href="/logout") Выйти
