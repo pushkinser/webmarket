@@ -1,7 +1,6 @@
 package ru.webmarket.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -11,8 +10,12 @@ import ru.webmarket.service.UserService;
 @Component
 public class UserValidator implements Validator {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserValidator(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

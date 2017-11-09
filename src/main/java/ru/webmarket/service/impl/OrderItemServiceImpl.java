@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.webmarket.model.dto.OrderDTO;
 import ru.webmarket.model.dto.OrderItemDTO;
 import ru.webmarket.model.dto.ProductDTO;
-import ru.webmarket.model.entity.OrderItem;
 import ru.webmarket.model.mapper.OrderItemMap;
 import ru.webmarket.model.mapper.ProductMap;
 import ru.webmarket.repository.OrderItemRepository;
@@ -44,22 +43,22 @@ public class OrderItemServiceImpl implements OrderItemService {
      * Возвращает товар из сохраненного пункта заказа.
      */
     @Override
-    public ProductDTO addProduct(OrderDTO orderDTO, ProductDTO productDTO) {
-        return addProduct(orderDTO, productDTO, 1);
+    public void addProduct(OrderDTO orderDTO, ProductDTO productDTO) {
+        addProduct(orderDTO, productDTO, 1);
     }
 
     /**
      * Возвращает товар из сохраненного пункта заказа.
      */
     @Override
-    public ProductDTO addProduct(OrderDTO orderDTO, ProductDTO productDTO, Integer count) {
-        if ((orderDTO == null) || (productDTO == null)) return null;
+    public void addProduct(OrderDTO orderDTO, ProductDTO productDTO, Integer count) {
+        if ((orderDTO == null) || (productDTO == null)) return;
         OrderItemDTO orderItemDTO = new OrderItemDTO();
         orderItemDTO.setOrder(orderDTO);
         orderItemDTO.setProduct(productDTO);
         orderItemDTO.setCount(count);
 
-        return ProductMap.toDto(orderItemRepository.save(OrderItemMap.toEntity(orderItemDTO)).getProduct());
+        ProductMap.toDto(orderItemRepository.save(OrderItemMap.toEntity(orderItemDTO)).getProduct());
     }
 
     /**
@@ -90,15 +89,6 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public void delete(List<OrderItemDTO> orderItemDTOLists) {
         if (orderItemDTOLists != null) orderItemRepository.delete(OrderItemMap.toEntity(orderItemDTOLists));
-    }
-
-    /**
-     * Очищает список заказа.
-     */
-    @Override
-    public void delete(OrderDTO orderDTO) {
-        List<OrderItemDTO> orderItemDTOList = getOrderItemByOrder(orderDTO);
-        if (orderItemDTOList!= null) delete(orderItemDTOList);
     }
 
     /**

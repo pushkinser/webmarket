@@ -2,7 +2,6 @@ package ru.webmarket.model.mapper;
 
 import ru.webmarket.model.dto.OrderDTO;
 import ru.webmarket.model.entity.Order;
-import ru.webmarket.model.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class OrderMap {
     }
 
     public static List<Order> toEntity(List<OrderDTO> orderDTOS) {
-        if ( orderDTOS == null) return null;
+        if (orderDTOS == null) return null;
         List<Order> orders = new ArrayList<>();
 
         for (OrderDTO orderDTO : orderDTOS) {
@@ -46,7 +45,7 @@ public class OrderMap {
     }
 
     public static List<OrderDTO> toDto(List<Order> orders) {
-        if ( orders == null) return null;
+        if (orders == null) return null;
         List<OrderDTO> orderDTOS = new ArrayList<>();
 
         for (Order order : orders) {

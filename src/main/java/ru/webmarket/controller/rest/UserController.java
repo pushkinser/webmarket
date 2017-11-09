@@ -12,8 +12,12 @@ import ru.webmarket.service.impl.UserServiceImpl;
 @RequestMapping(value = "/api/user")
 public class UserController {
 
+    private final UserServiceImpl userService;
+
     @Autowired
-    private UserServiceImpl userService;
+    public UserController(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public UserDTO getUser(@PathVariable("id") Long id) {

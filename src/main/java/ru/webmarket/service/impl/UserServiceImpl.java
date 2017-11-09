@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.webmarket.model.dto.RoleDTO;
-import ru.webmarket.model.dto.ShoppingCartDTO;
 import ru.webmarket.model.dto.UserDTO;
 import ru.webmarket.model.mapper.UserMap;
 import ru.webmarket.repository.UserRepository;
-import ru.webmarket.service.RoleService;
 import ru.webmarket.service.UserService;
 
 import java.util.Collections;
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setRoles(Collections.singletonList(roleService.get("CUSTOMER")));
         userDTO = UserMap.toDto(userRepository.save(UserMap.toEntity(userDTO)));
 
-        ShoppingCartDTO shoppingCartDTO = shoppingCartService.addByUser(userDTO);
+        shoppingCartService.addByUser(userDTO);
 
         return userDTO;
     }
@@ -58,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-    Возвращает пользовтеля по логину.
+     * Возвращает пользовтеля по логину.
      */
     @Override
     public UserDTO get(String userName) {
@@ -66,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-    Возвращает список ролей у пользователя.
+     * Возвращает список ролей у пользователя.
      */
     @Override
     public List<RoleDTO> getRoles(UserDTO userDTO) {

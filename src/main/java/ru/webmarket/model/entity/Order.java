@@ -1,10 +1,8 @@
 package ru.webmarket.model.entity;
 
 import lombok.Data;
-import ru.webmarket.model.entity.OrderItem;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -26,7 +24,7 @@ public class Order {
 //    private List<OrderItem> orderItems;
 
     /**
-    Для добавления нового заказа для пользователя напрямую через Order.
+     * Для добавления нового заказа для пользователя напрямую через Order.
      */
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id")

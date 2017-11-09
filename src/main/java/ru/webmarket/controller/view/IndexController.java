@@ -13,18 +13,28 @@ import ru.webmarket.model.mapper.UserMap;
 import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.security.UserDetailsManager;
 
+import javax.servlet.ServletContext;
 import java.security.Principal;
 
 @Controller
 public class IndexController {
 
+    private final UserDetailsManager userDetailsManager;
+
+    private final ServletContext rootApplicationContext;
+
     @Autowired
-    private UserDetailsManager userDetailsManager;
+    public IndexController(UserDetailsManager userDetailsManager, ServletContext rootApplicationContext) {
+        this.userDetailsManager = userDetailsManager;
+        this.rootApplicationContext = rootApplicationContext;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER"})
     public ModelAndView index() {
-        return new ModelAndView("products", SecurityUtils.getAuthInfo());
+        ModelAndView modelAndView = new ModelAndView("products", SecurityUtils.getAuthInfo());
+        modelAndView.addObject("root", rootApplicationContext.getContextPath());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)

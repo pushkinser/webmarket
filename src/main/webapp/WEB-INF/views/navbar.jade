@@ -2,34 +2,34 @@ nav.navbar.navbar-default
     .container-fluid
         .navbar-header
             .navbar-brand
-                a(href="./") Webmarket
+                a(href="#{root}/") Webmarket
         lu.nav.navbar-nav.nav-tabs
             li
                 if isAuthorized
-                    a(href="products") Товары
+                    a(href="#{root}/products") Товары
             li
                 if isAuthorized
                     if isSeller
-                        a(href="addproduct") Добавить товар
+                        a(href="#{root}/addproduct") Добавить товар
 
         lu.nav.navbar-nav.navbar-right.nav-tabs
             if isAuthorized
                 li
                     .h1 #{user.userName}
                 li
-                    a(href="orders") Мои заказы
+                    a(href="#{root}/orders") Мои заказы
                 li
-                    a(href="shoppingcart")
+                    a(href="#{root}/shoppingcart")
                         div(id = 'shoppingCartInfo')
-                            img(src='images/shopping_cart/empty.png', class='img-responsive')
+                            img(src='#{root}/images/shopping_cart/empty.png', class='img-responsive')
                 li
                    .h1
                         div(id = 'shoppingCartCost')
             li
                 if isAuthorized
-                    a(href="logout") Выйти
+                    a(href="#{root}/logout") Выйти
                 else
-                    a(href="login") Войти
+                    a(href="#{root}/login") Войти
     if isAuthorized
         script.
             require(['pages/CostShoppingCart'], function (CostShoppingCart) {

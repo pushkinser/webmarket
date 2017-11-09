@@ -3,8 +3,6 @@ package ru.webmarket.model.dto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import ru.webmarket.model.entity.Role;
-import ru.webmarket.model.entity.ShoppingCart;
 
 import java.util.List;
 

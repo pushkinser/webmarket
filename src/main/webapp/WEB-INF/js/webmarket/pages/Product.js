@@ -8,7 +8,7 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
         var regexp = 'product/';
         var indexId = str.indexOf(regexp);
         var id = str.slice(indexId + regexp.length);
-        var url = "/api/product/" + id;
+        var url = rootUrl + "/api/product/" + id;
         var productImageElementId = 'productImageId';
         var descriptionId = 'descriptionId';
         var shoppingCartIconId = 'shoppingcartId';
@@ -48,12 +48,12 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
     Product.prototype._drawProductImage = function (productImageElementId, data) {
         if (data && data.id) {
             try {
-                $.get('/images/product/' + data.id + '.jpg').then(
+                $.get(rootUrl + '/images/product/' + data.id + '.jpg').then(
                     function () {
-                        $('#' + productImageElementId).html('<img src="/images/product/' + data.id + '.jpg" class="img-thumbnail" alt="' + data.name + '">');
+                        $('#' + productImageElementId).html('<img src="' + rootUrl + '/images/product/' + data.id + '.jpg" class="img-thumbnail" alt="' + data.name + '">');
                     },
                     function () {
-                        $('#' + productImageElementId).html('<img src="/images/product/pain.png" class="img-thumbnail" alt="Изображение товара отсутствует">');
+                        $('#' + productImageElementId).html('<img src="' + rootUrl + '/images/product/pain.png" class="img-thumbnail" alt="Изображение товара отсутствует">');
                     }
                 );
             } catch (err) {
@@ -63,7 +63,7 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
 
     Product.prototype._addProductCell = function (shoppingCartIconId, data) {
         var iconId = 'iconId';
-        $('#' + shoppingCartIconId).html("<img src='/images/shopping_cart/add.png' id = " + iconId + " class='img-responsive' width='50px' height='50px' >");
+        $('#' + shoppingCartIconId).html("<img src='" + rootUrl + "/images/shopping_cart/add.png' id = " + iconId + " class='img-responsive' width='50px' height='50px' >");
         $('#' + iconId).bind("click", function () {
             this._addProductInShoppingCart.apply(this, [data, 1])
         }.bind(this));
@@ -71,7 +71,7 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
 
     Product.prototype._addProductInShoppingCart = function (data, count) {
         $.ajax({
-            url: '/api/shoppingcart/',
+            url: rootUrl + '/api/shoppingcart/',
             type: 'PUT',
             contentType: "application/json",
             data: JSON.stringify({'id': data.id, 'count': count}),
@@ -96,7 +96,7 @@ define('pages/Product', ['jquery', 'bootstrap', 'require-css!bootstrap-css', 'do
     Product.prototype._convertRuble = function (num) {
         var p = num.toFixed(2).split(".");
         return p[0].split("").reverse().reduce(function (acc, num, i, orig) {
-            return num == "-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
+            return num === "-" ? acc : num + (i && !(i % 3) ? " " : "") + acc;
         }, "") + "," + p[1] + '&#8381';
     };
 

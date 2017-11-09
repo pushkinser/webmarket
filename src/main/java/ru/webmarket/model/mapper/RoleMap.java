@@ -9,7 +9,7 @@ import java.util.List;
 public class RoleMap {
 
     public static Role toEntity(RoleDTO roleDTO) {
-        if ( roleDTO == null) return null;
+        if (roleDTO == null) return null;
         Role role = new Role();
 
         role.setId(roleDTO.getId());
@@ -19,7 +19,7 @@ public class RoleMap {
     }
 
     public static RoleDTO toDto(Role role) {
-        if ( role == null) return null;
+        if (role == null) return null;
         RoleDTO roleDTO = new RoleDTO();
 
         roleDTO.setId(role.getId());
@@ -29,7 +29,7 @@ public class RoleMap {
     }
 
     public static List<Role> toEntity(List<RoleDTO> roleDTOS) {
-        if ( roleDTOS == null) return null;
+        if (roleDTOS == null) return null;
         List<Role> roles = new ArrayList<>();
         for (RoleDTO roleDTO : roleDTOS) {
             if (roleDTO == null) continue;
@@ -39,7 +39,7 @@ public class RoleMap {
     }
 
     public static List<RoleDTO> toDto(List<Role> roles) {
-        if ( roles == null) return null;
+        if (roles == null) return null;
         List<RoleDTO> roleDTOS = new ArrayList<>();
         for (Role role : roles) {
             if (role == null) continue;

@@ -29,7 +29,7 @@ define('pages/Products',
                     {
                         'data': null,
                         'render': function (data) {
-                            return '<a href="product/' + data.id + '/">' + data.name + '</a>';
+                            return '<a href="product/' + data.id + '">' + data.name + '</a>';
                         }
                     },
                     {

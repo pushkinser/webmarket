@@ -17,11 +17,15 @@ import java.util.List;
 @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER"})
 public class ShoppingCartController {
 
-    @Autowired
-    private ShoppingCartServiceImpl shoppingCartService;
+    private final ShoppingCartServiceImpl shoppingCartService;
+
+    private final OrderItemService orderItemService;
 
     @Autowired
-    private OrderItemService orderItemService;
+    public ShoppingCartController(ShoppingCartServiceImpl shoppingCartService, OrderItemService orderItemService) {
+        this.shoppingCartService = shoppingCartService;
+        this.orderItemService = orderItemService;
+    }
 
     private ShoppingCartDTO getCurrentShoppingCart() {
         return shoppingCartService.getByUserId(SecurityUtils.getCurrentDetails().getId());

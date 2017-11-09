@@ -8,11 +8,9 @@ public interface ShoppingCartService {
 
     Boolean isEmpty (ShoppingCartDTO shoppingCartDTO);
 
-    ShoppingCartDTO addByUser (UserDTO userDTO);
+    void addByUser (UserDTO userDTO);
 
     ShoppingCartDTO getByUserId (Long userId);
-
-    OrderDTO getOrder (ShoppingCartDTO shoppingCartDTO);
 
     void addProduct (ShoppingCartDTO shoppingCartDTO, ProductDTO productDTO);
 
@@ -23,8 +21,6 @@ public interface ShoppingCartService {
     void editCountOrderItem (OrderItemDTO orderItemDTO, Integer count);
 
     void editCountOrderItem (Long orderItemId, Integer count);
-
-    void deleteOrderItem (OrderItemDTO orderItemDTO);
 
     void deleteOrderItem (Long orderItemId);
 

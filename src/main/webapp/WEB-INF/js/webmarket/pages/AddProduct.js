@@ -66,7 +66,7 @@ define('pages/AddProduct',
                 if (name < 1) {
                     $.jGrowl('Не выбрано название товара.', {life: 4000, theme: 'error', position: 'bottom-right'});
                 }
-                else if ((price == 0) || (price < 0)) {
+                else if ((price === 0) || (price < 0)) {
                     $.jGrowl('Неправильно указана цена товара.', {life: 4000, theme: 'error', position: 'bottom-right'});
                 }
                 else if (document.getElementsByName("file")[0].files.length === 0) {
@@ -84,7 +84,7 @@ define('pages/AddProduct',
             const pDescription = data[2];
             var responseId = '';
             $.ajax({
-                url: '/api/product/',
+                url: 'api/product/',
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({'name': pName, 'price': pPrice, 'description': pDescription}),
@@ -102,7 +102,7 @@ define('pages/AddProduct',
                     formData.append('id', JSON.stringify(responseId));
 
                     $.ajax({
-                        url: '/api/upload/',
+                        url: rootUrl + '/api/upload/',
                         data: formData,
                         processData: false,
                         contentType: false,

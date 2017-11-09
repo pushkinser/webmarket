@@ -1,9 +1,7 @@
 package ru.webmarket.controller.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.webmarket.model.dto.UserDTO;
 import ru.webmarket.security.SecurityUtils;
-import ru.webmarket.service.impl.RoleServiceImpl;
 import ru.webmarket.service.impl.UserServiceImpl;
 import ru.webmarket.validator.UserValidator;
 
@@ -63,8 +60,8 @@ public class LoginController {
 
             List<FieldError> errors = bindingResult.getFieldErrors();
 
-            for (FieldError error : errors ) {
-                System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
+            for (FieldError error : errors) {
+                System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
                 modelAndView.addObject("error", error.getDefaultMessage());
             }
 

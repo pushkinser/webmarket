@@ -2,7 +2,6 @@ package ru.webmarket.model.mapper;
 
 import ru.webmarket.model.dto.ShoppingCartDTO;
 import ru.webmarket.model.entity.ShoppingCart;
-import ru.webmarket.model.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

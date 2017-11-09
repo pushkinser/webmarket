@@ -5,6 +5,6 @@ import ru.webmarket.model.entity.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    public Product findByName (String name);
+    //Product findByName (String name);
 
 }

@@ -2,7 +2,7 @@
 
 // noinspection JSFileReferences
 require.config({
-    baseUrl: 'js/webmarket',
+    baseUrl: rootUrl + '/js/webmarket',
     paths: {
         'require-css': '//cdnjs.cloudflare.com/ajax/libs/require-css/0.1.10/css',
         'jquery': '//code.jquery.com/jquery-3.2.1',
@@ -11,10 +11,10 @@ require.config({
         'bootstrap-css': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap',
         'datatables': '//cdn.datatables.net/1.10.16/js/jquery.dataTables',
         'datatables-css': '//cdn.datatables.net/1.10.16/css/jquery.dataTables',
-        'tables-css': 'css/tables',
+        'tables-css': '../../css/tables',
         'jgrowl' :    '//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.6/jquery.jgrowl',
         'jgrowl-css': '//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.6/jquery.jgrowl',
-        'growl-css' : 'css/growl',
+        'growl-css' : '../../css/growl',
         'domReady': '//cdnjs.cloudflare.com/ajax/libs/require-domReady/2.0.1/domReady'
     },
     shim: {

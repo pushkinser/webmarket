@@ -1,8 +1,6 @@
 package ru.webmarket.model.entity;
 
 import lombok.Data;
-import ru.webmarket.model.entity.Order;
-import ru.webmarket.model.entity.Product;
 
 import javax.persistence.*;
 
@@ -21,7 +19,7 @@ public class OrderItem {
 
     /**
      * Реализуется без каскада : OrderItemRepository не создает новый Order.
-     *
+     * <p>
      * 3.11.17 Добавлен каскад с MERGE, убран в классе Order: List<OrderItem>.
      */
     @ManyToOne(cascade = {CascadeType.MERGE})

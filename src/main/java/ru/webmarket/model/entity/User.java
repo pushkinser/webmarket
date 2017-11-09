@@ -1,6 +1,5 @@
 package ru.webmarket.model.entity;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,22 +21,26 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "users_id")
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long id;
 
     @Setter
     @Column(name = "username")
     private String userName;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @Column(name = "name")
     private String name;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @Column(name = "lastname")
     private String lastName;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @Column(name = "email")
     private String email;
 
@@ -63,8 +66,8 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (Role role: getRoles()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" +role.getName()));
+        for (Role role : getRoles()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         }
         return grantedAuthorities;
     }

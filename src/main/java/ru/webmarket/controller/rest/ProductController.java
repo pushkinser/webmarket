@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping("/api/product")
 public class ProductController {
 
+    private final ProductServiceImpl productService;
+
     @Autowired
-    private ProductServiceImpl productService;
+    public ProductController(ProductServiceImpl productService) {
+        this.productService = productService;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ProductDTO getProduct(@PathVariable("id") Long id) {

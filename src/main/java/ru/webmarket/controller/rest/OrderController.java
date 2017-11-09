@@ -12,6 +12,7 @@ import ru.webmarket.controller.rest.request.OrderBodyJson;
 import ru.webmarket.model.dto.OrderDTO;
 import ru.webmarket.model.dto.OrderItemDTO;
 import ru.webmarket.model.dto.ShoppingCartDTO;
+import ru.webmarket.model.dto.UserDTO;
 import ru.webmarket.security.SecurityUtils;
 import ru.webmarket.service.impl.OrderItemServiceImpl;
 import ru.webmarket.service.impl.OrderServiceImpl;
@@ -25,17 +26,26 @@ import java.util.List;
 @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_SELLER"})
 public class OrderController {
 
-    @Autowired
-    private ShoppingCartServiceImpl shoppingCartService;
+    private final ShoppingCartServiceImpl shoppingCartService;
+
+    private final OrderServiceImpl orderService;
+
+    private final OrderItemServiceImpl orderItemService;
 
     @Autowired
-    private OrderServiceImpl orderService;
-
-    @Autowired
-    private OrderItemServiceImpl orderItemService;
+    public OrderController(ShoppingCartServiceImpl shoppingCartService, OrderServiceImpl orderService, OrderItemServiceImpl orderItemService) {
+        this.shoppingCartService = shoppingCartService;
+        this.orderService = orderService;
+        this.orderItemService = orderItemService;
+    }
 
     private ShoppingCartDTO getCurrentShoppingCart() {
-        return shoppingCartService.getByUserId(SecurityUtils.getCurrentDetails().getId());
+        if (SecurityUtils.getCurrentDetails() == null) return null;
+        UserDTO userDTO = SecurityUtils.getCurrentDetails();
+        if (userDTO != null) {
+            return shoppingCartService.getByUserId(userDTO.getId());
+        }
+        return null;
     }
 
     @RequestMapping(value = "/complete", method = RequestMethod.POST)
@@ -45,15 +55,19 @@ public class OrderController {
 
         OrderDTO order = new OrderDTO();
 
-        order.setUser(shoppingCartDTO.getUser());
+        if (shoppingCartDTO != null) {
+            order.setUser(shoppingCartDTO.getUser());
+        }
         order.setAddress(orderBodyJson.getAddress());
         order = orderService.add(order);
 
         List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
 
-        for (OrderItemDTO orderItemDTO : orderItemService.getOrderItemByOrder(shoppingCartDTO.getOrder())) {
-            orderItemDTO.setOrder(order);
-            orderItemDTOList.add(orderItemDTO);
+        if (shoppingCartDTO != null) {
+            for (OrderItemDTO orderItemDTO : orderItemService.getOrderItemByOrder(shoppingCartDTO.getOrder())) {
+                orderItemDTO.setOrder(order);
+                orderItemDTOList.add(orderItemDTO);
+            }
         }
 
         orderItemService.add(orderItemDTOList);
@@ -63,11 +77,12 @@ public class OrderController {
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public List<OrderBody> getOrders () {
 
-        List<OrderBody> orderBodyResponse = new ArrayList<>();
+
         List<OrderDTO> orderDTOS = orderService.getByUserId(SecurityUtils.getCurrentDetails().getId());
+        List<OrderBody> orderBodyResponse = new ArrayList<>();
 
         for (OrderDTO orderDTO: orderDTOS) {
-            if (orderDTO.getId() != getCurrentShoppingCart().getOrder().getId()) {
+            if (!orderDTO.getId().equals(getCurrentShoppingCart().getOrder().getId())) {
                 OrderBody orderBodyItem = new OrderBody();
                 orderBodyItem.setId(orderDTO.getId());
                 orderBodyItem.setAddress(orderDTO.getAddress());
@@ -76,7 +91,6 @@ public class OrderController {
 
                 orderBodyResponse.add(orderBodyItem);
             }
-
         }
 
         return orderBodyResponse;

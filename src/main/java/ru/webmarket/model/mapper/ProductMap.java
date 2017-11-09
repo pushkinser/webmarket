@@ -9,7 +9,7 @@ import java.util.List;
 public class ProductMap {
 
     public static ProductDTO toDto(Product product) {
-        if ( product == null) return null;
+        if (product == null) return null;
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setId(product.getId());
@@ -21,7 +21,7 @@ public class ProductMap {
     }
 
     public static Product toEntity(ProductDTO productDTO) {
-        if ( productDTO == null) return null;
+        if (productDTO == null) return null;
         Product product = new Product();
 
         product.setId(productDTO.getId());
@@ -33,7 +33,7 @@ public class ProductMap {
     }
 
     public static List<ProductDTO> toDto(List<Product> products) {
-        if ( products == null) return null;
+        if (products == null) return null;
         List<ProductDTO> productDTOS = new ArrayList<>();
 
         for (Product product : products) {
@@ -46,7 +46,7 @@ public class ProductMap {
     }
 
     public static List<Product> toEntity(List<ProductDTO> productDTOS) {
-        if ( productDTOS == null) return null;
+        if (productDTOS == null) return null;
         List<Product> products = new ArrayList<>();
 
         for (ProductDTO productDTO : productDTOS) {

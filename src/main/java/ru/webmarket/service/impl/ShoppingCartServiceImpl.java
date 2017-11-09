@@ -41,10 +41,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     /**
      * Сохраняет пустую корзину для пользователя.
-    */
+     */
     @Override
-    public ShoppingCartDTO addByUser(UserDTO userDTO) {
-        if (userDTO == null) return null;
+    public void addByUser(UserDTO userDTO) {
+        if (userDTO == null) return;
 
         ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO();
 
@@ -54,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartDTO.setOrder(orderDTO);
         shoppingCartDTO.setUser(userDTO);
 
-        return ShoppingCartMap.toDto(shoppingCartRepository.save(ShoppingCartMap.toEntity(shoppingCartDTO)));
+        ShoppingCartMap.toDto(shoppingCartRepository.save(ShoppingCartMap.toEntity(shoppingCartDTO)));
     }
 
     /**
@@ -66,21 +66,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     /**
-     * Возвращает заказ корзины.
-     */
-    @Override
-    public OrderDTO getOrder(ShoppingCartDTO shoppingCartDTO) {
-        return shoppingCartDTO.getOrder();
-    }
-
-    /**
      * Возвращает стоимость корзины.
      */
     @Override
     public Double getCount(ShoppingCartDTO shoppingCartDTO) {
-        Double count = Double.valueOf(0);
-        if (shoppingCartDTO.getOrder() != null ) {
-            for (OrderItemDTO orderItemDTO: orderItemService.getOrderItemByOrder(shoppingCartDTO.getOrder()) ) {
+        Double count = 0d;
+        if (shoppingCartDTO.getOrder() != null) {
+            for (OrderItemDTO orderItemDTO : orderItemService.getOrderItemByOrder(shoppingCartDTO.getOrder())) {
                 count += orderItemDTO.getCount() * orderItemDTO.getProduct().getPrice();
             }
         }
@@ -124,15 +116,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public void editCountOrderItem(Long orderItemId, Integer count) {
-       editCountOrderItem(orderItemService.get(orderItemId), count);
-    }
-
-    /**
-     * Удаляет позицию заказа из корзины.
-     */
-    @Override
-    public void deleteOrderItem(OrderItemDTO orderItemDTO) {
-        orderItemService.delete(orderItemDTO);
+        editCountOrderItem(orderItemService.get(orderItemId), count);
     }
 
     /**
