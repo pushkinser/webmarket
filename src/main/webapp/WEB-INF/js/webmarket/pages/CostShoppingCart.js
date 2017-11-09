@@ -10,7 +10,7 @@ define('pages/CostShoppingCart',
 
         CostShoppingCart.prototype.draw = function () {
             $.ajax({
-                url: '/api/shoppingcart/total/',
+                url: 'api/shoppingcart/total/',
                 type: 'GET',
                 success: function (data) {
                     $('#' + this.shoppingCartCostElementId).html('<div style= "text-align: center;">'+this._costConvertRuble(data)+'</div>');

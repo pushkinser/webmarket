@@ -6,21 +6,21 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
 
     ShoppingCart.prototype.draw = function () {
         $('#' + this.shoppingCartTableElementId).DataTable({
-            'ajax': {'url': '/api/shoppingcart/', 'dataSrc': this._getJson},
+            'ajax': {'url': 'api/shoppingcart/', 'dataSrc': this._getJson},
             'columns': [
                 {
                     'data': null,
                     'searchable': false,
                     'sortable': false,
                     'render': function () {
-                        return '<img src="/images/product/loader.gif" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >';
+                        return '<img src="images/product/loader.gif" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >';
                     },
                     'createdCell': this._onImageCellCreated
                 },
                 {
                     'data': null,
                     'render': function (data) {
-                        return '<a href="/product/' + data.product.id + '/">' + data.product.name + '</a>';
+                        return '<a href="product/' + data.product.id + '/">' + data.product.name + '</a>';
                     }
                 },
                 {
@@ -74,25 +74,24 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
         var $controlId = $('#' + controlElementId);
 
         $.ajax({
-            url: '/api/shoppingcart/isempty',
+            url: 'api/shoppingcart/isempty',
             type: 'GET',
             success: function (data) {
                if (data)  $.jGrowl('Корзина еще пустая, давайте добавим товары :)', {life: 5000, theme: 'success', position: 'bottom-right'});
                else {
-                   $controlId.append("Оформить заказ <a href='/order'><img src='/images/shopping_cart/stores.png' class='img-responsive' width='50px' height='50px'></a>");
-                   $controlId.append("Очистить корзину <img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
+                   $controlId.append("Оформить заказ <a href='order'><img src='images/shopping_cart/stores.png' class='img-responsive' width='50px' height='50px'></a>");
+                   $controlId.append("Очистить корзину <img src='images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px'>");
                    $controlId.children('img').bind("click", function () {
                        this._deleteAllProductFromShoppingCart();
                    }.bind(this));
                   }
             }.bind(this)
-        }).bind(this);
-
+        });
     };
 
     ShoppingCart.prototype._deleteAllProductFromShoppingCart = function () {
         $.ajax({
-            url: '/api/shoppingcart/',
+            url: 'api/shoppingcart/',
             type: 'DELETE',
             contentType: "application/json",
             data: JSON.stringify({'flag': true}),
@@ -115,12 +114,12 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
     ShoppingCart.prototype._onImageCellCreated = function (td, cellData) {
         if (cellData && cellData.product.id) {
             try {
-                $.get('/images/product/' + cellData.product.id + '.jpg').then(
+                $.get('images/product/' + cellData.product.id + '.jpg').then(
                     function () {
-                        $(td).html('<img src="/images/product/' + cellData.product.id + '.jpg" class="img-circle" alt="image" width="100px" height="100px" >');
+                        $(td).html('<img src="images/product/' + cellData.product.id + '.jpg" class="img-circle" alt="image" width="100px" height="100px" >');
                     },
                     function () {
-                        $(td).html('<img src="/images/product/pain.png" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >');
+                        $(td).html('<img src="images/product/pain.png" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >');
                     }
                 );
             } catch (err) {
@@ -138,7 +137,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
     };
 
     ShoppingCart.prototype._productCellDelete = function (td, cellData) {
-        $(td).html("<img src='/images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px' alt=" + cellData.product.name + "'>");
+        $(td).html("<img src='images/shopping_cart/remove.png' class='img-responsive' width='50px' height='50px' alt=" + cellData.product.name + "'>");
         $(td).children('img').bind("click", function () {
             this._deleteProductFromShoppingCart.apply(this, [cellData, td])
         }.bind(this));
@@ -146,7 +145,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
 
     ShoppingCart.prototype._deleteProductFromShoppingCart = function (cellData, td) {
         $.ajax({
-            url: '/api/shoppingcart/',
+            url: 'api/shoppingcart/',
             type: 'DELETE',
             contentType: "application/json",
             data: JSON.stringify({'id': cellData.id, 'flag': false}),
@@ -201,7 +200,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
                 inputId.change();
 
                 $.ajax({
-                    url: '/api/shoppingcart/count',
+                    url: 'api/shoppingcart/count',
                     type: 'PUT',
                     contentType: "application/json",
                     data: JSON.stringify({'id': cellData.id, 'count': count}),
@@ -234,7 +233,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
                 inputId.change();
 
                 $.ajax({
-                    url: '/api/shoppingcart/count',
+                    url: 'api/shoppingcart/count',
                     type: 'PUT',
                     contentType: "application/json",
                     data: JSON.stringify({'id': cellData.id, 'count': count}),
@@ -269,7 +268,7 @@ define('pages/ShoppingCart', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 're
                     inputId.change();
 
                     $.ajax({
-                        url: '/api/shoppingcart/count',
+                        url: 'api/shoppingcart/count',
                         type: 'PUT',
                         contentType: "application/json",
                         data: JSON.stringify({'id': cellData.id, 'count': count}),

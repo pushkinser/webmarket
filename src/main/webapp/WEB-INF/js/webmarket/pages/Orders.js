@@ -8,7 +8,7 @@ define('pages/Orders', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-
         Orders.prototype.draw = function () {
 
             $.ajax({
-                url: '/api/order/get',
+                url: 'api/order/get',
                 type: 'GET',
                 success: function (data) {
 
@@ -44,7 +44,7 @@ define('pages/Orders', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-
                                 {
                                     'data': null,
                                     'render': function (data) {
-                                        return '<a href="/product/' + data.product.id + '/">' + data.product.name + '</a>';
+                                        return '<a href="product/' + data.product.id + '/">' + data.product.name + '</a>';
                                     }
                                 },
                                 {

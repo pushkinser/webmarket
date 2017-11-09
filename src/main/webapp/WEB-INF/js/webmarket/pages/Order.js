@@ -7,21 +7,21 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
 
         Order.prototype.draw = function () {
             $('#' + this.orderTableElementId).DataTable({
-                'ajax': {'url': '/api/shoppingcart/', 'dataSrc': this._getJson},
+                'ajax': {'url': 'api/shoppingcart/', 'dataSrc': this._getJson},
                 'columns': [
                     {
                         'data': null,
                         'searchable': false,
                         'sortable': false,
                         'render': function () {
-                            return '<img src="/images/product/loader.gif" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >';
+                            return '<img src="images/product/loader.gif" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >';
                         },
                         'createdCell': this._onImageCellCreated
                     },
                     {
                         'data': null,
                         'render': function (data) {
-                            return '<a href="/product/' + data.product.id + '/">' + data.product.name + '</a>';
+                            return '<a href="product/' + data.product.id + '/">' + data.product.name + '</a>';
                         }
                     },
                     {
@@ -65,7 +65,7 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
             var controlId = $('#' + controlElementId);
 
             $.ajax({
-                url: '/api/shoppingcart/total/',
+                url: 'api/shoppingcart/total/',
                 type: 'GET',
                 async: false,
                 success: function (data) {
@@ -84,7 +84,7 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
                 if (controlId.children('input').val().length == 0) $.jGrowl('Не указан адрес доставки.' + controlId.children('input').val(), {life: 3000, theme: 'error', position: 'bottom-right'});
                 else {
                     $.ajax({
-                        url: '/api/order/complete',
+                        url: 'api/order/complete',
                         type: 'POST',
                         contentType: "application/json",
                         data: JSON.stringify({'address': controlId.children('input').val()}),
@@ -105,7 +105,7 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
                                 theme: 'success'
                             });
 
-                            $(window).attr('location','/');
+                            $(window).attr('location',"./");
                         }
                     });
                 }
@@ -133,12 +133,12 @@ define('pages/Order', ['jquery', 'jquery-ui', 'datatables', 'jgrowl', 'require-c
         Order.prototype._onImageCellCreated = function (td, cellData) {
             if (cellData && cellData.product.id) {
                 try {
-                    $.get('/images/product/' + cellData.product.id + '.jpg').then(
+                    $.get('images/product/' + cellData.product.id + '.jpg').then(
                         function () {
-                            $(td).html('<img src="/images/product/' + cellData.product.id + '.jpg" class="img-circle" alt="image" width="100px" height="100px" >');
+                            $(td).html('<img src="images/product/' + cellData.product.id + '.jpg" class="img-circle" alt="image" width="100px" height="100px" >');
                         },
                         function () {
-                            $(td).html('<img src="/images/product/pain.png" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >');
+                            $(td).html('<img src="images/product/pain.png" class="img-circle" alt="Изображение товара отсутствует" width="100px" height="100px" >');
                         }
                     );
                 } catch (err) {
